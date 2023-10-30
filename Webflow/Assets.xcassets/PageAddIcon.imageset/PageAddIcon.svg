@@ -1,0 +1,7 @@
+<svg data-wf-icon="PageAddIcon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path
+		d="M4 2C3.44772 2 3 2.44772 3 3V13C3 13.5523 3.44772 14 4 14H7V13H4V3H8.29289L12 6.70711V8H13V6.29289L8.70711 2H4Z"
+		fill="currentColor"
+	></path>
+	<path d="M11 14H10V12H8V11H10V9H11V11H13V12H11V14Z" fill="currentColor"></path>
+</svg>

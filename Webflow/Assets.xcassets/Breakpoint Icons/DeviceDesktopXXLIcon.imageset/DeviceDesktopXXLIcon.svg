@@ -1,0 +1,8 @@
+<svg data-wf-icon="DeviceDesktopXXLIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path
+		fill-rule="evenodd"
+		clip-rule="evenodd"
+		d="M4 4C3.44772 4 3 4.44772 3 5V14C3 14.5523 3.44772 15 4 15H9V18H6.5V19H18.5V18H16V15H21C21.5523 15 22 14.5523 22 14V5C22 4.44771 21.5523 4 21 4H4ZM15 15H13V18H15V15ZM12 15H10V18H12V15ZM4 5L21 5V14H4V5Z"
+		fill="currentColor"
+	></path>
+</svg>
