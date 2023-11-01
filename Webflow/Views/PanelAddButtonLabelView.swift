@@ -17,7 +17,7 @@ struct PanelAddButtonLabelView: View {
 		}
 		.frame(maxWidth: .infinity)
 		.background(isHovering ? .background3 : .clear)
-		.draggable(element.id.uuidString) {
+		.draggable(element) {
 			VStack {
 				Image(icon)
 				

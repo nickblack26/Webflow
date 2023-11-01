@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 enum SidebarTab: String, CaseIterable {
-	case add = "Add Elements (A)"
+	case Add = "Add Elements (A)"
 	case pages = "Pages (P)"
 	case navigator = "Navigator (Z)"
 	case components = "Components (A)"
@@ -21,10 +21,11 @@ enum SidebarTab: String, CaseIterable {
 	case users = "Users"
 	case ecommerce = "Ecommerce"
 	case apps = "Apps"
+	case find = "Find Anything (CMD + E)"
 	
 	var symbol: String {
 		switch self {
-			case .add: return "addPanelIcon"
+			case .Add: return "addPanelIcon"
 			case .pages: return "pagePanelIcon"
 			case .navigator: return "navigatorPanelIcon"
 			case .components: return "componentsPanelIcon"
@@ -36,14 +37,16 @@ enum SidebarTab: String, CaseIterable {
 			case .users: return "capabilityUserPanelIcon"
 			case .ecommerce: return "ecommercePanelIcon"
 			case .apps: return "assetManagerPanelIcon"
+			case .find: return "toolbarSearchPanelIcon"
 		}
 	}
 	
 	var keyBoardShortcut: (KeyEquivalent?, EventModifiers?) {
 		switch self {
-			case .add: return ("a", nil)
+			case .Add: return ("a", nil)
 			case .pages: return ("p", nil)
 			case .navigator: return ("z", nil)
+			case .find: return ("e", .command)
 			default: return (nil, nil)
 		}
 	}

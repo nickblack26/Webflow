@@ -4,7 +4,7 @@ import SwiftUI
 
 struct InspectorStyleView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
-	@State private var displayMode: ElementStyleModel.DisplayLayout = .Block
+	@State private var displayMode: ElementStyleModel.Layout = .Block
 	@State private var margin: (CGFloat?, CGFloat?, CGFloat?, CGFloat?) = (nil, nil, nil, nil)
 	@State private var padding: (CGFloat?, CGFloat?, CGFloat?, CGFloat?) = (nil, nil, nil, nil)
 	@State private var inheritingSelectors: Int = 4
@@ -57,7 +57,7 @@ struct InspectorStyleView: View {
 			@Bindable var websiteManager = websiteManager
 			DisclosureGroup("Layout") {
 				Picker("Display", selection: $displayMode) {
-					ForEach(ElementStyleModel.DisplayLayout.allCases) { layout in
+					ForEach(ElementStyleModel.Layout.allCases) { layout in
 						Image(systemName: layout.icon)
 							.tag(layout)
 					}
@@ -70,8 +70,8 @@ struct InspectorStyleView: View {
 			}
 			
 			DisclosureGroup("Spacing") {
-				Picker("Spacing", selection: .constant(ElementStyleModel.DisplayLayout.Block)) {
-					ForEach(ElementStyleModel.DisplayLayout.allCases) { layout in
+				Picker("Spacing", selection: .constant(ElementStyleModel.Layout.Block)) {
+					ForEach(ElementStyleModel.Layout.allCases) { layout in
 						Image(systemName: layout.icon)
 							.tag(layout)
 					}
@@ -83,14 +83,14 @@ struct InspectorStyleView: View {
 					displayMode = style.layout
 					
 					if let spacing = style.spacing {
-						margin = (spacing.marginCenter, spacing.marginRight, spacing.marginLeft, spacing.marginLeft)
-						padding = (spacing.paddingCenter, spacing.paddingRight, spacing.paddingBottom, spacing.paddingLeft)
+						margin = (spacing.marginTop, spacing.marginRight, spacing.marginLeft, spacing.marginLeft)
+						padding = (spacing.paddingTop, spacing.paddingRight, spacing.paddingBottom, spacing.paddingLeft)
 					}
 				}
 			}
 		} else {
 			VStack {
-				Image("emptyNoSelectionIcon")
+				Image("EmptyNoSelectionIcon")
 				
 				Text("Make a selection")
 				Text("Select an element on the canvas to activate this panel")

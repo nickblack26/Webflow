@@ -6,14 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NavigatorListView: View {
+	@Query private var elements: [ElementModel]
 	@Environment(WebsiteManager.self) private var websiteManager
 	var selectedPage: PageModel?
 	
     var body: some View {
 		@Bindable var websiteManager = websiteManager
-		if let selectedPage = selectedPage {
+		if let selectedPage {
 			List(selection: $websiteManager.selectedElement) {
 				NavigatorListItemView(element: selectedPage.body)
 			}

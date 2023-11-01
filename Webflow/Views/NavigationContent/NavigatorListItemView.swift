@@ -9,14 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct NavigatorListItemView: View {
+	@Environment(\.modelContext) var modelContext
 	@Environment(WebsiteManager.self) private var websiteManager
 	var element: ElementModel
 	
 	var body: some View {
-		if !element.childElements.isEmpty {
+		if let children = element.children, !children.isEmpty {
 			DisclosureGroup(
 				content: {
-					ForEach(element.childElements) { childElement in
+					ForEach(children) { childElement in
 						NavigatorListItemView(element: childElement)
 					}
 				}, label: {
@@ -47,6 +48,11 @@ struct NavigatorListItemView: View {
 					}
 				}
 			}
+			.contextMenu(ContextMenu(menuItems: {
+				Button("Delete") {
+					modelContext.delete(element)
+				}
+			}))
 		}
 	}
 }

@@ -13,8 +13,8 @@ struct InspectorSettingsView: View {
 		TextField("ID", text: .constant(""), prompt: Text("For in-page linking"))
 			.textFieldStyle(.automatic)
 		
-		Picker("Tag", selection: .constant(ElementSettingsModel.ElementSettingsTag.Div)) {
-			ForEach(ElementSettingsModel.ElementSettingsTag.allCases, id: \.self) { tag in
+		Picker("Tag", selection: .constant(ElementSettingsModel.HTMLTag.Div)) {
+			ForEach(ElementSettingsModel.HTMLTag.allCases, id: \.self) { tag in
 				Text(tag.rawValue)
 			}
 		}

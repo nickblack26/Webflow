@@ -1,10 +1,3 @@
-//
-//  ElementView.swift
-//  Webflow
-//
-//  Created by Nick on 10/6/23.
-//
-
 import SwiftUI
 
 struct ElementView: View {
@@ -18,28 +11,25 @@ struct ElementView: View {
 			websiteManager.selectedElement == element
 		}
 		var isEmptyElement: Bool {
-			element.childElements.isEmpty && element.style == nil && element.classes.isEmpty
+			element.children == nil && element.style == nil && element.classes.isEmpty
 		}
 		
 		ZStack(alignment: .topLeading) {
-			if !element.childElements.isEmpty {
-				ForEach(element.childElements) { childElement in
+			if let children = element.children {
+				ForEach(children) { childElement in
 					ElementView(element: childElement)
 				}
 			} else {
-				NavigationLink(value: element) {
-					Text("")
-						.font(.largeTitle)
-						.border(hovering ? .blue : .clear, width: 1)
-				}
-				.padding(.all, 1)
-				.border(isSelectedElement ? Color.accentColor : .gray)
-				.frame(
-					minWidth: isEmptyElement ? nil : element.style?.size?.minWidth,
-					maxWidth: isEmptyElement ? .infinity : element.style?.size?.maxWidth,
-					minHeight: isEmptyElement ? 75 : element.style?.size?.minHeight,
-					maxHeight: isEmptyElement ? nil : element.style?.size?.maxHeight
-				)
+				Text("")
+					.font(.largeTitle)
+					.padding(.all, 1)
+					.frame(
+						minWidth: isEmptyElement ? nil : element.style?.size?.minWidth,
+						maxWidth: isEmptyElement ? .infinity : element.style?.size?.maxWidth,
+						minHeight: isEmptyElement ? 75 : element.style?.size?.minHeight,
+						maxHeight: isEmptyElement ? nil : element.style?.size?.maxHeight
+					)
+					.border(isSelectedElement ? Color.accentColor : .gray)
 			}
 			
 			if (hovering || isSelectedElement) {
@@ -57,7 +47,6 @@ struct ElementView: View {
 				.offset(y: -25.0)
 			}
 		}
-		.buttonStyle(.plain)
 		.onHover(perform: {
 			hovering = $0
 		})
@@ -76,6 +65,16 @@ struct ElementView: View {
 				Label("Delete", systemImage: "trash")
 			}
 		})
+		.dropDestination(for: ElementModel.self) { items, location in
+			let elements: [ElementModel] = items.compactMap { element in
+				ElementModel(name: element.name)
+			}
+			element.children?.append(contentsOf: elements)
+			websiteManager.draggingElement = nil
+			return false
+		} isTargeted: { isTargeted in
+			hovering = isTargeted
+		}
 	}
 	
 	private func delete() {

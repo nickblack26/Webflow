@@ -9,41 +9,41 @@ import SwiftUI
 import Foundation
 
 enum Breakpoint: String, CaseIterable {
-	case desktopXXL = "1920px and up"
-	case desktopXL = "1440px and up"
-	case desktop = "1280px and up"
-	case laptop = "Laptop"
-	case tablet = "Table"
-	case mobileLandscape = "Mobile Landscape"
-	case mobile = "Mobile"
+	case DesktopXXL = "1920px and up"
+	case DesktopXL = "1440px and up"
+	case Desktop = "1280px and up"
+	case Laptop
+	case Tablet
+	case MobileLandscape = "Mobile Landscape"
+	case Mobile
 	
 	var icon: String {
 		switch self {
-			case .desktopXXL: "DeviceDesktopXXLIcon"
-			case .desktopXL: "DeviceDesktopXLIcon"
-			case .desktop: "DeviceDesktopIcon"
-			case .laptop: "DeviceLaptopStarIcon"
-			case .tablet: "DeviceTabletPortraitIcon"
-			case .mobileLandscape: "DeviceMobileLandscapeIcon"
-			case .mobile: "DeviceMobilePortraitIcon"
+			case .DesktopXXL: "DeviceDesktopXXLIcon"
+			case .DesktopXL: "DeviceDesktopXLIcon"
+			case .Desktop: "DeviceDesktopIcon"
+			case .Laptop: "DeviceLaptopStarIcon"
+			case .Tablet: "DeviceTabletPortraitIcon"
+			case .MobileLandscape: "DeviceMobileLandscapeIcon"
+			case .Mobile: "DeviceMobilePortraitIcon"
 		}
 	}
 	
 	var widths: (CGFloat, CGFloat) {
 		switch self {
-			case .desktopXXL: (1920, .infinity)
-			case .desktopXL: (1440, 1919)
-			case .desktop: (1280, 1439)
-			case .laptop: (992, 1279)
-			case .tablet: (768, 991)
-			case .mobileLandscape: (479, 767)
-			case .mobile: (1, 478)
+			case .DesktopXXL: (1920, .infinity)
+			case .DesktopXL: (1440, 1919)
+			case .Desktop: (1280, 1439)
+			case .Laptop: (992, 1279)
+			case .Tablet: (768, 991)
+			case .MobileLandscape: (479, 767)
+			case .Mobile: (1, 478)
 		}
 	}
 }
 
 struct BreakpointPicker: View {
-	@State private var currentBreakpoint: Breakpoint = .laptop
+	@State private var currentBreakpoint: Breakpoint = .Laptop
 	@State private var currentWidth: CGFloat = 991.0
 	
 	init() {
@@ -71,7 +71,16 @@ struct BreakpointPicker: View {
 				.buttonStyle(.plain)
 			}
 			
-			Text("\(Int(currentWidth)) \(Text("PX").foregroundStyle(.secondary))")
+			if Int(currentWidth) > 999 {
+				Text("\(Int(currentWidth)) \(Text("PX").foregroundStyle(.secondary))")
+			} else if Int(currentWidth) > 99 {
+				Text(" \(Int(currentWidth)) \(Text("PX").foregroundStyle(.secondary))")
+			} else if Int(currentWidth) > 9 {
+				Text("  \(Int(currentWidth)) \(Text("PX").foregroundStyle(.secondary))")
+			} else {
+				Text("   \(Int(currentWidth)) \(Text("PX").foregroundStyle(.secondary))")
+			}
+				
 		}
 		.pickerStyle(.palette)
     }

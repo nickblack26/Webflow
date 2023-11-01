@@ -12,18 +12,19 @@ struct ButtonLabel: ViewModifier {
 		content
 			.padding(.horizontal, 8)
 			.padding(.vertical, 4)
-			.background(
-				.linearGradient(
-					colors: [
-						Color("ActionSecondaryBackground")
-							.opacity(0.12),
-						Color("ActionSecondaryBackground")
-							.opacity(0.1)
-					],
-					startPoint: .trailing,
-					endPoint: .leading
-				)
-			)
+			.background(Color("Background"))
+//			.background(
+//				.linearGradient(
+//					colors: [
+//						Color("Background")
+//							.opacity(0.12),
+//						Color("Background")
+//							.opacity(0.1)
+//					],
+//					startPoint: .trailing,
+//					endPoint: .leading
+//				)
+//			)
 			.clipShape(RoundedRectangle(cornerRadius: 8))
 	}
 }

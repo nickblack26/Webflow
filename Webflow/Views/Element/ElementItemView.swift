@@ -16,7 +16,6 @@ struct ElementItemView: View {
 			}
 		}
 		.buttonStyle(.plain)
-		.frame(minHeight: element.childElements.isEmpty ? 50 : .infinity)
     }
 }
 

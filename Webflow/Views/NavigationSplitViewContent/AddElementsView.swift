@@ -49,7 +49,8 @@ struct AddElementsView: View {
 						.buttonStyle(.plain)
 					}
 				}
-			}.listRowBackground(EmptyView())
+			}
+			.listRowBackground(EmptyView())
 			
 			Section("Typography") {
 				LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
@@ -76,8 +77,9 @@ struct AddElementsView: View {
 						.buttonStyle(.plain)
 					}
 				}
-			}.listRowBackground(EmptyView())
-
+			}
+			.listRowBackground(EmptyView())
+			
 			Section("Media") {
 				LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
 					ForEach(DefaultStructureElement.allCases, id: \.self) { element in
@@ -89,7 +91,8 @@ struct AddElementsView: View {
 						.buttonStyle(.plain)
 					}
 				}
-			}.listRowBackground(EmptyView())
+			}
+			.listRowBackground(EmptyView())
 			
 			Section("Forms") {
 				LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
@@ -102,7 +105,8 @@ struct AddElementsView: View {
 						.buttonStyle(.plain)
 					}
 				}
-			}.listRowBackground(EmptyView())
+			}
+			.listRowBackground(EmptyView())
 			
 			Section("Advanced") {
 				LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
@@ -115,20 +119,28 @@ struct AddElementsView: View {
 						.buttonStyle(.plain)
 					}
 				}
-			}.listRowBackground(EmptyView())
+			}
+			.listRowBackground(EmptyView())
 		}
-		.navigationTitle("Add")
-		.navigationBarTitleDisplayMode(.inline)
-		.listStyle(.sidebar)
+		.toolbar(removing: .sidebarToggle)
+		.toolbar {
+			ToolbarItem(placement: .topBarLeading) {
+				Text("Add")
+					.fontWeight(.medium)
+			}
+		}
+		.tint(.primary)
+		.foregroundStyle(.primary)
     }
 	
 	private func addElement() {
 		let element = ElementModel(name: "Div Block")
+		
 		if let selectedElement = websiteManager.selectedElement {
-			selectedElement.childElements.append(element)
+			selectedElement.children?.append(element)
 		} else {
 			if let selectedPage {
-				selectedPage.body.childElements.append(element)
+				selectedPage.body.children?.append(element)
 			}
 		}
 	}
@@ -136,10 +148,9 @@ struct AddElementsView: View {
 
 #Preview {
 	NavigationSplitView {
-		
 	} content: {
-		AddElementsView(selectedPage: .constant(.init(name: "Test")))
-			.environment(previewWebsiteManager)
+		AddElementsView(selectedPage: .constant(.init(name: "Test", index: 0)))
+			.environment(previewWebsiteManager)		
 	} detail: {
 		
 	}

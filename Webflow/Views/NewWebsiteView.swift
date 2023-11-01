@@ -48,7 +48,11 @@ struct NewWebsiteView: View {
 		withAnimation {
 			let newWebsite = WebsiteModel(
 				name: siteName,
-				pages: [.init(name: "Home", elementStatus: .Public)]
+				pages: [
+					.init(name: "Home", isHome: true, index: 0),
+					.init(name: "404", typeId: PageModel.Category.Utility.rawValue, type: .Utility, index: 0),
+					.init(name: "Password", typeId: PageModel.Category.Utility.rawValue, type: .Utility, index: 1)
+				]
 			)
 			modelContext.insert(newWebsite)
 		}

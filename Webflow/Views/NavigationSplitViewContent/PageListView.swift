@@ -9,28 +9,31 @@ import SwiftUI
 import SwiftData
 
 struct PageListView: View {
-	@State private var seachText: String = ""
+	@State var isEditMode: EditMode = .active
+	@State private var searchText: String = ""
 	@State private var createNewPage: Bool = false
 	@Binding var selectedPage: PageModel?
-	var pages: [PageModel]
 	
-    var body: some View {
+	var body: some View {
 		List(selection: $selectedPage) {
-			ForEach(PageModel.PageType.allCases, id: \.self) { type in
-				PageGroupedList(pageType: type)
+			ForEach(PageModel.Category.allCases, id: \.self) { type in
+				PageGroupedList(pageType: type, searchText: $searchText)
 			}
 		}
-		.searchable(text: $seachText, prompt: "Search pages")
+		.listStyle(.plain)
+		.searchable(text: $searchText, prompt: "Search pages")
 		.toolbar {
 			ToolbarItemGroup(placement: .topBarLeading) {
 				Text("Pages")
 			}
-			
+						
 			ToolbarItemGroup {
 				Button {
 					createNewPage.toggle()
 				} label: {
 					Image("FolderAddIcon")
+						.resizable()
+						.buttonHoverEffect()
 				}
 				.buttonStyle(.plain)
 				
@@ -38,24 +41,27 @@ struct PageListView: View {
 					createNewPage.toggle()
 				} label: {
 					Image("PageAddIcon")
+						.resizable()
+						.buttonHoverEffect()
 				}
 				.buttonStyle(.plain)
 			}
 		}
+		.environment(\.editMode, $isEditMode)
 		.sheet(isPresented: $createNewPage) {
 			NewPageView()
 		}
-    }
+	}
 }
 
 #Preview {
 	NavigationSplitView {
-		
+
 	} content: {
-		PageListView(selectedPage: .constant(.init(name: "Home", elementStatus: .Public, website: .init(name: "Test"))), pages: .init())
+		PageListView(selectedPage: .constant(.init(name: "Home", index: 0)))
 			.modelContainer(for: PageModel.self, inMemory: true)
 			.environment(previewWebsiteManager)
 	} detail: {
-		
+
 	}
 }

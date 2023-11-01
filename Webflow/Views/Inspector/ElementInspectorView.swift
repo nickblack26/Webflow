@@ -8,38 +8,40 @@
 import SwiftUI
 
 enum InspectorTab: String, CaseIterable {
-	case style
-	case settings
-	case interactions
+	case Style
+	case Settings
+	case Interactions
 }
 
 struct ElementInspectorView: View {
-	@State private var selectedTab: InspectorTab = .style
+	@State private var selectedTab: InspectorTab = .Style
 	
 	var body: some View {
-		Form {
-			switch selectedTab {
-				case .style: InspectorStyleView()
-				case .settings: InspectorSettingsView()
-				case .interactions: InspectorSettingsView()
-			}
-		}
-		.toolbar {
-			ToolbarItemGroup {
-				HStack {
-					ForEach(InspectorTab.allCases, id: \.self) { tab in
-						Button {
-							selectedTab = tab
-						} label: {
-							Text(tab.rawValue.capitalized)
-						}
-						.buttonStyle(.plain)
-						.opacity(selectedTab == tab ? 1 : 0.75)
-						.underline(selectedTab == tab)
-					}
+		NavigationStack {
+			Form {
+				switch selectedTab {
+					case .Style: InspectorStyleView()
+					case .Settings: InspectorSettingsView()
+					case .Interactions: InspectorSettingsView()
 				}
 			}
 		}
+//		.toolbar {
+//			ToolbarItemGroup {
+//				HStack {
+//					ForEach(InspectorTab.allCases, id: \.self) { tab in
+//						Button {
+//							selectedTab = tab
+//						} label: {
+//							Text(tab.rawValue.capitalized)
+//						}
+//						.buttonStyle(.plain)
+//						.opacity(selectedTab == tab ? 1 : 0.75)
+//						.underline(selectedTab == tab)
+//					}
+//				}
+//			}
+//		}
 	}
 }
 

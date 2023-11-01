@@ -41,9 +41,11 @@ struct EmptyPageDetailView: View {
 				.strokeBorder(.secondary, style: StrokeStyle(dash: [5]))
 		}
 		.padding()
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
 	}
 }
 
 #Preview {
 	EmptyPageDetailView()
+		.environment(previewWebsiteManager)
 }

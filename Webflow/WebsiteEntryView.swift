@@ -11,8 +11,9 @@ import SwiftData
 struct WebsiteEntryView: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) private var websiteManager
-	@State private var columnVisibility = NavigationSplitViewVisibility.all
-	@State private var selectedTab: SidebarTab? = .add
+	
+	@State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+	@State private var selectedTab: SidebarTab? = .Add
 	@State private var selectedPage: PageModel?
 	
 	var website: WebsiteModel
@@ -25,38 +26,58 @@ struct WebsiteEntryView: View {
 	}
 	
 	var body: some View {
-		NavigationSplitView(columnVisibility: .constant(.all)) {
+		NavigationSplitView(columnVisibility: $columnVisibility) {
 			List(SidebarTab.allCases, id: \.self, selection: $selectedTab) { tab in
-				Image(tab.symbol)
-					.toolbar(removing: .sidebarToggle)
-					.keyboardShortcut(tab.keyBoardShortcut.0 ?? " ", modifiers: tab.keyBoardShortcut.1 ?? [.command])
+				if(tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 != nil) {
+					Label(tab.rawValue, image: tab.symbol)
+						.keyboardShortcut(tab.keyBoardShortcut.0!, modifiers: tab.keyBoardShortcut.1!)
+					
+				} else if tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 == nil {
+					Label(tab.rawValue, image: tab.symbol)
+						.keyboardShortcut(tab.keyBoardShortcut.0!)
+				} else {
+					Label(tab.rawValue, image: tab.symbol)
+				}
 			}
-			.navigationSplitViewColumnWidth(70)
 		} content: {
 			ZStack {
 				if let selectedTab {
 					switch selectedTab {
 						case .pages:
-							PageListView(selectedPage: $selectedPage, pages: website.pages)
-						case .add:
+							PageListView(selectedPage: $selectedPage)
+						case .Add:
 							AddElementsView(selectedPage: $selectedPage)
 						case .navigator:
 							NavigatorListView(selectedPage: selectedPage)
+						case .components:
+							ComponentsListView()
+						case .assets:
+							AssetsListView()
+						case .find: EmptyView()
+							
 						default:
 							AddElementsView(selectedPage: $selectedPage)
-							
 					}
 				} else {
 					Text("Please select a tab")
 				}
 			}
-			.navigationSplitViewColumnWidth(900)
 		} detail: {
 			if let selectedPage {
 				PageDetailView(selectedTab: $selectedTab, page: selectedPage)
+					.toolbar {
+						EditorToolbar()
+					}
 			} else {
 				EmptyPageDetailView()
+					.toolbar {
+						EditorToolbar()
+					}
 			}
+		}
+		.onChange(of: websiteManager.draggingElement) {
+			columnVisibility = .detailOnly
+			selectedTab = .Add
 		}
 	}
 }

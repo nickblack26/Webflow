@@ -9,9 +9,9 @@ import Foundation
 import SwiftData
 
 @Model
-class ElementStyleModel {
+class ElementStyleModel: Codable {
 	@Attribute(.unique) var id: UUID
-	var layout: DisplayLayout
+	var layout: Layout
 	var overflow: Overflow
 	var ratio: Ratio
 	var elementClass: ClassModel?
@@ -20,10 +20,13 @@ class ElementStyleModel {
 	@Relationship(deleteRule: .cascade, inverse: \SpacingModel.element)
 	var spacing: SpacingModel?
 	
+//	var padding: (CGFloat, CGFloat, CGFloat, CGFloat)
+//	var margin: (CGFloat, CGFloat, CGFloat, CGFloat)
+	
 	@Relationship(deleteRule: .cascade, inverse: \SizeModel.element)
 	var size: SizeModel?
 	
-	init(id: UUID = UUID(), layout: DisplayLayout = .Block, overflow: Overflow = .visible, ratio: Ratio = .Auto, elementClass: ClassModel? = nil, element: ElementModel? = nil) {
+	init(id: UUID = UUID(), layout: Layout = .Block, overflow: Overflow = .visible, ratio: Ratio = .Auto, elementClass: ClassModel? = nil, element: ElementModel? = nil) {
 		self.id = id
 		self.layout = layout
 		self.overflow = overflow
@@ -33,6 +36,43 @@ class ElementStyleModel {
 		self.spacing = spacing
 		self.size = size
 	}
+	
+	enum CodingKeys: CodingKey {
+		case id
+		case layout
+		case overflow
+		case ratio
+		case elementClass
+		case element
+		case spacing
+		case size
+	}
+	
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		id = try container.decode(UUID.self, forKey: .id)
+		layout = try container.decode(Layout.self, forKey: .layout)
+		overflow = try container.decode(Overflow.self, forKey: .overflow)
+		ratio = try container.decode(Ratio.self, forKey: .ratio)
+		elementClass = try container.decode(ClassModel.self, forKey: .elementClass)
+		element = try container.decode(ElementModel.self, forKey: .element)
+		spacing = try container.decode(SpacingModel.self, forKey: .spacing)
+		size = try container.decode(SizeModel.self, forKey: .size)
+		
+	}
+	
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(id, forKey: .id)
+		try container.encode(element, forKey: .element)
+		try container.encode(layout, forKey: .layout)
+		try container.encode(overflow, forKey: .overflow)
+		try container.encode(ratio, forKey: .ratio)
+		try container.encode(elementClass, forKey: .elementClass)
+		try container.encode(element, forKey: .element)
+		try container.encode(spacing, forKey: .spacing)
+		try container.encode(size, forKey: .size)
+	}
 }
 
 extension ElementStyleModel {
@@ -40,7 +80,7 @@ extension ElementStyleModel {
 		case Auto
 	}
 	
-	enum DisplayLayout: String, Identifiable, CaseIterable, Codable {
+	enum Layout: String, Identifiable, CaseIterable, Codable {
 		case Block
 		case Flex
 		case Grid

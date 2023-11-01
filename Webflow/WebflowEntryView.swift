@@ -9,13 +9,13 @@ import SwiftUI
 import SwiftData
 
 enum WebflowTab: String, CaseIterable {
-	case allSites = "All sites"
-	case tutorials = "Tutorials"
+	case AllSites = "All sites"
+	case Tutorials
 	
 	var icon: String {
 		switch self {
-			case .allSites: return "list.bullet.below.rectangle"
-			case .tutorials: return "video"
+			case .AllSites: return "list.bullet.below.rectangle"
+			case .Tutorials: return "video"
 		}
 	}
 }
@@ -27,31 +27,25 @@ struct WebflowEntryView: View {
 	@State private var newWebsite: Bool = false
 	
 	var body: some View {
-		NavigationSplitView {
-			List(WebflowTab.allCases, id: \.self) { tab in
-				Label(tab.rawValue, systemImage: tab.icon)
-			}
-		} detail: {
-			List {
-				LazyVGrid(columns: Array(repeating: GridItem(), count: 3), content: {
-					ForEach(websites) { website in
-						WebsiteListItemView(website: website)
+		@Bindable var websiteManager = websiteManager
+		NavigationStack {
+			if websites.isEmpty {
+				ContentUnavailableView(label: {
+					Label("No Websites", systemImage: "lessthan")
+				}, description: {
+					Text("New mails you receive will appear here.")
+				}, actions: {
+					Button(action: {newWebsite.toggle()}) {
+						Text("Add")
 					}
-					.onDelete(perform: deleteItems)
 				})
-				.listRowSeparator(.hidden)
+			} else {
+				List(websites, selection: $websiteManager.selectedWebsite) { website in
+					Button(website.name) {
+						websiteManager.selectedWebsite = website
+					}
+				}
 			}
-			.listStyle(.inset)
-			.navigationTitle("My Workspace")
-//			.toolbar {
-//				ToolbarItem {
-//					Button {
-//						newWebsite.toggle()
-//					} label: {
-//						Image(systemName: "plus")
-//					}
-//				}
-//			}
 		}
 		.sheet(isPresented: $newWebsite, content: {
 			NewWebsiteView()

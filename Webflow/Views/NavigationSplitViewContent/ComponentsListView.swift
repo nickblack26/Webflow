@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ComponentsListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		List {
+			
+		}
+		.navigationSplitViewColumnWidth(min: 500, ideal: 900, max: 1800)
+//		.navigationSplitViewColumnWidth(900)
     }
 }
 

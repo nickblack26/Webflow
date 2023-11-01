@@ -47,7 +47,16 @@
 		01B58EC22AEB021500164CBB /* EditorToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B58EC12AEB021500164CBB /* EditorToolbar.swift */; };
 		01B58EC52AEB13EF00164CBB /* ModelDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B58EC42AEB13EF00164CBB /* ModelDefaults.swift */; };
 		01B58EC72AEB666900164CBB /* EmptyPageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B58EC62AEB666900164CBB /* EmptyPageDetailView.swift */; };
+		01B630962AF0346A0099B448 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 010AF8972AD0C2CC00A8785A /* Info.plist */; };
 		01BE77222ADDC7FF004D383C /* WebsiteListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE77212ADDC7FE004D383C /* WebsiteListItemView.swift */; };
+		01BE7EA62AF06381005ACDB7 /* ComponentsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EA52AF06381005ACDB7 /* ComponentsListView.swift */; };
+		01BE7EA82AF063C2005ACDB7 /* AssetsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EA72AF063C2005ACDB7 /* AssetsListView.swift */; };
+		01BE7EAA2AF06B17005ACDB7 /* AsyncImageGridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EA92AF06B17005ACDB7 /* AsyncImageGridItemView.swift */; };
+		01BE7EAC2AF0ACAC005ACDB7 /* ControlPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EAB2AF0ACAC005ACDB7 /* ControlPanelView.swift */; };
+		01BE7EAE2AF1B45F005ACDB7 /* Searchable+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EAD2AF1B45F005ACDB7 /* Searchable+Protocol.swift */; };
+		01BE7EB12AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB02AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift */; };
+		01BE7EB32AF1EF83005ACDB7 /* ToolbarButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */; };
+		01BE7EB62AF1F349005ACDB7 /* ButtonHoverEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */; };
 		01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +105,14 @@
 		01B58EC42AEB13EF00164CBB /* ModelDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDefaults.swift; sourceTree = "<group>"; };
 		01B58EC62AEB666900164CBB /* EmptyPageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageDetailView.swift; sourceTree = "<group>"; };
 		01BE77212ADDC7FE004D383C /* WebsiteListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteListItemView.swift; sourceTree = "<group>"; };
+		01BE7EA52AF06381005ACDB7 /* ComponentsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsListView.swift; sourceTree = "<group>"; };
+		01BE7EA72AF063C2005ACDB7 /* AssetsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsListView.swift; sourceTree = "<group>"; };
+		01BE7EA92AF06B17005ACDB7 /* AsyncImageGridItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageGridItemView.swift; sourceTree = "<group>"; };
+		01BE7EAB2AF0ACAC005ACDB7 /* ControlPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanelView.swift; sourceTree = "<group>"; };
+		01BE7EAD2AF1B45F005ACDB7 /* Searchable+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Searchable+Protocol.swift"; sourceTree = "<group>"; };
+		01BE7EB02AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+PixelConversion.swift"; sourceTree = "<group>"; };
+		01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonItemView.swift; sourceTree = "<group>"; };
+		01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHoverEffect.swift; sourceTree = "<group>"; };
 		01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAddButtonLabelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +146,8 @@
 		010AF88A2AD0C2CB00A8785A /* Webflow */ = {
 			isa = PBXGroup;
 			children = (
+				01BE7EB42AF1F336005ACDB7 /* Modifiers */,
+				01BE7EAF2AF1B619005ACDB7 /* Protocols */,
 				010AF8CE2AD4DB3100A8785A /* Extensions */,
 				010AF8B02AD0CBA300A8785A /* Views */,
 				010AF89D2AD0C35000A8785A /* Models */,
@@ -188,6 +207,9 @@
 				01B58EC12AEB021500164CBB /* EditorToolbar.swift */,
 				01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */,
 				01B58EC62AEB666900164CBB /* EmptyPageDetailView.swift */,
+				01BE7EA92AF06B17005ACDB7 /* AsyncImageGridItemView.swift */,
+				01BE7EAB2AF0ACAC005ACDB7 /* ControlPanelView.swift */,
+				01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -207,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				010AF8CF2AD4DB4300A8785A /* Modifier+Extension.swift */,
+				01BE7EB02AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -237,8 +260,26 @@
 				010AF8B82AD45B4400A8785A /* AddElementsView.swift */,
 				010AF8BE2AD4694B00A8785A /* PageListView.swift */,
 				010AF8BA2AD45DFC00A8785A /* NavigatorListView.swift */,
+				01BE7EA52AF06381005ACDB7 /* ComponentsListView.swift */,
+				01BE7EA72AF063C2005ACDB7 /* AssetsListView.swift */,
 			);
 			path = NavigationSplitViewContent;
+			sourceTree = "<group>";
+		};
+		01BE7EAF2AF1B619005ACDB7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				01BE7EAD2AF1B45F005ACDB7 /* Searchable+Protocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		01BE7EB42AF1F336005ACDB7 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +346,7 @@
 			files = (
 				010AF8962AD0C2CC00A8785A /* Preview Assets.xcassets in Resources */,
 				010AF8922AD0C2CC00A8785A /* Assets.xcassets in Resources */,
+				01B630962AF0346A0099B448 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,10 +368,15 @@
 				010AF8C92AD4AD4500A8785A /* NewPageView.swift in Sources */,
 				010AF8B22AD0CBB300A8785A /* ElementView.swift in Sources */,
 				010AF8D22AD4DC0B00A8785A /* VisualEffectView.swift in Sources */,
+				01BE7EA62AF06381005ACDB7 /* ComponentsListView.swift in Sources */,
 				010AF8A32AD0C51700A8785A /* WebsiteModel.swift in Sources */,
 				01B58EC72AEB666900164CBB /* EmptyPageDetailView.swift in Sources */,
 				010AF8BF2AD4694C00A8785A /* PageListView.swift in Sources */,
+				01BE7EB12AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift in Sources */,
+				01BE7EB32AF1EF83005ACDB7 /* ToolbarButtonItemView.swift in Sources */,
 				010AF8CD2AD4DA4200A8785A /* CommandBarView.swift in Sources */,
+				01BE7EA82AF063C2005ACDB7 /* AssetsListView.swift in Sources */,
+				01BE7EAC2AF0ACAC005ACDB7 /* ControlPanelView.swift in Sources */,
 				010AF8A12AD0C49E00A8785A /* PageModel.swift in Sources */,
 				01B58EBC2AEAF25F00164CBB /* ButtonLabel.swift in Sources */,
 				010AF8CB2AD4BFFA00A8785A /* ElementItemView.swift in Sources */,
@@ -345,6 +392,7 @@
 				010AF8AB2AD0C7AD00A8785A /* SizeModel.swift in Sources */,
 				01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */,
 				01B58EC52AEB13EF00164CBB /* ModelDefaults.swift in Sources */,
+				01BE7EB62AF1F349005ACDB7 /* ButtonHoverEffect.swift in Sources */,
 				01B58EC02AEAF9E300164CBB /* BreakpointPicker.swift in Sources */,
 				010AF88E2AD0C2CB00A8785A /* WebsiteEntryView.swift in Sources */,
 				010AF8A72AD0C67300A8785A /* ElementStyleModel.swift in Sources */,
@@ -354,7 +402,9 @@
 				01A4B65F2AD4F35C009B3F9E /* InspectorSizeSection.swift in Sources */,
 				010AF8A92AD0C72600A8785A /* SpacingModel.swift in Sources */,
 				010AF8BD2AD45F6600A8785A /* NavigatorListItemView.swift in Sources */,
+				01BE7EAA2AF06B17005ACDB7 /* AsyncImageGridItemView.swift in Sources */,
 				010AF8B42AD1AF6600A8785A /* ElementInspectorView.swift in Sources */,
+				01BE7EAE2AF1B45F005ACDB7 /* Searchable+Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

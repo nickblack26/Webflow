@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct NavigationDetailPageView: View {
+	@Binding var selectedTab: SidebarTab?
+	@Binding var selectedPage: PageModel?
+	
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		if let selectedPage {
+			PageDetailView(selectedTab: $selectedTab, page: selectedPage)
+			
+		} else {
+			EmptyPageDetailView()
+		}
     }
 }
 
 #Preview {
-    NavigationDetailPageView()
+	NavigationDetailPageView(selectedTab: .constant(.Add), selectedPage: .constant(.init(name: "Hello")))
 }

@@ -12,12 +12,20 @@ struct NavigationSidebarListView: View {
 	
     var body: some View {
 		List(SidebarTab.allCases, id: \.self, selection: $selectedTab) { tab in
-			Label(tab.rawValue, image: tab.symbol)
-				.keyboardShortcut(tab.keyBoardShortcut.0 ?? " ", modifiers: tab.keyBoardShortcut.1 ?? [.command])
+			if(tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 != nil) {
+				Label(tab.rawValue, image: tab.symbol)
+					.keyboardShortcut(tab.keyBoardShortcut.0!, modifiers: tab.keyBoardShortcut.1!)
+					
+			} else if tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 == nil {
+				Label(tab.rawValue, image: tab.symbol)
+					.keyboardShortcut(tab.keyBoardShortcut.0!)
+			} else {
+				Label(tab.rawValue, image: tab.symbol)
+			}
 		}
     }
 }
 
 #Preview {
-	NavigationSidebarListView(selectedTab: .constant(.add))
+	NavigationSidebarListView(selectedTab: .constant(.Add))
 }

@@ -1,56 +1,97 @@
-//
-//  PageGroupedList.swift
-//  Webflow
-//
-//  Created by Nick on 10/26/23.
-//
-
 import SwiftUI
 import SwiftData
 
 struct PageGroupedList: View {
+	@Environment(\.modelContext) private var modelContext
+	@Query private var pages: [PageModel]
 	@Environment(WebsiteManager.self) private var websiteManager
 	@State private var isExpanded: Bool = true
-	@Query private var pages: [PageModel]
-	var pageType: PageModel.PageType
+	var pageType: PageModel.Category
+	@Binding var searchText: String
 	
-	init(pageType: PageModel.PageType) {
+	init(pageType: PageModel.Category, searchText: Binding<String>) {
 		self.pageType = pageType
-//		let id = websiteManager.selectedWebsite?.id ?? UUID()
 		self._pages = Query(filter: #Predicate<PageModel> {
-			$0.type == pageType
-		})
+			/*$0.website != nil && $0.website?.id == websiteManager.selectedWebsite?.id &&*/ $0.categoryId == pageType.rawValue
+		}, sort: \.createdAt)
+		self._searchText = searchText
 	}
 	
     var body: some View {
-		Section("\(pageType.rawValue) pages", isExpanded: $isExpanded) {
-			if pages.isEmpty {
-				EmptyListView(item: pageType.emptyView)
-			} else {
-				ForEach(pages, id: \.self) { page in
-					NavigationLink(value: page) {
+		var pages = pages
+		if searchText.isEmpty || (!searchText.isEmpty && !filteredPages().isEmpty) {
+			DisclosureGroup("\(pageType.rawValue) pages", isExpanded: $isExpanded) {
+				if filteredPages().isEmpty {
+					EmptyListView(item: pageType.emptyView)
+				} else {
+					ForEach(pages, id: \.self) { page in
 						Label(page.name, image: "PageDefaultIcon")
+							.listRowSeparator(.hidden)
+							.listRowInsets(EdgeInsets())
+							.contextMenu(ContextMenu(menuItems: {
+								Button("Delete") {
+									modelContext.delete(page)
+								}
+							}))
+							.moveDisabled(page.isHome)
 					}
+					.onMove(perform: { indices, newOffset in
+						move(&pages, from: indices, to: newOffset)
+					})
 				}
 			}
+			.tint(.primary)
+			.foregroundStyle(.primary)
 		}
-		.tint(.primary)
-		.foregroundStyle(.primary)
     }
+	
+	private func filteredPages() -> [PageModel] {
+		if searchText.isEmpty {
+			return pages
+		} else {
+			return pages.filter {$0.name.lowercased().contains(searchText.lowercased())}
+		}
+	}
+	
+	func move(_ data: inout [PageModel], from source: IndexSet, to destination: Int) {
+		data.move(fromOffsets: source, toOffset: destination)
+		
+		if(destination == 0) {
+			for index in source {
+				pages[index].index = 0
+				pages.forEach { page in
+					if page.index != index {
+						page.index += 1
+					}
+				}
+				print(index, destination)
+			}
+		} else {
+			for index in source {
+				pages[index].index = destination
+				print(index, destination)
+			}
+		}
+	}
 }
 
 #Preview {
-	NavigationSplitView {
+	@State var searchText: String = ""
+	
+	 return NavigationSplitView {
+		
+	} content: {
 		List {
-			PageGroupedList(pageType: .generic)
-			PageGroupedList(pageType: .utility)
-			PageGroupedList(pageType: .cms)
-			PageGroupedList(pageType: .ecommerce)
-			PageGroupedList(pageType: .user)
+			PageGroupedList(pageType: .Static, searchText: $searchText)
+			PageGroupedList(pageType: .Utility, searchText: $searchText)
+			PageGroupedList(pageType: .CMS, searchText: $searchText)
+			PageGroupedList(pageType: .Ecommerce, searchText: $searchText)
+			PageGroupedList(pageType: .User, searchText: $searchText)
 		}
-		.modelContainer(for: PageModel.self, inMemory: true)
-		.environment(previewWebsiteManager)
+		
 	} detail: {
 	
 	}
+	.modelContainer(for: PageModel.self, inMemory: true)
+	.environment(previewWebsiteManager)
 }

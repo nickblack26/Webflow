@@ -15,24 +15,24 @@ struct PageDetailView: View {
 	
 	var body: some View {
 		@Bindable var websiteManager = websiteManager
-		let childElements = page.body.childElements
-		List {
-			if childElements.isEmpty {
-				ElementView(element: page.body)
-					.frame(minWidth: 50, minHeight: 50)
-			} else {
-				ForEach(childElements, id: \.self) { element in
-					ElementView(element: element)
-						.frame(minWidth: 50, minHeight: 50)
-				}
+		let children = page.body.children
+		
+		if let children, !children.isEmpty {
+			List(children, children: \.children, selection: $websiteManager.selectedElement) { element in
+				ElementView(element: element)
 			}
-		}
-		.listStyle(.plain)
-		.inspector(isPresented: .constant(true)) {
-			ElementInspectorView()
-		}
-		.toolbar {
-			EditorToolbar()
+			.listRowSeparator(.hidden)
+			.listStyle(.plain)
+		} else {
+			EmptyPageDetailView()
+				.dropDestination(for: ElementModel.self) { items, location in
+					let elements = items.compactMap { element in
+						ElementModel(name: element.name)
+					}
+					page.body.children?.append(contentsOf: elements)
+					websiteManager.draggingElement = nil
+					return false
+				}
 		}
 	}
 }
@@ -43,7 +43,7 @@ struct PageDetailView: View {
 	} content: {
 		
 	} detail: {
-		PageDetailView(selectedTab: .constant(.add), page: .init(name: "Test"))
+		PageDetailView(selectedTab: .constant(.Add), page: .init(name: "Test", index: 0))
 	}
 	.environment(previewWebsiteManager)
 }
