@@ -9,14 +9,13 @@ import SwiftUI
 import SwiftData
 
 struct NavigatorListView: View {
-	@Query private var elements: [ElementModel]
 	@Environment(WebsiteManager.self) private var websiteManager
-	var selectedPage: PageModel?
+	@Query private var elements: [ElementModel]
 	
     var body: some View {
 		@Bindable var websiteManager = websiteManager
-		if let selectedPage {
-			List(selection: $websiteManager.selectedElement) {
+		if let selectedPage = websiteManager.selectedPage {
+			List(selection: $websiteManager.selectedPage) {
 				NavigatorListItemView(element: selectedPage.body)
 			}
 			.navigationTitle("Navigator")

@@ -21,37 +21,34 @@ struct NavigatorListItemView: View {
 						NavigatorListItemView(element: childElement)
 					}
 				}, label: {
-					NavigationLink(value: element) {
-						HStack {
-							Image(systemName: "square")
-							Text(element.name)
-							
-							Spacer()
-							
-							if let style = element.style, style.layout == .Hidden {
-								Image(systemName: "eye.slash")
-							}
+					HStack {
+						Image(systemName: "square")
+						Text(element.name)
+						
+						Spacer()
+						
+						if let style = element.style, style.layout == .Hidden {
+							Image(systemName: "eye.slash")
 						}
 					}
+					.contextMenu(ContextMenu(menuItems: {
+						ElementContextMenu(element: element)
+					}))
 				}
 			)
 		} else {
-			NavigationLink(value: element) {
-				HStack {
-					Image(systemName: "square")
-					Text(element.name)
-					
-					Spacer()
-					
-					if let style = element.style, style.layout == .Hidden {
-						Image(systemName: "eye.slash")
-					}
+			HStack {
+				Image(systemName: "square")
+				Text(element.name)
+				
+				Spacer()
+				
+				if let style = element.style, style.layout == .Hidden {
+					Image(systemName: "eye.slash")
 				}
 			}
 			.contextMenu(ContextMenu(menuItems: {
-				Button("Delete") {
-					modelContext.delete(element)
-				}
+				ElementContextMenu(element: element)
 			}))
 		}
 	}
@@ -59,5 +56,5 @@ struct NavigatorListItemView: View {
 
 #Preview {
 	NavigatorListItemView(element: .init(name: "Body"))
-//		.modelContainer(for: Item.self, inMemory: true)
+	//		.modelContainer(for: Item.self, inMemory: true)
 }

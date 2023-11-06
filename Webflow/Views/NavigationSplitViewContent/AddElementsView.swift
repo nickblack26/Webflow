@@ -10,9 +10,9 @@ import SwiftUI
 struct AddElementsView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
 	@State private var selection: String = "elements"
-	@Binding var selectedPage: PageModel?
 	
     var body: some View {
+		@Bindable var websiteManager = websiteManager
 		List {
 			Picker("Type", selection: $selection) {
 				Text("Elements")
@@ -122,13 +122,6 @@ struct AddElementsView: View {
 			}
 			.listRowBackground(EmptyView())
 		}
-		.toolbar(removing: .sidebarToggle)
-		.toolbar {
-			ToolbarItem(placement: .topBarLeading) {
-				Text("Add")
-					.fontWeight(.medium)
-			}
-		}
 		.tint(.primary)
 		.foregroundStyle(.primary)
     }
@@ -139,7 +132,7 @@ struct AddElementsView: View {
 		if let selectedElement = websiteManager.selectedElement {
 			selectedElement.children?.append(element)
 		} else {
-			if let selectedPage {
+			if let selectedPage = websiteManager.selectedPage {
 				selectedPage.body.children?.append(element)
 			}
 		}
@@ -149,7 +142,7 @@ struct AddElementsView: View {
 #Preview {
 	NavigationSplitView {
 	} content: {
-		AddElementsView(selectedPage: .constant(.init(name: "Test", index: 0)))
+		AddElementsView()
 			.environment(previewWebsiteManager)		
 	} detail: {
 		

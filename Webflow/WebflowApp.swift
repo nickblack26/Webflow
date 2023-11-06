@@ -1,13 +1,7 @@
-//
-//  WebflowApp.swift
-//  Webflow
-//
-//  Created by Nick on 10/6/23.
-//
-
 import SwiftUI
 import SwiftData
 import UIKit
+import UniformTypeIdentifiers
 
 @main
 struct WebflowApp: App {
@@ -70,5 +64,23 @@ class MySceneDelegate: NSObject, UIWindowSceneDelegate, ObservableObject {
 		}
 #endif
 		
+	}
+}
+
+struct CustomHTMLDocument: FileDocument {
+	var data: Data
+	
+	static var readableContentTypes: [UTType] { [UTType.websiteModel] }
+	
+	init(configuration: ReadConfiguration) throws {
+		guard let data = configuration.file.regularFileContents
+		else {
+			throw CocoaError(.fileReadCorruptFile)
+		}
+		self.data = data
+	}
+	
+	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+		FileWrapper(regularFileWithContents: data)
 	}
 }

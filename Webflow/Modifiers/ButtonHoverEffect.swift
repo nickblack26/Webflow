@@ -9,11 +9,9 @@ import SwiftUI
 
 struct ButtonHoverEffect: ViewModifier {
 	@State private var isHovering: Bool = false
-	let size = CGFloat.pixelsToPoints(45)
 
 	func body(content: Content) -> some View {
 		content
-			.frame(width: size(), height: size())
 			.padding(.all, 5)
 			.onHover(perform: {
 				isHovering = $0

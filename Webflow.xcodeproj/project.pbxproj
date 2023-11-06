@@ -58,6 +58,8 @@
 		01BE7EB32AF1EF83005ACDB7 /* ToolbarButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */; };
 		01BE7EB62AF1F349005ACDB7 /* ButtonHoverEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */; };
 		01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */; };
+		1DB9306A2AF2D0FB00E0A67B /* PopoverButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB930692AF2D0FB00E0A67B /* PopoverButtonView.swift */; };
+		1DECED852AF2F36D008DEDFC /* ElementContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +116,8 @@
 		01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonItemView.swift; sourceTree = "<group>"; };
 		01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHoverEffect.swift; sourceTree = "<group>"; };
 		01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAddButtonLabelView.swift; sourceTree = "<group>"; };
+		1DB930692AF2D0FB00E0A67B /* PopoverButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButtonView.swift; sourceTree = "<group>"; };
+		1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementContextMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +214,8 @@
 				01BE7EA92AF06B17005ACDB7 /* AsyncImageGridItemView.swift */,
 				01BE7EAB2AF0ACAC005ACDB7 /* ControlPanelView.swift */,
 				01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */,
+				1DB930692AF2D0FB00E0A67B /* PopoverButtonView.swift */,
+				1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -365,6 +371,7 @@
 				01B58EC22AEB021500164CBB /* EditorToolbar.swift in Sources */,
 				010AF8C32AD47CFC00A8785A /* CanvasSettings.swift in Sources */,
 				010AF8C52AD4817400A8785A /* WebflowEntryView.swift in Sources */,
+				1DB9306A2AF2D0FB00E0A67B /* PopoverButtonView.swift in Sources */,
 				010AF8C92AD4AD4500A8785A /* NewPageView.swift in Sources */,
 				010AF8B22AD0CBB300A8785A /* ElementView.swift in Sources */,
 				010AF8D22AD4DC0B00A8785A /* VisualEffectView.swift in Sources */,
@@ -391,6 +398,7 @@
 				010AF8AF2AD0CB7800A8785A /* WebsiteManager.swift in Sources */,
 				010AF8AB2AD0C7AD00A8785A /* SizeModel.swift in Sources */,
 				01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */,
+				1DECED852AF2F36D008DEDFC /* ElementContextMenu.swift in Sources */,
 				01B58EC52AEB13EF00164CBB /* ModelDefaults.swift in Sources */,
 				01BE7EB62AF1F349005ACDB7 /* ButtonHoverEffect.swift in Sources */,
 				01B58EC02AEAF9E300164CBB /* BreakpointPicker.swift in Sources */,

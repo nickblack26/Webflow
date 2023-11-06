@@ -7,12 +7,53 @@
 
 import Foundation
 import SwiftData
+import UniformTypeIdentifiers
 
-@Model
-class WebsiteModel: Codable {
+@Model final class DomainModel {
+	@Attribute(.unique) var id: UUID = UUID()
+	@Attribute(.unique) var name: String
+	var isConnected: Bool
+	var isDefault: Bool
+	var publishedDate: Date
+	var website: WebsiteModel?
+	
+	init(name: String, isConnected: Bool, isDefault: Bool, publishedDate: Date) {
+		self.name = name
+		self.isConnected = isConnected
+		self.isDefault = isDefault
+		self.publishedDate = publishedDate
+	}
+	
+	func update<T>(keyPath: ReferenceWritableKeyPath<DomainModel, T>, to value: T) {
+		self[keyPath: keyPath] = value
+		publishedDate = .now
+	}
+}
+
+@Model final class RedirectModel {
+	@Attribute(.unique) var id: UUID = UUID()
+	@Attribute(.unique) var oldPath: String
+	@Attribute(.unique) var newPath: String
+	var website: WebsiteModel?
+	
+	init(oldPath: String, newPath: String) {
+		self.oldPath = oldPath
+		self.newPath = newPath
+	}
+}
+
+@Model final class WebsiteModel: Codable {
 	@Attribute(.unique) var id: UUID
 	@Attribute(.unique) var name: String
+	@Attribute(.unique) var internalDomain: String {
+		"https://www.\(name.lowercased()).webflow.io"
+	}
+	
 	@Relationship(deleteRule: .cascade, inverse: \PageModel.website) var pages = [PageModel]()
+	
+	@Relationship(deleteRule: .cascade, inverse: \DomainModel.website) var domains: [DomainModel] = []
+	
+	@Relationship(deleteRule: .cascade, inverse: \RedirectModel.website) var redirects: [RedirectModel] = []
 	
 	init(id: UUID = UUID(), name: String, pages: [PageModel] = [PageModel]()) {
 		self.id = id
@@ -39,4 +80,8 @@ class WebsiteModel: Codable {
 		try container.encode(name, forKey: .name)
 		try container.encode(pages, forKey: .pages)
 	}
+}
+
+extension UTType {
+	static let websiteModel = UTType(exportedAs: "com.nicholasblack.Webflow")
 }

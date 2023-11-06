@@ -45,7 +45,7 @@ final class ElementModel: Codable, Searchable {
 		case id
 		case name
 		case elementType
-		case parentElement
+		case parent
 		case classes
 		case style
 		case settings
@@ -57,7 +57,7 @@ final class ElementModel: Codable, Searchable {
 		id = try container.decode(UUID.self, forKey: .id)
 		name = try container.decode(String.self, forKey: .name)
 		category = try container.decode(Category.self, forKey: .elementType)
-		parent = try container.decode(ElementModel.self, forKey: .parentElement)
+		parent = try container.decode(ElementModel.self, forKey: .parent)
 		classes = try container.decode([ClassModel].self, forKey: .classes)
 		style = try container.decode(ElementStyleModel.self, forKey: .style)
 		settings = try container.decode(ElementSettingsModel.self, forKey: .settings)
@@ -69,7 +69,7 @@ final class ElementModel: Codable, Searchable {
 		try container.encode(id, forKey: .id)
 		try container.encode(name, forKey: .name)
 		try container.encode(category, forKey: .elementType)
-		try container.encode(parent, forKey: .parentElement)
+		try container.encode(parent, forKey: .parent)
 		try container.encode(classes, forKey: .classes)
 		try container.encode(style, forKey: .style)
 		try container.encode(settings, forKey: .settings)

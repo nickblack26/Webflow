@@ -7,12 +7,34 @@
 
 import SwiftUI
 
-struct PopoverButtonView: View {
+struct PopoverButtonView<Label: View, PopoverContent: View>: View {
+	@State private var isPresented: Bool = false
+	@ViewBuilder var label: Label
+	@ViewBuilder var content: PopoverContent
+	var attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds)
+	var arrowEdge: Edge = .top
+	
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		Button {
+			isPresented.toggle()
+		} label: {
+			label
+				.buttonLabel()
+		}
+		.buttonStyle(.plain)
+		.popover(isPresented: $isPresented, attachmentAnchor: attachmentAnchor, arrowEdge: arrowEdge, content: {
+			content
+		})
     }
 }
 
 #Preview {
-    PopoverButtonView()
+	PopoverButtonView(label: {
+		HStack {
+			Label("Designing", image: "paintBrush")
+			Image("chevronDown")
+		}
+	}, content: {
+		
+	})
 }

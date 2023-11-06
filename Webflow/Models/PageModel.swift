@@ -18,6 +18,9 @@ struct EmptyPageModel: Codable {
 class PageModel: Codable, Searchable {
 	@Attribute(.unique) var id: UUID = UUID()
 	@Attribute(.unique) var name: String
+	@Attribute(.unique) var slug: String {
+		"/\(self.name)"
+	}
 	var status: Status
 	var website: WebsiteModel? = nil
 	var categoryId: Category.RawValue

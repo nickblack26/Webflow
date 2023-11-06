@@ -10,22 +10,20 @@ import SwiftData
 
 struct WebsiteEntryView: View {
 	@Environment(\.modelContext) private var modelContext
-	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(WebsiteManager.self) var websiteManager
 	
-	@State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+	@State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
 	@State private var selectedTab: SidebarTab? = .Add
-	@State private var selectedPage: PageModel?
 	
 	var website: WebsiteModel
 	
 	init(website: WebsiteModel) {
 		self.website = website
-		if(!website.pages.isEmpty) {
-			self._selectedPage = State(initialValue: website.pages[0])
-		}
 	}
 	
 	var body: some View {
+		@Bindable var websiteManager = websiteManager
+		
 		NavigationSplitView(columnVisibility: $columnVisibility) {
 			List(SidebarTab.allCases, id: \.self, selection: $selectedTab) { tab in
 				if(tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 != nil) {
@@ -44,11 +42,11 @@ struct WebsiteEntryView: View {
 				if let selectedTab {
 					switch selectedTab {
 						case .pages:
-							PageListView(selectedPage: $selectedPage)
+							PageListView()
 						case .Add:
-							AddElementsView(selectedPage: $selectedPage)
+							AddElementsView()
 						case .navigator:
-							NavigatorListView(selectedPage: selectedPage)
+							NavigatorListView()
 						case .components:
 							ComponentsListView()
 						case .assets:
@@ -56,28 +54,30 @@ struct WebsiteEntryView: View {
 						case .find: EmptyView()
 							
 						default:
-							AddElementsView(selectedPage: $selectedPage)
+							AddElementsView()
 					}
 				} else {
 					Text("Please select a tab")
 				}
 			}
 		} detail: {
-			if let selectedPage {
-				PageDetailView(selectedTab: $selectedTab, page: selectedPage)
-					.toolbar {
-						EditorToolbar()
-					}
-			} else {
-				EmptyPageDetailView()
-					.toolbar {
-						EditorToolbar()
-					}
+			ZStack {
+				if let selectedPage = websiteManager.selectedPage {
+					PageDetailView(selectedTab: $selectedTab, page: selectedPage)
+				} else {
+					EmptyPageDetailView()
+				}
+			}
+			.toolbar {
+				EditorToolbar()
 			}
 		}
 		.onChange(of: websiteManager.draggingElement) {
-			columnVisibility = .detailOnly
-			selectedTab = .Add
+			if(websiteManager.draggingElement == nil) {
+				columnVisibility = .doubleColumn
+			} else {
+				columnVisibility = .detailOnly
+			}
 		}
 	}
 }

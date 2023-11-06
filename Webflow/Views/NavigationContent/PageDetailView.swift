@@ -21,6 +21,7 @@ struct PageDetailView: View {
 			List(children, children: \.children, selection: $websiteManager.selectedElement) { element in
 				ElementView(element: element)
 			}
+			.navigationBarHidden(true)
 			.listRowSeparator(.hidden)
 			.listStyle(.plain)
 		} else {
@@ -39,8 +40,6 @@ struct PageDetailView: View {
 
 #Preview {
 	NavigationSplitView {
-		
-	} content: {
 		
 	} detail: {
 		PageDetailView(selectedTab: .constant(.Add), page: .init(name: "Test", index: 0))

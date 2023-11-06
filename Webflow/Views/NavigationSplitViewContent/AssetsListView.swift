@@ -37,39 +37,39 @@ struct AssetsListView: View {
 			})
 		}
 		.searchable(text: $searchText, prompt: "Search assets")
-		.toolbar {
-			ToolbarItemGroup(placement: .topBarLeading) {
-				VStack(alignment: .leading, spacing: 5, content: {
-					Text("Assets")
-						.fontWeight(.medium)
-					Menu {
-						Text("Images")
-						Text("Documents")
-						Text("Lottie")
-					} label: {
-						HStack {
-							Text("All Assets")
-							Image("chevronDown")
-						}
-					}
-				})
-			}
-			ToolbarItemGroup(placement: .topBarTrailing) {
-				VStack(alignment: .trailing, content: {
-					Image("SidebarExpandIcon")
-					
-					HStack {
-						Image("FolderAddIcon")
-						Button {
-							
-						} label: {
-							Image("UploadIcon")
-								.buttonLabel()
-						}
-					}
-				})
-			}
-		}
+//		.toolbar {
+//			ToolbarItemGroup(placement: .topBarLeading) {
+//				VStack(alignment: .leading, spacing: 5, content: {
+//					Text("Assets")
+//						.fontWeight(.medium)
+//					Menu {
+//						Text("Images")
+//						Text("Documents")
+//						Text("Lottie")
+//					} label: {
+//						HStack {
+//							Text("All Assets")
+//							Image("chevronDown")
+//						}
+//					}
+//				})
+//			}
+//			ToolbarItemGroup(placement: .topBarTrailing) {
+//				VStack(alignment: .trailing, content: {
+//					Image("SidebarExpandIcon")
+//					
+//					HStack {
+//						Image("FolderAddIcon")
+//						Button {
+//							
+//						} label: {
+//							Image("UploadIcon")
+//								.buttonLabel()
+//						}
+//					}
+//				})
+//			}
+//		}
 		.navigationSplitViewColumnWidth(min: 500, ideal: 900, max: 1800)
 	}
 }

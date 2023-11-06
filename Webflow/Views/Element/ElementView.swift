@@ -16,8 +16,8 @@ struct ElementView: View {
 		
 		ZStack(alignment: .topLeading) {
 			if let children = element.children {
-				ForEach(children) { childElement in
-					ElementView(element: childElement)
+				List(children) { child in
+					ElementView(element: child)
 				}
 			} else {
 				Text("")
@@ -73,6 +73,7 @@ struct ElementView: View {
 			websiteManager.draggingElement = nil
 			return false
 		} isTargeted: { isTargeted in
+			websiteManager.draggingElement = nil
 			hovering = isTargeted
 		}
 	}
