@@ -1,10 +1,3 @@
-//
-//  ButtonLabel.swift
-//  Webflow
-//
-//  Created by Nick on 10/26/23.
-//
-
 import SwiftUI
 
 struct ButtonLabel: ViewModifier {
