@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AsyncImageGridItemView: View {
+struct ImageGridItemView: View {
 	@State private var hovering: Bool = false
 	@State private var showPopover: Bool = false
 	var url: URL?
@@ -75,7 +75,7 @@ struct AsyncImageGridItemView: View {
 //				ForEach(0..<10, id: \.self) { _ in
 //
 //				}
-				AsyncImageGridItemView(index: 1)
+				ImageGridItemView(index: 1)
 			})
 			.listRowSeparator(.hidden)
 		}
