@@ -16,7 +16,7 @@ struct AssetsListView: View {
 		List(selection: $selection) {
 			LazyVGrid(columns: Array(repeating: GridItem(), count: 3), content: {
 				ForEach((0..<100).indices, id: \.self) { index in
-					AsyncImageGridItemView(url: URL(string: url), title: "ben-kolde-bs2Ba7t69mM-unsplash.jpg", index: index)
+					ImageGridItemView(url: URL(string: url), title: "ben-kolde-bs2Ba7t69mM-unsplash.jpg", index: index)
 				}
 				.listRowInsets(.none)
 			})
