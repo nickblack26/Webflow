@@ -57,6 +57,7 @@
 		01BE7EB12AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB02AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift */; };
 		01BE7EB32AF1EF83005ACDB7 /* ToolbarButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */; };
 		01BE7EB62AF1F349005ACDB7 /* ButtonHoverEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */; };
+		01D493EF2AF92F0B00F10AEB /* AssetPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D493EE2AF92F0B00F10AEB /* AssetPopoverView.swift */; };
 		01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */; };
 		1DB9306A2AF2D0FB00E0A67B /* PopoverButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB930692AF2D0FB00E0A67B /* PopoverButtonView.swift */; };
 		1DECED852AF2F36D008DEDFC /* ElementContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */; };
@@ -115,6 +116,7 @@
 		01BE7EB02AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+PixelConversion.swift"; sourceTree = "<group>"; };
 		01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonItemView.swift; sourceTree = "<group>"; };
 		01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHoverEffect.swift; sourceTree = "<group>"; };
+		01D493EE2AF92F0B00F10AEB /* AssetPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPopoverView.swift; sourceTree = "<group>"; };
 		01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAddButtonLabelView.swift; sourceTree = "<group>"; };
 		1DB930692AF2D0FB00E0A67B /* PopoverButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButtonView.swift; sourceTree = "<group>"; };
 		1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementContextMenu.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				01BE7EB22AF1EF83005ACDB7 /* ToolbarButtonItemView.swift */,
 				1DB930692AF2D0FB00E0A67B /* PopoverButtonView.swift */,
 				1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */,
+				01D493EE2AF92F0B00F10AEB /* AssetPopoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				010AF8A52AD0C5C800A8785A /* ElementSettingsModel.swift in Sources */,
 				010AF8BB2AD45DFC00A8785A /* NavigatorListView.swift in Sources */,
 				01B58EB82AEAD46300164CBB /* SidebarTab.swift in Sources */,
+				01D493EF2AF92F0B00F10AEB /* AssetPopoverView.swift in Sources */,
 				01A4B65B2AD4EE24009B3F9E /* InspectorSettingsView.swift in Sources */,
 				010AF8AD2AD0C80800A8785A /* ClassModel.swift in Sources */,
 				01A5F3C52AEAAA19000FD778 /* GroupedList.swift in Sources */,

@@ -8,35 +8,26 @@
 import SwiftUI
 
 struct AssetsListView: View {
-	
 	let url = "https://uploads-ssl.webflow.com/64be9ae522eb4b9359d95694/64d26fa734805f036d461a29_ben-kolde-bs2Ba7t69mM-unsplash.jpg"
 	@State private var searchText: String = ""
+	@State private var selection = Set<Int>()
+	
 	var body: some View {
-		List {
+		List(selection: $selection) {
 			LazyVGrid(columns: Array(repeating: GridItem(), count: 3), content: {
-				ForEach(0..<100, id: \.self) { image in
-					VStack {
-						AsyncImage(url: URL(string: url)) { image in
-							image
-								.resizable()
-								.scaledToFit()
-								.frame(height: 84)
-								.frame(maxWidth: .infinity)
-								.background(.gray)
-						} placeholder: {
-							Rectangle()
-								.fill(.gray)
-								.frame(height: 84)
-								.frame(maxWidth: .infinity)
-						}
-						
-						Text("ben-kolde-bs2Ba7t69mM-unsplash.jpg")
-							.lineLimit(1)
-					}
+				ForEach((0..<100).indices, id: \.self) { index in
+					AsyncImageGridItemView(url: URL(string: url), title: "ben-kolde-bs2Ba7t69mM-unsplash.jpg", index: index)
 				}
 				.listRowInsets(.none)
 			})
 		}
+		.listStyle(.plain)
+		.scrollContentBackground(.hidden)
+		.background(
+			Color("Background")
+				.ignoresSafeArea()
+		)
+		.environment(\.editMode, .constant(.active))
 		.searchable(text: $searchText, prompt: "Search assets")
 		.toolbar {
 			ToolbarItemGroup(placement: .topBarLeading) {
@@ -57,7 +48,12 @@ struct AssetsListView: View {
 			}
 			ToolbarItemGroup(placement: .topBarTrailing) {
 				VStack(alignment: .trailing, content: {
-					Image("SidebarExpandIcon")
+					HStack {
+						if(selection.count > 0) {
+							Text("^[\(selection.count) select](inflect: true)")
+						}
+						Image("SidebarExpandIcon")
+					}
 					
 					HStack {
 						Image("FolderAddIcon")
