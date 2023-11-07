@@ -155,7 +155,7 @@
 				010AF8912AD0C2CC00A8785A /* Assets.xcassets */,
 				010AF8CE2AD4DB3100A8785A /* Extensions */,
 				010AF89D2AD0C35000A8785A /* Models */,
-				01BE7EB42AF1F336005ACDB7 /* Modifiers */,
+				01BE7EB42AF1F336005ACDB7 /* View Modifiers */,
 				01BE7EAF2AF1B619005ACDB7 /* Protocols */,
 				010AF8B02AD0CBA300A8785A /* Views */,
 				010AF8972AD0C2CC00A8785A /* Info.plist */,
@@ -265,13 +265,13 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		01BE7EB42AF1F336005ACDB7 /* Modifiers */ = {
+		01BE7EB42AF1F336005ACDB7 /* View Modifiers */ = {
 			isa = PBXGroup;
 			children = (
 				01B58EBB2AEAF25F00164CBB /* ButtonLabel.swift */,
 				01BE7EB52AF1F349005ACDB7 /* ButtonHoverEffect.swift */,
 			);
-			path = Modifiers;
+			path = "View Modifiers";
 			sourceTree = "<group>";
 		};
 		01D493F02AF945AA00F10AEB /* Toolbars */ = {

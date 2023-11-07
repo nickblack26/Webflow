@@ -81,11 +81,7 @@ struct InspectorStyleView: View {
 						Button("Display") {
 							
 						}
-						.font(.callout)
-						.buttonStyle(.bordered)
-						.tint(.orange)
-//						Text("Display")
-//							.foregroundStyle(.secondary)
+						.buttonLabel()
 						
 						Picker("Display", selection: $displayMode) {
 							ForEach(ElementStyleModel.Layout.allCases) { layout in

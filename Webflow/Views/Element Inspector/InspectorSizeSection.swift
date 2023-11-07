@@ -23,20 +23,22 @@ struct InspectorSizeSection: View {
 		DisclosureGroup("Size", isExpanded: $isExpanded) {
 			LazyVGrid(columns: [GridItem(), GridItem()]) {
 				HStack {
-					Text("Width")
-						.font(.caption)
-						.foregroundStyle(.secondary)
-						.frame(minWidth: 40, alignment: .leading)
+					Button("Width") {
+						
+					}
+					.buttonLabel()
+					.frame(minWidth: 40, alignment: .leading)
 					
 					TextField("Width", value: $size.width, formatter: formatter, prompt: Text("Auto"))
 						.textFieldStyle(.roundedBorder)
 				}
 				
 				HStack {
-					Text("Height")
-						.font(.caption)
-						.foregroundStyle(.secondary)
-						.frame(minWidth: 40, alignment: .leading)
+					Button("Height") {
+						
+					}
+					.buttonLabel()
+					.frame(minWidth: 40, alignment: .leading)
 					
 					TextField("Height", value: $size.height, formatter: formatter, prompt: Text("Auto"))
 						.textFieldStyle(.roundedBorder)
