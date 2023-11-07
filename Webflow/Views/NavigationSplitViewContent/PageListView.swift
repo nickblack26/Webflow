@@ -13,16 +13,19 @@ struct PageListView: View {
 	@State var isEditMode: EditMode = .active
 	@State private var searchText: String = ""
 	@State private var createNewPage: Bool = false
+	@Binding var selectedPage: PageModel?
 	
 	var body: some View {
-		@Bindable var websiteManager = websiteManager
-		List(selection: $websiteManager.selectedPage) {
+		List(selection: $selectedPage) {
 			ForEach(PageModel.Category.allCases, id: \.self) { type in
 				PageGroupedList(pageType: type, searchText: $searchText)
 			}
 		}
 		.listStyle(.plain)
 		.searchable(text: $searchText, prompt: "Search pages")
+		.onDisappear {
+			selectedPage = selectedPage
+		}
 //		.toolbar {
 //			ToolbarItemGroup(placement: .topBarLeading) {
 //				Text("Pages")
@@ -48,7 +51,7 @@ struct PageListView: View {
 //				.buttonStyle(.plain)
 //			}
 //		}
-		.environment(\.editMode, $isEditMode)
+//		.environment(\.editMode, $isEditMode)
 		.sheet(isPresented: $createNewPage) {
 			NewPageView()
 		}
@@ -59,9 +62,9 @@ struct PageListView: View {
 	NavigationSplitView {
 
 	} content: {
-		PageListView()
-			.modelContainer(for: PageModel.self, inMemory: true)
-			.environment(previewWebsiteManager)
+//		PageListView(selectedPage: .constant(.init(name: "1", index: 0)))
+//			.modelContainer(for: PageModel.self, inMemory: true)
+//			.environment(previewWebsiteManager)
 	} detail: {
 
 	}

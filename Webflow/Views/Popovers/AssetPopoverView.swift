@@ -33,8 +33,8 @@ struct AssetPopoverView: View {
 				}
 				.buttonStyle(.plain)
 			}
-			.padding(.horizontal, 7.5)
-			.padding(.top, 7.5)
+			.padding(.horizontal, 8)
+			.padding(.top, 8)
 			
 			Divider()
 			
@@ -58,7 +58,7 @@ struct AssetPopoverView: View {
 				}
 				.buttonStyle(.plain)
 			}
-			.padding(.horizontal, 7.5)
+			.padding(.horizontal, 8)
 			
 			HStack {
 				HStack {
@@ -71,7 +71,7 @@ struct AssetPopoverView: View {
 					Text("1.44 MB")
 				}
 			}
-			.padding(.horizontal, 7.5)
+			.padding(.horizontal, 8)
 			
 			Section {
 				Picker("Alt Category", selection: $altCategory) {
@@ -91,28 +91,26 @@ struct AssetPopoverView: View {
 			} footer: {
 				if altCategory == .Descriptive {
 					Text("Write a description of this image. Alt text is used by screen readers and/or if an image doesn't load.")
-						.padding(7.5)
+						.padding(8)
 						.background(.background2)
 						.clipShape(RoundedRectangle(cornerRadius: 5))
 				} else {
 					Text("Decorative images don't convey meaning and don't require alt text.")
 				}
 			}
-			.padding(.horizontal, 7.5)
+			.padding(.horizontal, 8)
 			
 			Button {
 				
 			} label: {
 				Label("Delete", image: "DeleteIcon")
-					.buttonLabel()
-					.buttonHoverEffect()
 			}
-			.buttonStyle(.plain)
-			.padding(.bottom, 7.5)
+			.buttonStyle(.borderedProminent)
+			.tint(.background2)
+			.padding(.horizontal, 8)
 		}
 		.formStyle(.columns)
 		.frame(width: 300)
-		.preferredColorScheme(.dark)
     }
 }
 

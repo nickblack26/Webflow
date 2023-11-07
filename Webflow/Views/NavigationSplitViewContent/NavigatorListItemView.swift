@@ -21,14 +21,16 @@ struct NavigatorListItemView: View {
 						NavigatorListItemView(element: childElement)
 					}
 				}, label: {
-					HStack {
-						Image(systemName: "square")
-						Text(element.name)
-						
-						Spacer()
-						
-						if let style = element.style, style.layout == .Hidden {
-							Image(systemName: "eye.slash")
+					NavigationLink(value: element) {
+						HStack {
+							Image(systemName: "square")
+							Text(element.name)
+							
+							Spacer()
+							
+							if let style = element.style, style.layout == .Hidden {
+								Image(systemName: "eye.slash")
+							}
 						}
 					}
 					.contextMenu(ContextMenu(menuItems: {
@@ -37,14 +39,16 @@ struct NavigatorListItemView: View {
 				}
 			)
 		} else {
-			HStack {
-				Image(systemName: "square")
-				Text(element.name)
-				
-				Spacer()
-				
-				if let style = element.style, style.layout == .Hidden {
-					Image(systemName: "eye.slash")
+			NavigationLink(value: element) {
+				HStack {
+					Image(systemName: "square")
+					Text(element.name)
+					
+					Spacer()
+					
+					if let style = element.style, style.layout == .Hidden {
+						Image(systemName: "eye.slash")
+					}
 				}
 			}
 			.contextMenu(ContextMenu(menuItems: {

@@ -8,6 +8,7 @@ struct WebflowApp: App {
 	@UIApplicationDelegateAdaptor private var appDelegate: MyAppDelegate
 	
 	@State private var websiteManager = WebsiteManager()
+	@State private var navigationManager = NavigationManager()
 	@State private var isPresented: Bool = false
 	
 	var sharedModelContainer: ModelContainer = {
@@ -32,6 +33,7 @@ struct WebflowApp: App {
 					WebsiteEntryView(website: website)
 						.modelContainer(sharedModelContainer)
 						.environment(websiteManager)
+						.environment(navigationManager)
 				}
 		}
 		.modelContainer(sharedModelContainer)

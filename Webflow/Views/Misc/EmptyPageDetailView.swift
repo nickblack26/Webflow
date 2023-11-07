@@ -19,11 +19,9 @@ struct EmptyPageDetailView: View {
 					
 				} label: {
 					Label("Add a layout", systemImage: "plus")
-						.padding()
-						.background(.blue.opacity(0.25))
-						.foregroundStyle(Color.accentColor)
-						.clipShape(RoundedRectangle(cornerRadius: 5))
 				}
+				.buttonStyle(.bordered)
+				.tint(.accent)
 				
 				Spacer()
 			}
