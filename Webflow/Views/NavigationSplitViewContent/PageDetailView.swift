@@ -1,10 +1,3 @@
-//
-//  PageDetailView.swift
-//  Webflow
-//
-//  Created by Nick on 10/9/23.
-//
-
 import SwiftUI
 
 struct PageDetailView: View {
@@ -21,9 +14,11 @@ struct PageDetailView: View {
 			List(children, children: \.children, selection: $websiteManager.selectedElement) { element in
 				ElementView(element: element)
 			}
-			.navigationBarHidden(true)
 			.listRowSeparator(.hidden)
 			.listStyle(.plain)
+			.overlay(alignment: .leading) {
+				
+			}
 		} else {
 			EmptyPageDetailView()
 				.dropDestination(for: ElementModel.self) { items, location in
@@ -43,6 +38,6 @@ struct PageDetailView: View {
 		
 	} detail: {
 		PageDetailView(selectedTab: .constant(.Add), page: .init(name: "Test", index: 0))
+			.environment(previewWebsiteManager)
 	}
-	.environment(previewWebsiteManager)
 }

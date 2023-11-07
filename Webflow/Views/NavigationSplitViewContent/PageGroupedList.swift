@@ -11,10 +11,10 @@ struct PageGroupedList: View {
 	
 	init(pageType: PageModel.Category, searchText: Binding<String>) {
 		self.pageType = pageType
-		self._pages = Query(filter: #Predicate<PageModel> {
-			/*$0.website != nil && $0.website?.id == websiteManager.selectedWebsite?.id &&*/ $0.categoryId == pageType.rawValue
-		}, sort: \.createdAt)
 		self._searchText = searchText
+		self._pages = Query(filter: #Predicate<PageModel> {
+			$0.categoryId == pageType.rawValue
+		}, sort: \.createdAt)
 	}
 	
     var body: some View {
@@ -22,7 +22,7 @@ struct PageGroupedList: View {
 		if searchText.isEmpty || (!searchText.isEmpty && !filteredPages().isEmpty) {
 			DisclosureGroup("\(pageType.rawValue) pages", isExpanded: $isExpanded) {
 				if filteredPages().isEmpty {
-					EmptyListView(item: pageType.emptyView)
+					EmptyListView(image: pageType.emptyView.image, title: pageType.emptyView.title, description: pageType.emptyView.description)
 				} else {
 					ForEach(pages, id: \.self) { page in
 						Label(page.name, image: "PageDefaultIcon")
@@ -33,7 +33,7 @@ struct PageGroupedList: View {
 									modelContext.delete(page)
 								}
 							}))
-							.moveDisabled(page.isHome)
+							.moveDisabled(page.isHome)		
 					}
 					.onMove(perform: { indices, newOffset in
 						move(&pages, from: indices, to: newOffset)
@@ -44,6 +44,7 @@ struct PageGroupedList: View {
 			.foregroundStyle(.primary)
 		}
     }
+	
 	
 	private func filteredPages() -> [PageModel] {
 		if searchText.isEmpty {

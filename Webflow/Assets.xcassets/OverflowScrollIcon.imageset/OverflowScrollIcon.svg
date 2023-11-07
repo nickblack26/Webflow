@@ -1,0 +1,9 @@
+<svg data-wf-icon="OverflowScrollIcon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path opacity="0.4" d="M3 3H8V11H3V3Z" fill="currentColor"></path>
+	<path d="M1 2H15V3L1 3V2Z" fill="currentColor"></path>
+	<path d="M1 11H8V12H1V11Z" fill="currentColor"></path>
+	<path
+		d="M12 11.2929L10.3536 9.64645L9.64645 10.3536L12.5 13.2071L15.3536 10.3536L14.6464 9.64645L13 11.2929V5H12V11.2929Z"
+		fill="currentColor"
+	></path>
+</svg>

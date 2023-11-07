@@ -193,6 +193,7 @@ struct ElementContextMenu: View {
 	
 	func getParents(element: ElementModel) {
 		if let parent = element.parent {
+			print(parent)
 			self.parents.append(parent)
 			getParents(element: parent)
 		}

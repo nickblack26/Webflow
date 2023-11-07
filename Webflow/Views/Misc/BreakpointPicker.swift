@@ -1,10 +1,3 @@
-//
-//  BreakpointPicker.swift
-//  Webflow
-//
-//  Created by Nick on 10/26/23.
-//
-
 import SwiftUI
 import Foundation
 
@@ -65,10 +58,9 @@ struct BreakpointPicker: View {
 					}
 				} label: {
 					Image(breakpoint.icon)
-						.padding(.all, 10)
-						.background(currentBreakpoint == breakpoint ? .background2 : .clear)
 				}
-				.buttonStyle(.plain)
+				.buttonStyle(.bordered)
+				.tint(.background2)
 			}
 			
 			if Int(currentWidth) > 999 {

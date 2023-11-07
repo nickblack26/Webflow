@@ -7,8 +7,9 @@ class WebsiteManager {
 	var selectedPage: PageModel?
 	var selectedWebsite: WebsiteModel? {
 		didSet {
-			guard let selectedWebsite = selectedWebsite else { return }
-			selectedPage = selectedWebsite.pages.first(where: { $0.isHome })
+			guard let website = selectedWebsite else { return }
+			print("setting page")
+			selectedPage = website.pages[0]
 		}
 	}
 	var draggingElement: ElementModel?

@@ -20,13 +20,13 @@ class ElementStyleModel: Codable {
 	@Relationship(deleteRule: .cascade, inverse: \SpacingModel.element)
 	var spacing: SpacingModel?
 	
-//	var padding: (CGFloat, CGFloat, CGFloat, CGFloat)
-//	var margin: (CGFloat, CGFloat, CGFloat, CGFloat)
+	//	var padding: (CGFloat, CGFloat, CGFloat, CGFloat)
+	//	var margin: (CGFloat, CGFloat, CGFloat, CGFloat)
 	
 	@Relationship(deleteRule: .cascade, inverse: \SizeModel.element)
 	var size: SizeModel?
 	
-	init(id: UUID = UUID(), layout: Layout = .Block, overflow: Overflow = .visible, ratio: Ratio = .Auto, elementClass: ClassModel? = nil, element: ElementModel? = nil) {
+	init(id: UUID = UUID(), layout: Layout = .Block, overflow: Overflow = .Visible, ratio: Ratio = .Auto, elementClass: ClassModel? = nil, element: ElementModel? = nil) {
 		self.id = id
 		self.layout = layout
 		self.overflow = overflow
@@ -78,6 +78,13 @@ class ElementStyleModel: Codable {
 extension ElementStyleModel {
 	enum Ratio: String, CaseIterable, Codable {
 		case Auto
+		case Anamorphic
+		case Univisium
+		case Widescreen
+		case Landscape
+		case Portrait
+		case Square
+		case Custom
 	}
 	
 	enum Layout: String, Identifiable, CaseIterable, Codable {
@@ -114,9 +121,100 @@ extension ElementStyleModel {
 	}
 	
 	enum Overflow: String, CaseIterable, Codable {
-		case visible
-		case hidden
-		case scroll
-		case auto
+		case Visible
+		case Hidden
+		case Scroll
+		case Auto
+		
+		var icon: String {
+			switch self {
+				case .Visible: "ShowIcon"
+				case .Hidden: "HideIcon"
+				case .Scroll: "OverflowScrollIcon"
+				case .Auto: ""
+			}
+		}
 	}
+	
+	enum Fit: String, CaseIterable, Codable {
+		case Fill
+		case Contain
+		case Cover
+		case None
+		case ScaleDown = "Scale Down"
+	}
+	
+	enum Position: String, CaseIterable, Codable {
+		case Static
+		case Relative
+		case Absolute
+		case Fixed
+		case Sticky
+	}
+	
+	enum Float: String, CaseIterable, Codable {
+		case None
+		case Left
+		case Right
+	}
+	
+	enum Clear: String, CaseIterable, Codable {
+		case None
+		case Left
+		case Right
+		case Both
+	}
+	
+	enum Align: String, CaseIterable, Codable {
+		case Left
+		case Center
+		case Right
+		case Justify
+	}
+	
+	enum Italicize: String, CaseIterable, Codable {
+		case Regular
+		case Italic
+	}
+	
+	enum Clipping: String, CaseIterable, Codable {
+		case None
+		case Padding = "Clip background to padding"
+		case Content = "Clip background to content"
+		case Text = "Clip background to text"
+	}
+	
+	enum Border: String, CaseIterable, Codable {
+		case None
+		case Solid
+		case Dashed
+		case Dotted
+	}
+	
+	enum Blending: String, CaseIterable, Codable {
+		case Normal
+		case Darken
+		case Multiply
+		case ColorBurn = "Color Burn"
+		case Lighten
+		case Screen
+		case ColorDodge = "Color Dodge"
+		case Overlay
+		case SoftLight = "Soft Light"
+		case HardLight = "Hard light"
+		case Difference
+		case Exclusion
+		case Hue
+		case Saturation
+		case Color
+		case Luminosity
+	}
+	
+	enum Outline: String, CaseIterable, Codable {
+		case None
+		case Solid
+		case Dashed
+		case Dotted
+	}
+	
 }
