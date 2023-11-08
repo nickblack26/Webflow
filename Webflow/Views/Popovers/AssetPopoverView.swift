@@ -77,6 +77,7 @@ struct AssetPopoverView: View {
 				Picker("Alt Category", selection: $altCategory) {
 					ForEach(AssetAltCategory.allCases, id: \.self) { category in
 						Text(category.rawValue)
+							.tag(category)
 					}
 				}
 				.pickerStyle(.segmented)

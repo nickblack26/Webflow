@@ -10,7 +10,6 @@ import SwiftData
 import UniformTypeIdentifiers
 
 @Model final class DomainModel {
-	@Attribute(.unique) var id: UUID = UUID()
 	@Attribute(.unique) var name: String
 	var isConnected: Bool
 	var isDefault: Bool
@@ -31,7 +30,6 @@ import UniformTypeIdentifiers
 }
 
 @Model final class RedirectModel {
-	@Attribute(.unique) var id: UUID = UUID()
 	@Attribute(.unique) var oldPath: String
 	@Attribute(.unique) var newPath: String
 	var website: WebsiteModel?
@@ -43,7 +41,6 @@ import UniformTypeIdentifiers
 }
 
 @Model final class WebsiteModel: Codable {
-	@Attribute(.unique) var id: UUID
 	@Attribute(.unique) var name: String
 	@Attribute(.unique) var internalDomain: String {
 		"https://www.\(name.lowercased()).webflow.io"
@@ -55,28 +52,24 @@ import UniformTypeIdentifiers
 	
 	@Relationship(deleteRule: .cascade, inverse: \RedirectModel.website) var redirects: [RedirectModel] = []
 	
-	init(id: UUID = UUID(), name: String, pages: [PageModel] = [PageModel]()) {
-		self.id = id
+	init(name: String, pages: [PageModel] = [PageModel]()) {
 		self.name = name
 		self.pages = pages
 	}
 	
 	enum CodingKeys: CodingKey {
-		case id
 		case name
 		case pages
 	}
 	
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		id = try container.decode(UUID.self, forKey: .id)
 		name = try container.decode(String.self, forKey: .name)
 		pages = try container.decode([PageModel].self, forKey: .pages)
 	}
 	
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(id, forKey: .id)
 		try container.encode(name, forKey: .name)
 		try container.encode(pages, forKey: .pages)
 	}

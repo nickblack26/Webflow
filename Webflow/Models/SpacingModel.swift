@@ -10,32 +10,61 @@ import SwiftData
 
 @Model
 class SpacingModel: Codable {
-	@Attribute(.unique) var id: UUID
-	var element: ElementStyleModel?
-	var marginLeft: CGFloat?
+	var element: ElementStyleModel? = nil
 	var marginTop: CGFloat?
 	var marginRight: CGFloat?
 	var marginBottom: CGFloat?
-	var paddingLeft: CGFloat?
+	var marginLeft: CGFloat?
 	var paddingTop: CGFloat?
 	var paddingRight: CGFloat?
 	var paddingBottom: CGFloat?
+	var paddingLeft: CGFloat?
 	
-	init(id: UUID = UUID(), element: ElementStyleModel? = nil, marginLeft: CGFloat? = nil, marginCenter: CGFloat? = nil, marginRight: CGFloat? = nil, marginBottom: CGFloat? = nil, paddingLeft: CGFloat? = nil, paddingCenter: CGFloat? = nil, paddingRight: CGFloat? = nil, paddingBottom: CGFloat? = nil) {
-		self.id = id
-		self.element = element
-		self.marginLeft = marginLeft
-		self.marginTop = marginCenter
+	init(margin: CGFloat? = nil, padding: CGFloat? = nil) {
+		self.marginTop = margin
+		self.marginRight = margin
+		self.marginBottom = margin
+		self.marginLeft = margin
+		self.paddingTop = padding
+		self.paddingRight = padding
+		self.paddingBottom = padding
+		self.paddingLeft = padding
+	}
+	
+	init(marginVertical: CGFloat? = nil, marginHorizontal: CGFloat? = nil, paddingVertical: CGFloat? = nil, paddingHorizontal: CGFloat? = nil) {
+		self.marginTop = marginVertical
+		self.marginRight = marginHorizontal
+		self.marginBottom = marginVertical
+		self.marginLeft = marginHorizontal
+		self.paddingTop = paddingVertical
+		self.paddingRight = paddingHorizontal
+		self.paddingBottom = paddingVertical
+		self.paddingLeft = paddingHorizontal
+	}
+	
+	init(marginTop: CGFloat? = nil, marginHorizontal: CGFloat? = nil, marginBottom: CGFloat? = nil, paddingTop: CGFloat? = nil, paddingHorizontal: CGFloat? = nil, paddingBottom: CGFloat? = nil) {
+		self.marginTop = marginTop
+		self.marginRight = marginHorizontal
+		self.marginBottom = marginBottom
+		self.marginLeft = marginHorizontal
+		self.paddingTop = paddingTop
+		self.paddingRight = paddingHorizontal
+		self.paddingBottom = paddingBottom
+		self.paddingLeft = paddingHorizontal
+	}
+	
+	init(marginTop: CGFloat? = nil, marginRight: CGFloat? = nil,  marginBottom: CGFloat? = nil, marginLeft: CGFloat? = nil, paddingTop: CGFloat? = nil, paddingRight: CGFloat? = nil, paddingBottom: CGFloat? = nil, paddingLeft: CGFloat? = nil) {
+		self.marginTop = marginTop
 		self.marginRight = marginRight
 		self.marginBottom = marginBottom
-		self.paddingLeft = paddingLeft
-		self.paddingTop = paddingCenter
+		self.marginLeft = marginLeft
+		self.paddingTop = paddingTop
 		self.paddingRight = paddingRight
 		self.paddingBottom = paddingBottom
+		self.paddingLeft = paddingLeft
 	}
 	
 	enum CodingKeys: CodingKey {
-		case id
 		case element
 		case marginLeft
 		case marginCenter
@@ -49,7 +78,6 @@ class SpacingModel: Codable {
 	
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		id = try container.decode(UUID.self, forKey: .id)
 		marginLeft = try container.decode(CGFloat.self, forKey: .marginLeft)
 		marginTop = try container.decode(CGFloat.self, forKey: .marginCenter)
 		marginRight = try container.decode(CGFloat.self, forKey: .marginRight)
@@ -62,7 +90,6 @@ class SpacingModel: Codable {
 	
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(id, forKey: .id)
 		try container.encode(marginLeft, forKey: .marginLeft)
 		try container.encode(marginTop, forKey: .marginCenter)
 		try container.encode(marginRight, forKey: .marginRight)

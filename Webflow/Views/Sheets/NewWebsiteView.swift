@@ -40,6 +40,9 @@ struct NewWebsiteView: View {
 				.listRowBackground(EmptyView())
 				.listRowSeparator(.hidden)
 			}
+			.onSubmit {
+				addWebsite()
+			}
 			.navigationTitle("Name your site")
 		}
     }
@@ -56,6 +59,7 @@ struct NewWebsiteView: View {
 			)
 			modelContext.insert(newWebsite)
 		}
+		dismiss()
 	}
 
 //	private func deleteItems(offsets: IndexSet) {

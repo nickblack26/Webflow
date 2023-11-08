@@ -95,7 +95,6 @@ struct ElementContextMenu: View {
 			}
 		}
 		
-		
 		Section {
 			Button {
 				
@@ -192,6 +191,7 @@ struct ElementContextMenu: View {
 	}
 	
 	func getParents(element: ElementModel) {
+		print(element.parent.debugDescription)
 		if let parent = element.parent {
 			print(parent)
 			self.parents.append(parent)

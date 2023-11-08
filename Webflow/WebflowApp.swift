@@ -3,6 +3,7 @@ import SwiftData
 import UIKit
 import UniformTypeIdentifiers
 
+
 @main
 struct WebflowApp: App {
 	@UIApplicationDelegateAdaptor private var appDelegate: MyAppDelegate
@@ -30,12 +31,22 @@ struct WebflowApp: App {
 			WebflowEntryView()
 				.frame(minWidth: 900, minHeight: 500)
 				.fullScreenCover(item: $websiteManager.selectedWebsite) { website in
-					WebsiteEntryView(website: website)
-						.modelContainer(sharedModelContainer)
-						.environment(websiteManager)
-						.environment(navigationManager)
+					VStack(spacing: 0) {
+						EditorToolbar()
+						
+						Divider()
+						
+						WebsiteEntryView(website: website)
+							.toolbar(.hidden)
+					}
+					.frame(minWidth: 900, minHeight: 500)
+					.preferredColorScheme(.dark)
+					.modelContainer(sharedModelContainer)
+					.environment(websiteManager)
+					.environment(navigationManager)
 				}
 		}
+		
 		.modelContainer(sharedModelContainer)
 		.environment(websiteManager)
 	}

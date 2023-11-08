@@ -14,51 +14,66 @@ struct NavigatorListItemView: View {
 	var element: ElementModel
 	
 	var body: some View {
+		let isCurrent: Bool = element.id == websiteManager.selectedElement?.id
+		
 		if let children = element.children, !children.isEmpty {
 			DisclosureGroup(
 				content: {
 					ForEach(children) { childElement in
 						NavigatorListItemView(element: childElement)
 					}
-				}, label: {
-					NavigationLink(value: element) {
-						HStack {
-							Image(systemName: "square")
-							Text(element.name)
-							
-							Spacer()
-							
-							if let style = element.style, style.layout == .Hidden {
-								Image(systemName: "eye.slash")
-							}
-						}
+				}, 
+				label: {
+					HStack {
+						Image(element.settings?.tag.icon ?? "ElementDivIcon")
+							.resizable()
+							.frame(width: 16, height: 16)
+						
+						Text(element.name)
 					}
-					.contextMenu(ContextMenu(menuItems: {
+					.contextMenu(menuItems: {
 						ElementContextMenu(element: element)
-					}))
+					})
+					.listItemTint(isCurrent ? .accentColorForeground : .primary)
+					.foregroundStyle(isCurrent ? .accentColorForeground : .primary)
+					.listRowBackground(
+						Rectangle()
+							.fill(isCurrent ? .chartDataSeriesD2BlueA20 : .clear)
+					)
+					.listRowSeparator(.hidden)
 				}
 			)
+			.tag(element)
+			.listItemTint(isCurrent ? .accentColorForeground : .primary)
+			.foregroundStyle(isCurrent ? .accentColorForeground : .primary)
+			.listRowBackground(
+				Rectangle()
+					.fill(isCurrent ? .chartDataSeriesD2BlueA20 : .clear)
+			)
+			.listRowSeparator(.hidden)
+			
 		} else {
-			NavigationLink(value: element) {
-				HStack {
-					Image(systemName: "square")
-					Text(element.name)
-					
-					Spacer()
-					
-					if let style = element.style, style.layout == .Hidden {
-						Image(systemName: "eye.slash")
-					}
-				}
+			HStack {
+				Image(element.settings?.tag.icon ?? "ElementDivIcon")
+					.resizable()
+					.frame(width: 16, height: 16)
+				Text(element.name)
 			}
-			.contextMenu(ContextMenu(menuItems: {
+			.contextMenu(menuItems: {
 				ElementContextMenu(element: element)
-			}))
+			})
+			.tag(element)
+			.listItemTint(isCurrent ? .accentColorForeground : .primary)
+			.foregroundStyle(isCurrent ? .accentColorForeground : .primary)
+			.listRowBackground(
+				Rectangle()
+					.fill(isCurrent ? .chartDataSeriesD2BlueA20 : .clear)
+			)
+			.listRowSeparator(.hidden)
 		}
 	}
 }
 
 #Preview {
 	NavigatorListItemView(element: .init(name: "Body"))
-	//		.modelContainer(for: Item.self, inMemory: true)
 }

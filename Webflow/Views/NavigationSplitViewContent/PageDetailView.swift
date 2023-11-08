@@ -1,6 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct PageDetailView: View {
+	@Query var sizes: [SizeModel]
+	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) private var websiteManager
 	@State private var showPopover: Bool = true
 	@Binding var selectedTab: SidebarTab?
@@ -11,14 +14,11 @@ struct PageDetailView: View {
 		let children = page.body.children
 		
 		if let children, !children.isEmpty {
-			List(children, children: \.children, selection: $websiteManager.selectedElement) { element in
+			List(children, selection: $websiteManager.selectedElement) { element in
 				ElementView(element: element)
 			}
 			.listRowSeparator(.hidden)
 			.listStyle(.plain)
-			.overlay(alignment: .leading) {
-				
-			}
 		} else {
 			EmptyPageDetailView()
 				.dropDestination(for: ElementModel.self) { items, location in

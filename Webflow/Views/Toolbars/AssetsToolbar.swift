@@ -21,10 +21,17 @@ struct AssetsToolbar: ToolbarContent {
 				
 				if !expand {
 					Picker(selection: $assetType) {
-						Text("All Assets").tag("All Assets")
-						Text("Images").tag("Images")
-						Text("Documents").tag("Documents")
-						Text("Lottie").tag("Lottie")
+						Text("All Assets")
+							.tag("All Assets")
+						
+						Text("Images")
+							.tag("Images")
+						
+						Text("Documents")
+							.tag("Documents")
+						
+						Text("Lottie")
+							.tag("Lottie")
 					} label: {
 						HStack {
 							Text("All Assets")

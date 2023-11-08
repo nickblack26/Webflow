@@ -10,21 +10,18 @@ import SwiftData
 
 @Model
 class ElementSettingsModel: Codable {
-	@Attribute(.unique) var id: UUID
 	var pageId: String?
 	var tag: HTMLTag
 	var excludeFromSearch: Bool
 	var element: ElementModel?
 	
-	init(id: UUID = UUID(), pageId: String? = nil, tag: HTMLTag = .Div, excludeFromSearch: Bool = false) {
-		self.id = id
+	init(pageId: String? = nil, tag: HTMLTag = .Div, excludeFromSearch: Bool = false) {
 		self.pageId = pageId
 		self.tag = tag
 		self.excludeFromSearch = excludeFromSearch
 	}
 	
 	enum CodingKeys: CodingKey {
-		case id
 		case pageId
 		case tag
 		case excludeFromSearch
@@ -33,7 +30,6 @@ class ElementSettingsModel: Codable {
 	
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		id = try container.decode(UUID.self, forKey: .id)
 		pageId = try container.decode(String.self, forKey: .pageId)
 		tag = try container.decode(HTMLTag.self, forKey: .tag)
 		excludeFromSearch = try container.decode(Bool.self, forKey: .excludeFromSearch)
@@ -42,7 +38,6 @@ class ElementSettingsModel: Codable {
 	
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(id, forKey: .id)
 		try container.encode(pageId, forKey: .pageId)
 		try container.encode(tag, forKey: .tag)
 		try container.encode(excludeFromSearch, forKey: .excludeFromSearch)
@@ -62,6 +57,30 @@ extension ElementSettingsModel {
 		case Aside
 		case Address
 		case Figure
-		var id: Self { self }
+		
+		var icon: String {
+			switch self {
+				case .Div:
+					"ElementDivIcon"
+				case .Header:
+					"ElementDivIcon"
+				case .Footer:
+					"ElementDivIcon"
+				case .Nav:
+					"ElementDivIcon"
+				case .Main:
+					"ElementDivIcon"
+				case .Section:
+					"ElementDivIcon"
+				case .Article:
+					"ElementDivIcon"
+				case .Aside:
+					"ElementDivIcon"
+				case .Address:
+					"ElementDivIcon"
+				case .Figure:
+					"ElementDivIcon"
+			}
+		}
 	}
 }

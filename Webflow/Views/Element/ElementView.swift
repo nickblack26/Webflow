@@ -4,78 +4,119 @@ struct ElementView: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) private var websiteManager
 	@State private var hovering: Bool = false
-	var element: ElementModel
+	@Bindable var element: ElementModel
 	
 	var body: some View {
 		var isSelectedElement: Bool {
 			websiteManager.selectedElement == element
 		}
+		
 		var isEmptyElement: Bool {
 			element.children == nil && element.style == nil && element.classes.isEmpty
 		}
 		
-		ZStack(alignment: .topLeading) {
-			if let children = element.children {
-				List(children) { child in
-					ElementView(element: child)
-				}
-			} else {
+		if let children = element.children, !children.isEmpty {
+			ForEach(children) { child in
+				ElementView(element: child)
+			}
+		} else {
+			ZStack {
 				Text("")
-					.font(.largeTitle)
-					.padding(.all, 1)
-					.frame(
-						minWidth: isEmptyElement ? nil : element.style?.size?.minWidth,
-						maxWidth: isEmptyElement ? .infinity : element.style?.size?.maxWidth,
-						minHeight: isEmptyElement ? 75 : element.style?.size?.minHeight,
-						maxHeight: isEmptyElement ? nil : element.style?.size?.maxHeight
-					)
-					.border(isSelectedElement ? Color.accentColor : .gray)
 			}
-			
-			if (hovering || isSelectedElement) {
-				HStack {
-					Image(systemName: "square")
-					Text(element.name)
+			.listRowSeparator(.hidden)
+			.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+			.tag(element)
+//			.padding(.leading, element.style?.spacing?.paddingLeft ?? 0)
+//			.padding(.top, element.style?.spacing?.paddingTop ?? 0)
+//			.padding(.trailing, element.style?.spacing?.paddingRight ?? 0)
+//			.padding(.bottom, element.style?.spacing?.paddingBottom ?? 0)
+//			.frame(
+//				minWidth: element.style?.size?.minWidth  ?? nil,
+//				maxWidth: element.style?.size?.maxWidth ?? .infinity,
+//				minHeight: element.style?.size?.minHeight  ?? 75,
+//				maxHeight: element.style?.size?.maxHeight  ?? nil
+//			)
+			.background {
+				Rectangle()
+					.fill(.clear)
+					.border(.gray.opacity(0.5), width: 3)
+			}
+			.padding(1)
+			.background {
+				if isSelectedElement || hovering {
+					Rectangle()
+						.stroke(.accent, style: StrokeStyle(lineWidth: 1))
+				} else {
+					Rectangle()
+						.strokeBorder(.secondary, style: StrokeStyle(dash: [5]))
 				}
-				.padding(2.5)
-				.background(.blue)
-				.foregroundStyle(.white)
-				.clipShape(UnevenRoundedRectangle(topLeadingRadius: 2.5, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 2.5, style: .continuous))
-				.frame(height: 25)
-				.frame(maxWidth: .infinity, alignment: .leading)
-				.animation(.default, value: hovering)
-				.offset(y: -25.0)
 			}
+			.contextMenu(menuItems: {
+				ElementContextMenu(element: element)
+			})
+			.overlay(alignment: .topLeading, content: {
+				if (hovering || isSelectedElement) {
+					HStack {
+						Button {
+							
+						} label: {
+							Image(systemName: "square")
+							Text(element.name)
+								.font(.caption)
+						}
+						.buttonStyle(.borderedProminent)
+						.tint(.accent)
+						.frame(maxWidth: .infinity, alignment: .leading)
+						
+						if isSelectedElement {
+							Spacer()
+							
+							Button {
+								
+							} label: {
+								VStack(spacing: 3) {
+									Divider()
+										.frame(height: 2)
+									
+									Divider()
+										.frame(height: 2)
+									
+									Divider()
+										.frame(height: 2)
+								}
+								.frame(width: 16, height: 16)
+								
+								Text("Align")
+									.font(.caption)
+								
+								Image("chevronDown")
+							}
+							.buttonStyle(.bordered)
+							.tint(.orange)
+						}
+					}
+					.offset(y: -26.0)
+					.contentShape(Rectangle())
+				}
+			})
+			.dropDestination(for: ElementModel.self) { items, location in
+				let elements: [ElementModel] = items.compactMap { element in
+					ElementModel(name: element.name)
+				}
+				element.children?.append(contentsOf: elements)
+				try? modelContext.save()
+				websiteManager.draggingElement = nil
+				return false
+			} isTargeted: { isTargeted in
+				websiteManager.draggingElement = nil
+				hovering = isTargeted
+			}
+			.onHover(perform: {
+				hovering = $0
+			})
+			.contentShape(Rectangle())
 		}
-		.onHover(perform: {
-			hovering = $0
-		})
-		.contextMenu(menuItems: {
-			Label("Cut", systemImage: "scissors")
-			
-			Label("Copy", systemImage: "square.on.square")
-			
-			Label("Duplicate", systemImage: "plus.square.on.square")
-			
-			
 		
-			Button {
-				
-			} label: {
-				Label("Delete", systemImage: "trash")
-			}
-		})
-		.dropDestination(for: ElementModel.self) { items, location in
-			let elements: [ElementModel] = items.compactMap { element in
-				ElementModel(name: element.name)
-			}
-			element.children?.append(contentsOf: elements)
-			websiteManager.draggingElement = nil
-			return false
-		} isTargeted: { isTargeted in
-			websiteManager.draggingElement = nil
-			hovering = isTargeted
-		}
 	}
 	
 	private func delete() {

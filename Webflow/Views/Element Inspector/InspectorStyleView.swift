@@ -8,13 +8,14 @@ struct InspectorStyleView: View {
 	@State private var isExpanded: Bool = true
 	@State private var currentClasses: [ClassModel] = []
 	@State private var searchText: String = ""
-	@State private var displayMode: ElementStyleModel.Layout = .Block
-	@State private var margin: (CGFloat?, CGFloat?, CGFloat?, CGFloat?) = (nil, nil, nil, nil)
-	@State private var padding: (CGFloat?, CGFloat?, CGFloat?, CGFloat?) = (nil, nil, nil, nil)
+	@State private var displayMode: ElementStyleModel.Display = .Block
+	@State private var margin: (CGFloat?, CGFloat?, CGFloat?, CGFloat?)?
+	@State private var padding: (CGFloat?, CGFloat?, CGFloat?, CGFloat?)?
 	@State private var inheritingSelectors: Int = 4
+	@Binding var selectedTab: InspectorTab
 	
-	
-	init(displayMode: ElementStyleModel.Layout = .Block, margin: (CGFloat?, CGFloat?, CGFloat?, CGFloat?) = (nil, nil, nil, nil), padding: (CGFloat?, CGFloat?, CGFloat?, CGFloat?) = (nil, nil, nil, nil), inheritingSelectors: Int = 4) {
+	init(selectedTab: Binding<InspectorTab>, displayMode: ElementStyleModel.Display = .Block, margin: (CGFloat?, CGFloat?, CGFloat?, CGFloat?)? = nil, padding: (CGFloat?, CGFloat?, CGFloat?, CGFloat?)? = nil, inheritingSelectors: Int = 4) {
+		self._selectedTab = selectedTab
 		self.displayMode = displayMode
 		self.margin = margin
 		self.padding = padding
@@ -22,7 +23,7 @@ struct InspectorStyleView: View {
 	}
 	
 	var body: some View {
-		ScrollView {
+		List {
 			if let selectedElement = websiteManager.selectedElement {
 				@Bindable var selectedElement = selectedElement
 				
@@ -45,10 +46,7 @@ struct InspectorStyleView: View {
 					.buttonStyle(.borderedProminent)
 					.tint(.background2)
 				}
-				.padding(.horizontal)
-				.frame(maxWidth: .infinity, alignment: .leading)
-				
-				Divider()
+				.listRowSeparator(.hidden)
 				
 				Section {
 					CustomSearchBar()
@@ -71,10 +69,7 @@ struct InspectorStyleView: View {
 						.font(.caption)
 						.foregroundStyle(.secondary)
 				}
-				.padding(.horizontal)
-				.frame(maxWidth: .infinity, alignment: .leading)
-				
-				Divider()
+				.listRowSeparator(.hidden)
 				
 				DisclosureGroup("Layout", isExpanded: $isExpanded) {
 					HStack {
@@ -82,9 +77,23 @@ struct InspectorStyleView: View {
 							
 						}
 						.buttonLabel()
-						
-						Picker("Display", selection: $displayMode) {
-							ForEach(ElementStyleModel.Layout.allCases) { layout in
+												
+						Picker("Display", selection: Binding<ElementStyleModel.Display>(
+								get: {
+									return selectedElement.style?.display ?? ElementStyleModel.Display.Block
+								},
+								set: { layout in
+								if let style = selectedElement.style {
+									style.display = layout
+								} else {
+									let styleElement = ElementStyleModel(display: layout)
+									selectedElement.style = styleElement
+								}
+								try? modelContext.save()
+							}
+						)
+						) {
+							ForEach(ElementStyleModel.Display.allCases) { layout in
 								Image(systemName: layout.icon)
 									.tag(layout)
 							}
@@ -92,35 +101,17 @@ struct InspectorStyleView: View {
 						.pickerStyle(.segmented)
 					}
 				}
-				.padding(.horizontal)
-				.tint(.primary)
-				
-				Divider()
+				.listRowSeparator(.hidden)
 				
 				DisclosureGroup("Spacing", isExpanded: $isExpanded) {
-					Picker("Spacing", selection: .constant(ElementStyleModel.Layout.Block)) {
-						ForEach(ElementStyleModel.Layout.allCases) { layout in
-							Image(systemName: layout.icon)
-								.tag(layout)
-						}
-					}
-					.pickerStyle(.segmented)
+
 				}
-				.padding(.horizontal)
-				.tint(.primary)
+								
+				InspectorSizeSection(element: selectedElement)
 				
-				Divider()
-				
-				InspectorSizeSection(size: selectedElement.style?.size ?? .init())
-					.padding(.horizontal)
-					.tint(.primary)
-				
-				Divider()
 				
 				InspectorStylePositionSection()
-					.padding(.horizontal)
 					.tint(.primary)
-				
 			} else {
 				HStack(spacing: 5) {
 					Image("AddPanelDivIcon")
@@ -129,11 +120,10 @@ struct InspectorStyleView: View {
 					
 					Text("None selected")
 				}
-				.padding(.horizontal)
 				.frame(maxWidth: .infinity, alignment: .leading)
 				.font(.caption)
-								
-				Divider()
+				.listRowBackground(EmptyView())
+				.listRowSeparator(.hidden)
 				
 				Section {
 					TextField("Style selector", text: .constant(""), prompt: Text("None"))
@@ -145,21 +135,25 @@ struct InspectorStyleView: View {
 						.font(.subheadline)
 						.foregroundStyle(.secondary)
 				}
-				.padding(.horizontal)
 				.frame(maxWidth: .infinity, alignment: .leading)
 				.font(.callout)
-
-				Divider()
+				.listRowBackground(EmptyView())
+				.listRowSeparator(.hidden)
 				
 				EmptyListView(image: "EmptyNoSelectionIcon", title: "Make a selection", description: "Select an element on the canvas to activate this panel")
-					.padding(.horizontal)
+					.listRowBackground(EmptyView())
+					.listRowSeparator(.hidden)
+				
 			}
 		}
+		.listStyle(.plain)
+		.scrollContentBackground(.hidden)
+		.background(Color("Background"))
 		.onAppear {
-			if let selectedElement = websiteManager.selectedElement, let style = selectedElement.style, let elementClass = style.elementClass {
-				currentClasses = [elementClass]
+			if let selectedElement = websiteManager.selectedElement, let style = selectedElement.style, let elementClasses = style.classes {
+				currentClasses = elementClasses
 				
-				displayMode = style.layout
+				displayMode = style.display ?? .Block
 				
 				if let spacing = style.spacing {
 					margin = (spacing.marginTop, spacing.marginRight, spacing.marginLeft, spacing.marginLeft)
@@ -167,40 +161,35 @@ struct InspectorStyleView: View {
 				}
 			}
 		}
-		.searchable(
-			text: $searchText,
-			tokens: $currentClasses,
-			placement: .toolbar,
-			prompt: Text("Select a class or tag")
-		) {
-			Text($0.name)
-		}
-		.onSubmit(of: .search) {
-			if searchText.isEmpty { return }
-			let newClass = ClassModel(name: searchText)
-			
-			modelContext.insert(newClass)
+		.toolbar {
+			InspectorToolbarView(selectedTab: $selectedTab)
 		}
 	}
 }
 
 #Preview("No Selected Element") {
-	NavigationSplitView(sidebar: {
+	VStack(spacing: 0) {
+		EditorToolbar()
 		
-	}, content: {
+		Divider()
 		
-	}, detail: {
-		EmptyView()
-			.inspector(isPresented: .constant(true)) {
-				Form {
-					InspectorStyleView()
-						.inspectorColumnWidth(400)
-						.environment(previewWebsiteManager)
-						.modelContainer(for: ElementModel.self, inMemory: true)
-				}
-				.formStyle(.columns)
+		NavigationSplitView(sidebar: {
+			
+		}, content: {
+			
+		}, detail: {
+			EmptyView()
+		})
+		.inspector(isPresented: .constant(true)) {
+			Form {
+				InspectorStyleView(selectedTab: .constant(InspectorTab.Style))
+					.inspectorColumnWidth(400)
 			}
-	})
+			.formStyle(.columns)
+		}
+	}
+	.environment(previewWebsiteManager)
+	.modelContainer(for: ElementModel.self, inMemory: true)
 }
 
 #Preview("With Selected Element", body: {
@@ -208,26 +197,48 @@ struct InspectorStyleView: View {
 	let container = try! ModelContainer(for: ClassModel.self, configurations: config)
 	let classOne = ClassModel(name: "main")
 	container.mainContext.insert(classOne)
-	let style = ElementStyleModel(elementClass: classOne)
+	
+	let style = ElementStyleModel(classes: [classOne])
 	container.mainContext.insert(style)
 	previewWebsiteManager.selectedElement = .init(name: "Body", style: style)
 	let classTwo: ClassModel = .init(name: "loader")
 	container.mainContext.insert(classTwo)
 	
-	return NavigationSplitView(sidebar: {
+	return VStack(spacing: 0) {
+		EditorToolbar()
 		
-	}, content: {
+		Divider()
 		
-	}, detail: {
-		EmptyView()
-			.inspector(isPresented: .constant(true)) {
-				Form {
-					InspectorStyleView()
-						.inspectorColumnWidth(400)
-						.environment(previewWebsiteManager)
-						.modelContainer(container)
-				}
-				.formStyle(.columns)
+		NavigationSplitView(sidebar: {
+			
+		}, content: {
+			
+		}, detail: {
+			EmptyView()
+		})
+		.inspector(isPresented: .constant(true)) {
+			Form {
+				InspectorStyleView(selectedTab: .constant(InspectorTab.Style))
+					.inspectorColumnWidth(400)
 			}
-	})
+			.formStyle(.columns)
+		}
+	}
+	.environment(previewWebsiteManager)
+	.modelContainer(for: ElementModel.self, inMemory: true)
 })
+
+//		.searchable(
+//			text: $searchText,
+//			tokens: $currentClasses,
+//			placement: .toolbar,
+//			prompt: Text("Select a class or tag")
+//		) {
+//			Text($0.name)
+//		}
+//		.onSubmit(of: .search) {
+//			if searchText.isEmpty { return }
+//			let newClass = ClassModel(name: searchText)
+//
+//			modelContext.insert(newClass)
+//		}

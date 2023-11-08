@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddElementsView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
+	@State private var searchText: String = ""
 	@State private var selection: String = "elements"
 	@Binding var selectedPage: PageModel?
 	
@@ -122,8 +123,16 @@ struct AddElementsView: View {
 			}
 			.listRowBackground(EmptyView())
 		}
-		.tint(.primary)
+		.scrollContentBackground(.hidden)
+		.background(Color("Background"), ignoresSafeAreaEdges: .all)
+		.listStyle(.plain)
+		.searchable(text: $searchText, prompt: "Search pages")
 		.foregroundStyle(.primary)
+		.toolbar {
+			ToolbarItem(placement: .topBarLeading) {
+				Text("Add")
+			}
+		}
     }
 	
 	private func addElement() {

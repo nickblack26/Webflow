@@ -11,12 +11,12 @@ import CoreTransferable
 import UniformTypeIdentifiers
 
 @Model
-final class ElementModel: Codable, Searchable {
-	@Attribute(.unique) var id: UUID
+final class ElementModel: Codable {
 	var name: String
 	var category: Category
 	var parent: ElementModel?
 	var icon: String?
+	var tag: Tag?
 	
 	@Relationship(deleteRule: .cascade, inverse: \ClassModel.element)
 	var classes: [ClassModel]
@@ -30,8 +30,7 @@ final class ElementModel: Codable, Searchable {
 	@Relationship(deleteRule: .cascade, inverse: \ElementModel.parent)
 	var children: [ElementModel]?
 	
-	init(id: UUID = UUID(), name: String, elementType: Category = .Structure, icon: String? = nil, classes: [ClassModel]  = [], style: ElementStyleModel? = nil, settings: ElementSettingsModel? = nil, children: [ElementModel]? = []) {
-		self.id = id
+	init(name: String, elementType: Category = .Structure, icon: String? = nil, tag: Tag = .Div, classes: [ClassModel]  = [], style: ElementStyleModel? = nil, settings: ElementSettingsModel? = nil, children: [ElementModel]? = []) {
 		self.name = name
 		self.category = elementType
 		self.icon = icon
@@ -42,45 +41,33 @@ final class ElementModel: Codable, Searchable {
 	}
 	
 	enum CodingKeys: CodingKey {
-		case id
 		case name
 		case elementType
-		case parent
 		case classes
-		case style
-		case settings
 		case children
 	}
 	
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		id = try container.decode(UUID.self, forKey: .id)
 		name = try container.decode(String.self, forKey: .name)
 		category = try container.decode(Category.self, forKey: .elementType)
-		parent = try container.decode(ElementModel.self, forKey: .parent)
 		classes = try container.decode([ClassModel].self, forKey: .classes)
-		style = try container.decode(ElementStyleModel.self, forKey: .style)
-		settings = try container.decode(ElementSettingsModel.self, forKey: .settings)
 		children = try container.decode([ElementModel].self, forKey: .children)
 	}
 	
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(id, forKey: .id)
 		try container.encode(name, forKey: .name)
 		try container.encode(category, forKey: .elementType)
-		try container.encode(parent, forKey: .parent)
 		try container.encode(classes, forKey: .classes)
-		try container.encode(style, forKey: .style)
-		try container.encode(settings, forKey: .settings)
 		try container.encode(children, forKey: .children)
 	}
 	
 	static func defaultElements() -> [ElementModel] {
 		[
-			.init(name: "Section", icon: "AddPanelSectionIcon"),
-			.init(name: "Container", icon: "AddPanelContainerIcon"),
-			.init(name: "Quick Stack", icon: "AddPanelQuickStackIcon"),
+			.init(name: "Section", icon: "AddPanelSectionIcon", tag: .Section),
+			.init(name: "Container", icon: "AddPanelContainerIcon", style: .init(display: .Block, spacing: .init(paddingHorizontal: 0), size: .init(maxWidth: 940))),
+			.init(name: "Quick Stack", icon: "AddPanelQuickStackIcon", style: .init(display: .Grid, spacing: .init(padding: 20))),
 			.init(name: "V Flex", icon: "AddPanelVFlexIcon"),
 			.init(name: "H Flex", icon: "AddPanelHFlexIcon"),
 			.init(name: "Div Block", elementType: .Basic, icon: "AddPanelDivIcon"),
@@ -136,6 +123,177 @@ extension ElementModel {
 		case Forms
 		case Advanced
 		case Other
+	}
+	
+	enum Tag: String, CaseIterable, Codable {
+		case A
+		case Abbr
+		case Acronym
+		case Address
+		case Applet
+		case Area
+		case Article
+		case Aside
+		case Audio
+		case B
+		case Base
+		case Basefont
+		case Bdi
+		case Bdo
+		case Big
+		case Blockquote
+		case Body
+		case Br
+		case Button
+		case Canvas
+		case Caption
+		case Center
+		case Cite
+		case Code
+		case Col
+		case Colgroup
+		case Data
+		case Datalist
+		case Dd
+		case Del
+		case Details
+		case Dfn
+		case Dialog
+		case Dir
+		case Div
+		case Dl
+		case Dt
+		case Em
+		case Embed
+		case Fieldset
+		case Figcaption
+		case Figure
+		case Font
+		case Footer
+		case Form
+		case Frame
+		case Frameset
+		case H1
+		case H2
+		case H3
+		case H4
+		case H5
+		case H6
+		case Head
+		case Header
+		case Hgroup
+		case Hr
+		case Html
+		case I
+		case Iframe
+		case Img
+		case Input
+		case Ins
+		case Kbd
+		case Label
+		case Legend
+		case Li
+		case Link
+		case Main
+		case Map
+		case Mark
+		case Menu
+		case Meta
+		case Meter
+		case Nav
+		case Noframes
+		case Noscript
+		case Object
+		case Ol
+		case Optgroup
+		case Option
+		case Output
+		case P
+		case Param
+		case Picture
+		case Pre
+		case Progress
+		case Q
+		case Rp
+		case Rt
+		case Ruby
+		case S
+		case Samp
+		case Script
+		case Search
+		case Section
+		case Select
+		case Small
+		case Source
+		case Span
+		case Strike
+		case Strong
+		case Style
+		case Sub
+		case Summary
+		case Sup
+		case Svg
+		case Table
+		case Tbody
+		case Td
+		case Template
+		case Textarea
+		case Tfoot
+		case Th
+		case Thead
+		case Time
+		case Title
+		case Tr
+		case Track
+		case Tt
+		case U
+		case Ul
+		case Var
+		case Video
+		case Wbr
+		
+		var icon: String {
+			switch self {
+				case .Div:
+					"ElementDivIcon"
+				case .Header:
+					"ElementDivIcon"
+				case .Footer:
+					"ElementDivIcon"
+				case .Nav:
+					"ElementDivIcon"
+				case .Main:
+					"ElementDivIcon"
+				case .Section:
+					"ElementDivIcon"
+				case .Article:
+					"ElementDivIcon"
+				case .Aside:
+					"ElementDivIcon"
+				case .Address:
+					"ElementDivIcon"
+				case .Figure:
+					"ElementDivIcon"
+				default:
+					"ElementDivIcon"
+			}
+		}
+		
+		var styleDefault: ElementStyleModel {
+			switch self {
+				case .Div: .init(display: .Block)
+				case .Header: .init(display: .Block)
+				case .Footer: .init(display: .Block)
+				case .Nav: .init(display: .Block)
+				case .Main: .init()
+				case .Section: .init(display: .Block)
+				case .Article: .init(display: .Block)
+				case .Aside: .init(display: .Block)
+				case .Address: .init()
+				case .Figure: .init(display: .Block, spacing: SpacingModel(paddingTop: 16, paddingHorizontal: 40, paddingBottom: 16))
+				default: .init()
+			}
+		}
 	}
 }
 

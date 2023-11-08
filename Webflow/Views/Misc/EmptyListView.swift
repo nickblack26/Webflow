@@ -27,7 +27,7 @@ struct EmptyListView: View {
 		.frame(maxWidth: .infinity)
 		.multilineTextAlignment(.center)
 		.padding()
-		.background(Color("Background"))
+		.background(.background2)
 		.clipShape(RoundedRectangle(cornerRadius: 7.5))
     }
 }

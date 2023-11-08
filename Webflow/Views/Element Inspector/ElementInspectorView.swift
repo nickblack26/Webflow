@@ -17,24 +17,9 @@ struct ElementInspectorView: View {
 	@State private var selectedTab: InspectorTab = .Style
 	
 	var body: some View {
-		Form {
-			HStack {
-				ForEach(InspectorTab.allCases, id: \.self) { tab in
-					Button {
-						selectedTab = tab
-					} label: {
-						Text(tab.rawValue)
-					}
-					.buttonStyle(.plain)
-					.opacity(selectedTab == tab ? 1 : 0.75)
-				}
-			}
-			.padding(.horizontal)
-			
-			Divider()
-			
+		NavigationStack {
 			TabView(selection: $selectedTab) {
-				InspectorStyleView()
+				InspectorStyleView(selectedTab: $selectedTab)
 					.tag(InspectorTab.Style)
 				
 				InspectorSettingsView()
@@ -46,22 +31,28 @@ struct ElementInspectorView: View {
 			.tabViewStyle(.page(indexDisplayMode: .never))
 			
 		}
-		.formStyle(.columns)
 	}
 }
 
 #Preview {
-	NavigationSplitView(sidebar: {
-		Text("Text here")
-	}, detail: {
-		NavigationStack {
-			EmptyView()
-				.inspector(isPresented: .constant(true)) {
-					ElementInspectorView()
-						.inspectorColumnWidth(400)
-				}
+	VStack(spacing: 0) {
+		EditorToolbar()
+		
+		Divider()
+		
+		NavigationSplitView(sidebar: {
+			Text("Text here")
+		}, detail: {
+			NavigationStack {
+				EmptyView()
+			}
+		})
+		.inspector(isPresented: .constant(true)) {
+			ElementInspectorView()
+				.inspectorColumnWidth(400)
+			
 		}
-	})
+	}
 	.environment(previewWebsiteManager)
 	.modelContainer(for: ElementModel.self, inMemory: true)
 	

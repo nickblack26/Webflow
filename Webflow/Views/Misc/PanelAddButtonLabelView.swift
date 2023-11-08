@@ -26,9 +26,6 @@ struct PanelAddButtonLabelView: View {
 					.foregroundStyle(.secondary)
 			}
 			.background(Color("Background"))
-			.onDisappear(perform: {
-				websiteManager.draggingElement = nil
-			})
 			.onAppear(perform: {
 				websiteManager.draggingElement = element
 			})

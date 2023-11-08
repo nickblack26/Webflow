@@ -1,21 +1,16 @@
-//
-//  InspectorSizeSection.swift
-//  Webflow
-//
-//  Created by Nick on 10/9/23.
-//
-
 import SwiftUI
 
 struct InspectorSizeSection: View {
-	@State private var ratio: ElementStyleModel.Ratio = .Auto
-	@State private var overflow: ElementStyleModel.Overflow = .Visible
+	@Environment(\.modelContext) var modelContext
+	@State private var ratio: ElementStyleModel.AspectRatio = .Auto
+	@State private var overflow: ElementStyleModel.Overflow = ElementStyleModel.Overflow.Visible
 	@State private var isExpanded: Bool = true
-	@Bindable var size: SizeModel
+	@Bindable var element: ElementModel
 	
 	let formatter: NumberFormatter = {
 		let formatter = NumberFormatter()
 		formatter.numberStyle = .decimal
+		formatter.zeroSymbol = ""
 		return formatter
 	}()
 	
@@ -29,8 +24,38 @@ struct InspectorSizeSection: View {
 					.buttonLabel()
 					.frame(minWidth: 40, alignment: .leading)
 					
-					TextField("Width", value: $size.width, formatter: formatter, prompt: Text("Auto"))
-						.textFieldStyle(.roundedBorder)
+					TextField(
+						"Width",
+						value:
+							Binding<CGFloat>(
+								get: {
+									return element.style?.size?.width ?? 0
+								},
+								set: {
+									if let style = element.style {
+										@Bindable var style = style
+										if let size = style.size {
+											@Bindable var size = size
+											size.width = $0
+										} else {
+											let size = SizeModel(width: $0)
+											style.size = size
+										}
+									} else {
+										let size = SizeModel(width: $0)
+										let style = ElementStyleModel(size: size)
+										element.style = style
+									}
+								}
+							),
+						formatter: formatter,
+						prompt: Text("Auto")
+					)
+					.onSubmit {
+						print(modelContext.hasChanges)
+						try? modelContext.save()
+						print(element.style?.size?.width)
+					}
 				}
 				
 				HStack {
@@ -40,8 +65,32 @@ struct InspectorSizeSection: View {
 					.buttonLabel()
 					.frame(minWidth: 40, alignment: .leading)
 					
-					TextField("Height", value: $size.height, formatter: formatter, prompt: Text("Auto"))
-						.textFieldStyle(.roundedBorder)
+					TextField(
+						"Height",
+						value:
+							Binding(
+								get: {
+									return element.style?.size?.height ?? 0
+								},
+								set: {
+									if $0 > 0 {
+										if let style = element.style, let size = style.size {
+											size.height = $0
+										} else if let style = element.style {
+											let size = SizeModel(height: $0)
+											style.size = size
+										} else {
+											let size = SizeModel(height: $0)
+											let style = ElementStyleModel(size: size)
+											element.style = style
+										}
+									}
+								}
+							),
+						formatter: formatter,
+						prompt: Text("Auto")
+					)
+					.textFieldStyle(.roundedBorder)
 				}
 				
 				HStack {
@@ -50,8 +99,32 @@ struct InspectorSizeSection: View {
 						.foregroundStyle(.secondary)
 						.frame(minWidth: 40, alignment: .leading)
 					
-					TextField("Min W", value: $size.minWidth, formatter: formatter, prompt: Text("0"))
-						.textFieldStyle(.roundedBorder)
+					TextField(
+						"Min W",
+						value:
+							Binding(
+								get: {
+									return element.style?.size?.minWidth ?? 0
+								},
+								set: {
+									if $0 > 0 {
+										if let style = element.style, let size = style.size {
+											size.minWidth = $0
+										} else if let style = element.style {
+											let size = SizeModel(minWidth: $0)
+											style.size = size
+										} else {
+											let size = SizeModel(minWidth: $0)
+											let style = ElementStyleModel(size: size)
+											element.style = style
+										}
+									}
+								}
+							),
+						formatter: formatter,
+						prompt: Text("0")
+					)
+					.textFieldStyle(.roundedBorder)
 				}
 				
 				HStack {
@@ -60,8 +133,32 @@ struct InspectorSizeSection: View {
 						.foregroundStyle(.secondary)
 						.frame(minWidth: 40, alignment: .leading)
 					
-					TextField("Min H", value: $size.minHeight, formatter: formatter, prompt: Text("0"))
-						.textFieldStyle(.roundedBorder)
+					TextField(
+						"Min H",
+						value:
+							Binding(
+								get: {
+									return element.style?.size?.minHeight ?? 0
+								},
+								set: {
+									if $0 > 0 {
+										if let style = element.style, let size = style.size {
+											size.minHeight = $0
+										} else if let style = element.style {
+											let size = SizeModel(minHeight: $0)
+											style.size = size
+										} else {
+											let size = SizeModel(minHeight: $0)
+											let style = ElementStyleModel(size: size)
+											element.style = style
+										}
+									}
+								}
+							),
+						formatter: formatter,
+						prompt: Text("0")
+					)
+					.textFieldStyle(.roundedBorder)
 				}
 				
 				HStack {
@@ -70,8 +167,32 @@ struct InspectorSizeSection: View {
 						.foregroundStyle(.secondary)
 						.frame(minWidth: 40, alignment: .leading)
 					
-					TextField("Max W", value: $size.maxWidth, formatter: formatter, prompt: Text("None"))
-						.textFieldStyle(.roundedBorder)
+					TextField(
+						"Max W",
+						value:
+							Binding(
+								get: {
+									return element.style?.size?.maxWidth ?? 0
+								},
+								set: {
+									if $0 > 0 {
+										if let style = element.style, let size = style.size {
+											size.maxWidth = $0
+										} else if let style = element.style {
+											let size = SizeModel(maxWidth: $0)
+											style.size = size
+										} else {
+											let size = SizeModel(maxWidth: $0)
+											let style = ElementStyleModel(size: size)
+											element.style = style
+										}
+									}
+								}
+							),
+						formatter: formatter,
+						prompt: Text("None")
+					)
+					.textFieldStyle(.roundedBorder)
 				}
 				
 				HStack {
@@ -80,24 +201,52 @@ struct InspectorSizeSection: View {
 						.foregroundStyle(.secondary)
 						.frame(minWidth: 40, alignment: .leading)
 					
-					TextField("Max H", value: $size.maxHeight, formatter: formatter, prompt: Text("None"))
-						.textFieldStyle(.roundedBorder)
+					TextField(
+						"Max H",
+						value:
+							Binding(
+								get: {
+									return element.style?.size?.maxHeight ?? 0
+								},
+								set: {
+									if $0 > 0 {
+										if let style = element.style, let size = style.size {
+											size.maxHeight = $0
+										} else if let style = element.style {
+											let size = SizeModel(maxHeight: $0)
+											style.size = size
+										} else {
+											let size = SizeModel(maxHeight: $0)
+											let style = ElementStyleModel(size: size)
+											element.style = style
+										}
+									}
+								}
+							),
+						formatter: formatter,
+						prompt: Text("None")
+					)
+					.textFieldStyle(.roundedBorder)
 				}
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
-			
-			Divider()
-			
+			.textFieldStyle(.roundedBorder)
+			.onAppear {
+				print(element.style?.size?.width)
+			}
+			.listRowSeparator(.hidden)
+						
 			HStack {
 				Text("Ratio")
 					.font(.caption)
 					.foregroundStyle(.secondary)
 					.frame(minWidth: 50, alignment: .leading)
-
+				
 				
 				Picker(selection: $ratio) {
-					ForEach(ElementStyleModel.Ratio.allCases, id: \.self) { ratio in
+					ForEach(ElementStyleModel.AspectRatio.allCases, id: \.self) { ratio in
 						Text(ratio.rawValue)
+							.tag(ratio)
 					}
 				} label: {
 					HStack {
@@ -118,7 +267,7 @@ struct InspectorSizeSection: View {
 					.font(.caption)
 					.foregroundStyle(.secondary)
 					.frame(minWidth: 50, alignment: .leading)
-
+				
 				
 				Picker("Overflow", selection: $overflow) {
 					ForEach(ElementStyleModel.Overflow.allCases, id: \.self) { overflow in
@@ -140,23 +289,21 @@ struct InspectorSizeSection: View {
 					.font(.caption)
 					.foregroundStyle(.secondary)
 					.frame(minWidth: 50, alignment: .leading)
-
 				
 				Picker("Fit", selection: $overflow) {
 					ForEach(ElementStyleModel.Fit.allCases, id: \.self) { overflow in
 						Text(overflow.rawValue)
+							.tag(overflow)
 					}
 				}
 				.pickerStyle(.menu)
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
 		}
-		
-    }
-	
+	}
 }
 
 #Preview {
-	InspectorSizeSection(size: .init())
+	InspectorSizeSection(element: .init(name: "Body"))
 		.modelContainer(for: SizeModel.self, inMemory: true)
 }

@@ -15,8 +15,7 @@ struct EmptyPageModel: Codable {
 }
 
 @Model
-class PageModel: Codable, Searchable {
-	@Attribute(.unique) var id: UUID = UUID()
+class PageModel: Codable {
 	@Attribute(.unique) var name: String
 	@Attribute(.unique) var slug: String {
 		"/\(self.name)"
@@ -48,7 +47,6 @@ class PageModel: Codable, Searchable {
 	}
 	
 	enum CodingKeys: CodingKey {
-		case id
 		case name
 		case status
 		case website
@@ -62,7 +60,6 @@ class PageModel: Codable, Searchable {
 	
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		id = try container.decode(UUID.self, forKey: .id)
 		name = try container.decode(String.self, forKey: .name)
 		status = try container.decode(Status.self, forKey: .status)
 		website = try container.decode(WebsiteModel.self, forKey: .website)
@@ -76,7 +73,6 @@ class PageModel: Codable, Searchable {
 	
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(id, forKey: .id)
 		try container.encode(name, forKey: .name)
 		try container.encode(status, forKey: .status)
 		try container.encode(website, forKey: .website)

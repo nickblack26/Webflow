@@ -21,37 +21,35 @@ struct PageListView: View {
 				PageGroupedList(pageType: type, searchText: $searchText)
 			}
 		}
+		.scrollContentBackground(.hidden)
+		.background(Color("Background"), ignoresSafeAreaEdges: .all)
 		.listStyle(.plain)
 		.searchable(text: $searchText, prompt: "Search pages")
-		.onDisappear {
-			selectedPage = selectedPage
+		.toolbar {
+			ToolbarItemGroup(placement: .topBarLeading) {
+				Text("Pages")
+			}
+						
+			ToolbarItemGroup {
+				Button {
+					createNewPage.toggle()
+				} label: {
+					Image("FolderAddIcon")
+						.resizable()
+						.buttonHoverEffect()
+				}
+				.buttonStyle(.plain)
+				
+				Button {
+					createNewPage.toggle()
+				} label: {
+					Image("PageAddIcon")
+						.resizable()
+						.buttonHoverEffect()
+				}
+				.buttonStyle(.plain)
+			}
 		}
-//		.toolbar {
-//			ToolbarItemGroup(placement: .topBarLeading) {
-//				Text("Pages")
-//			}
-//						
-//			ToolbarItemGroup {
-//				Button {
-//					createNewPage.toggle()
-//				} label: {
-//					Image("FolderAddIcon")
-//						.resizable()
-//						.buttonHoverEffect()
-//				}
-//				.buttonStyle(.plain)
-//				
-//				Button {
-//					createNewPage.toggle()
-//				} label: {
-//					Image("PageAddIcon")
-//						.resizable()
-//						.buttonHoverEffect()
-//				}
-//				.buttonStyle(.plain)
-//			}
-//		}
-//		.environment(\.editMode, $isEditMode)
 		.sheet(isPresented: $createNewPage) {
 			NewPageView()
 		}

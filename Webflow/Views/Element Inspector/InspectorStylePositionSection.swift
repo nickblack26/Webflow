@@ -25,11 +25,12 @@ struct InspectorStylePositionSection: View {
 				Picker("Position", selection: $position) {
 					ForEach(ElementStyleModel.Position.allCases, id: \.self) {
 						Text($0.rawValue)
+							.tag($0)
 					}
 				}
 			}
-			.frame(maxWidth: .infinity, alignment: .leading)
-			
+//			.frame(maxWidth: .infinity, alignment: .leading)
+			.listRowSeparator(.hidden)
 			
 			DisclosureGroup(
 				isExpanded: .constant(true),
@@ -44,6 +45,7 @@ struct InspectorStylePositionSection: View {
 						Picker("Float", selection: $clear) {
 							ForEach(ElementStyleModel.Float.allCases, id: \.self) {
 								Text($0.rawValue)
+									.tag($0)
 							}
 						}
 					}
@@ -59,6 +61,7 @@ struct InspectorStylePositionSection: View {
 						Picker("Clear", selection: $clear) {
 							ForEach(ElementStyleModel.Float.allCases, id: \.self) {
 								Text($0.rawValue)
+									.tag($0)
 							}
 						}
 					}
@@ -72,8 +75,9 @@ struct InspectorStylePositionSection: View {
 					}
 				}
 			)
-			
+			.listRowSeparator(.hidden)
 		}
+		
     }
 }
 

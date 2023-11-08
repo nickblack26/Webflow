@@ -26,6 +26,7 @@ struct PageGroupedList: View {
 				} else {
 					ForEach(pages, id: \.self) { page in
 						Label(page.name, image: "PageDefaultIcon")
+							.font(.callout)
 							.listRowSeparator(.hidden)
 							.listRowInsets(EdgeInsets())
 							.contextMenu(ContextMenu(menuItems: {

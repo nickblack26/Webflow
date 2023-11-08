@@ -12,8 +12,9 @@ struct WebsiteEntryView: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) var websiteManager
 	
-	@State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
-	@State private var selectedTab: SidebarTab? = .Add
+	@State private var columnVisibility = NavigationSplitViewVisibility.all
+	@State private var preferredColumn = NavigationSplitViewColumn.sidebar
+	@State private var selectedTab: SidebarTab? = .navigator
 	@State private var selectedPage: PageModel?
 	@State private var searchText: String = ""
 	var website: WebsiteModel
@@ -29,40 +30,34 @@ struct WebsiteEntryView: View {
 	var body: some View {
 		@Bindable var websiteManager = websiteManager
 		
-		NavigationSplitView(columnVisibility: $columnVisibility) {
-			List(SidebarTab.allCases, id: \.self, selection: $selectedTab) { tab in
-				if(tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 != nil) {
-					Label(tab.rawValue, image: tab.symbol)
-						.keyboardShortcut(tab.keyBoardShortcut.0!, modifiers: tab.keyBoardShortcut.1!)
-						.listItemTint(.white)
-					
-				} else if tab.keyBoardShortcut.0 != nil && tab.keyBoardShortcut.1 == nil {
-					Label(tab.rawValue, image: tab.symbol)
-						.keyboardShortcut(tab.keyBoardShortcut.0!)
-						.listItemTint(.white)
-					
-				} else {
-					Label(tab.rawValue, image: tab.symbol)
-						.listItemTint(.white)
-				}
-			}
+		NavigationSplitView(columnVisibility: $columnVisibility, preferredCompactColumn: $preferredColumn) {
+			SidebarListView(selectedTab: $selectedTab)
+				.frame(width: 48, alignment: .center)
+				.navigationSplitViewColumnWidth(48)
 		} content: {
 			if let selectedTab {
 				switch selectedTab {
 					case .pages:
 						PageListView(selectedPage: $selectedPage)
+							.toolbar(removing: .sidebarToggle)
 					case .Add:
 						AddElementsView(selectedPage: $selectedPage)
+							.toolbar(removing: .sidebarToggle)
 					case .navigator:
 						NavigatorListView(selectedPage: selectedPage)
+							.toolbar(removing: .sidebarToggle)
+							.navigationSplitViewColumnWidth(min: 225, ideal: 275, max: 325)
 					case .components:
 						ComponentsListView()
+							.toolbar(removing: .sidebarToggle)
 					case .assets:
 						AssetsListView()
-					case .find: EmptyView()
+							.toolbar(removing: .sidebarToggle)
+					case .find: EmptyView().toolbar(removing: .sidebarToggle)
 						
 					default:
 						AddElementsView(selectedPage: $selectedPage)
+							.toolbar(removing: .sidebarToggle)
 				}
 			} else {
 				Text("Please select a tab")
@@ -71,21 +66,18 @@ struct WebsiteEntryView: View {
 			ZStack {
 				if let selectedPage = selectedPage {
 					PageDetailView(selectedTab: $selectedTab, page: selectedPage)
-						.toolbar {
-							EditorToolbar()
-						}
+						.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+						.toolbar(.hidden)
 				} else {
 					EmptyPageDetailView()
-						.toolbar {
-							EditorToolbar()
-						}
+						.toolbar(.hidden)
 				}
 			}
-			.inspector(isPresented: .constant(true)) {
-				ElementInspectorView()
-			}
-			
 		}
+		.inspector(isPresented: .constant(true)) {
+			ElementInspectorView()
+		}
+		.toolbar(.hidden)
 		.onChange(of: websiteManager.draggingElement) {
 			if(websiteManager.draggingElement == nil) {
 				columnVisibility = .doubleColumn
@@ -101,4 +93,25 @@ struct WebsiteEntryView: View {
 		.modelContainer(for: WebsiteModel.self, inMemory: true)
 		.modelContainer(for: ElementModel.self, inMemory: true)
 		.environment(previewWebsiteManager)
+}
+
+struct SidebarListView: View {
+	@Binding var selectedTab: SidebarTab?
+	
+	var body: some View {
+		List(SidebarTab.allCases, id: \.self, selection: $selectedTab) { tab in
+			Image(tab.symbol)
+				.resizable()
+				.frame(width: 24, height: 24, alignment: .center)
+				.scaledToFit()
+				.listItemTint(.white)
+				.listRowSeparator(.hidden)
+				.listRowBackground(Rectangle().fill(selectedTab == tab ? .background2 : .clear))
+				.tag(tab)
+		}
+		.scrollContentBackground(.hidden)
+		.background(Color("Background"), ignoresSafeAreaEdges: .all)
+		.toolbar(removing: .sidebarToggle)
+		.listStyle(.plain)
+	}
 }
