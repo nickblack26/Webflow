@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EmptyPageDetailView: View {
+	@Environment(WebsiteManager.self) private var websiteManager
+	
 	var body: some View {
 		VStack {
 			Spacer()
@@ -40,6 +42,17 @@ struct EmptyPageDetailView: View {
 		}
 		.padding()
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
+		.contentShape(Rectangle())
+		.dropDestination(for: ElementModel.self) { items, location in
+			let elements = items.compactMap { element in
+				ElementModel(name: element.name)
+			}
+			if let page = websiteManager.selectedPage {
+				page.body.children?.append(contentsOf: elements)
+			}
+			websiteManager.draggingElement = nil
+			return false
+		}
 	}
 }
 

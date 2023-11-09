@@ -1,10 +1,3 @@
-//
-//  NavigatorListView.swift
-//  Webflow
-//
-//  Created by Nick on 10/9/23.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -19,6 +12,7 @@ struct NavigatorListView: View {
 			List(selection: $websiteManager.selectedElement) {
 				NavigatorListItemView(element: selectedPage.body)
 			}
+			.listStyle(.plain)
 			.listRowSpacing(0)
 			.toolbar {
 				ToolbarItem(placement: .topBarLeading) {

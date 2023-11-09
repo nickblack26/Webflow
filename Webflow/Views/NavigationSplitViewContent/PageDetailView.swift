@@ -21,14 +21,6 @@ struct PageDetailView: View {
 			.listStyle(.plain)
 		} else {
 			EmptyPageDetailView()
-				.dropDestination(for: ElementModel.self) { items, location in
-					let elements = items.compactMap { element in
-						ElementModel(name: element.name)
-					}
-					page.body.children?.append(contentsOf: elements)
-					websiteManager.draggingElement = nil
-					return false
-				}
 		}
 	}
 }
