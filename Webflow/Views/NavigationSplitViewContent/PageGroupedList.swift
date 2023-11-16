@@ -3,7 +3,7 @@ import SwiftData
 
 struct PageGroupedList: View {
 	@Environment(\.modelContext) private var modelContext
-	@Query private var pages: [PageModel]
+	@Query(sort: \PageModel.index) private var pages: [PageModel]
 	@Environment(WebsiteManager.self) private var websiteManager
 	@State private var isExpanded: Bool = true
 	var pageType: PageModel.Category
@@ -25,27 +25,29 @@ struct PageGroupedList: View {
 					EmptyListView(image: pageType.emptyView.image, title: pageType.emptyView.title, description: pageType.emptyView.description)
 				} else {
 					ForEach(pages, id: \.self) { page in
-						Label(page.name, image: "PageDefaultIcon")
-							.font(.callout)
-							.listRowSeparator(.hidden)
-							.listRowInsets(EdgeInsets())
-							.contextMenu(ContextMenu(menuItems: {
-								Button("Delete") {
-									modelContext.delete(page)
-								}
-							}))
-							.moveDisabled(page.isHome)		
+						PageRow(page)
 					}
-					.onMove(perform: { indices, newOffset in
+					.onMove { indices, newOffset in
+//						 Make a copy of the current list of items
+						var updatedPages = pages
+						
+						updatedPages.move(fromOffsets: indices, toOffset: newOffset)
+						
+						for (index, updatedPage) in updatedPages.enumerated() {
+							var page = pages[index]
+							print(updatedPage.name, "'s ", "current index", page.index, "\nNew Index", index)
+							page.index = index
+						}
+
+						try? modelContext.save()
 						move(&pages, from: indices, to: newOffset)
-					})
+					}
 				}
 			}
 			.tint(.primary)
 			.foregroundStyle(.primary)
 		}
     }
-	
 	
 	private func filteredPages() -> [PageModel] {
 		if searchText.isEmpty {
@@ -58,20 +60,17 @@ struct PageGroupedList: View {
 	func move(_ data: inout [PageModel], from source: IndexSet, to destination: Int) {
 		data.move(fromOffsets: source, toOffset: destination)
 		
-		if(destination == 0) {
-			for index in source {
-				pages[index].index = 0
-				pages.forEach { page in
-					if page.index != index {
-						page.index += 1
-					}
-				}
-				print(index, destination)
-			}
-		} else {
-			for index in source {
-				pages[index].index = destination
-				print(index, destination)
+		for index in data.indices {
+			var page = pages[index]
+			page.index = index
+			
+			print(modelContext.hasChanges)
+			
+			do {
+				try modelContext.save()
+				print("Saved")
+			} catch {
+				print(error)
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import SwiftData
 struct WebsiteEntryView: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) var websiteManager
+	@Environment(NavigationManager.self) var navigation
 	
 	@State private var columnVisibility = NavigationSplitViewVisibility.all
 	@State private var preferredColumn = NavigationSplitViewColumn.sidebar
@@ -29,22 +30,26 @@ struct WebsiteEntryView: View {
 	
 	var body: some View {
 		@Bindable var websiteManager = websiteManager
+		@Bindable var navigation = navigation
 		
-		NavigationSplitView(columnVisibility: $columnVisibility, preferredCompactColumn: $preferredColumn) {
-			SidebarListView(selectedTab: $selectedTab)
+		NavigationSplitView(
+			columnVisibility: $columnVisibility,
+			preferredCompactColumn: $preferredColumn
+		) {
+			SidebarListView()
 				.frame(width: 48, alignment: .center)
 				.navigationSplitViewColumnWidth(48)
 		} content: {
-			if let selectedTab {
+			if let selectedTab = navigation.selectedTab {
 				switch selectedTab {
 					case .pages:
-						PageListView(selectedPage: $selectedPage)
+						PageListView(selectedPage: $navigation.selectedPage)
 							.toolbar(removing: .sidebarToggle)
 					case .Add:
-						AddElementsView(selectedPage: $selectedPage)
+						AddElementsView(selectedPage: $navigation.selectedPage)
 							.toolbar(removing: .sidebarToggle)
 					case .navigator:
-						NavigatorListView(selectedPage: selectedPage)
+						NavigatorListView(selectedPage: navigation.selectedPage)
 							.toolbar(removing: .sidebarToggle)
 							.navigationSplitViewColumnWidth(min: 225, ideal: 275, max: 325)
 					case .components:
@@ -56,7 +61,7 @@ struct WebsiteEntryView: View {
 					case .find: EmptyView().toolbar(removing: .sidebarToggle)
 						
 					default:
-						AddElementsView(selectedPage: $selectedPage)
+						AddElementsView(selectedPage: $navigation.selectedPage)
 							.toolbar(removing: .sidebarToggle)
 				}
 			} else {
@@ -78,13 +83,6 @@ struct WebsiteEntryView: View {
 			ElementInspectorView()
 		}
 		.toolbar(.hidden)
-		.onChange(of: websiteManager.draggingElement) {
-			if(websiteManager.draggingElement == nil) {
-				columnVisibility = .doubleColumn
-			} else {
-				columnVisibility = .detailOnly
-			}
-		}
 	}
 }
 
@@ -96,17 +94,18 @@ struct WebsiteEntryView: View {
 }
 
 struct SidebarListView: View {
-	@Binding var selectedTab: SidebarTab?
+	@Environment(NavigationManager.self) var navigation
 	
 	var body: some View {
-		List(SidebarTab.allCases, id: \.self, selection: $selectedTab) { tab in
+		@Bindable var navigation = navigation
+		List(SidebarTab.allCases, id: \.self, selection: $navigation.selectedTab) { tab in
 			Image(tab.symbol)
 				.resizable()
 				.frame(width: 24, height: 24, alignment: .center)
 				.scaledToFit()
 				.listItemTint(.white)
 				.listRowSeparator(.hidden)
-				.listRowBackground(Rectangle().fill(selectedTab == tab ? .background2 : .clear))
+				.listRowBackground(Rectangle().fill(navigation.selectedTab == tab ? .background2 : .clear))
 				.tag(tab)
 		}
 		.scrollContentBackground(.hidden)

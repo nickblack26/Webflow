@@ -1,12 +1,7 @@
-//
-//  PageModel.swift
-//  Webflow
-//
-//  Created by Nick on 10/6/23.
-//
-
 import Foundation
 import SwiftData
+import CoreTransferable
+import UniformTypeIdentifiers
 
 struct EmptyPageModel: Codable {
 	var image: String
@@ -112,4 +107,14 @@ extension PageModel {
 			}
 		}
 	}
+}
+
+extension PageModel: Transferable {
+	static var transferRepresentation: some TransferRepresentation {
+		CodableRepresentation(contentType: .pageModel)
+	}
+}
+
+extension UTType {
+	static let pageModel = UTType(exportedAs: "com.nicholasblack.Webflow")
 }

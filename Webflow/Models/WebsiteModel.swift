@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import UniformTypeIdentifiers
+import GroupActivities
 
 @Model final class DomainModel {
 	@Attribute(.unique) var name: String
@@ -40,7 +41,7 @@ import UniformTypeIdentifiers
 	}
 }
 
-@Model final class WebsiteModel: Codable {
+@Model final class WebsiteModel: Codable, GroupActivity  {
 	@Attribute(.unique) var name: String
 	@Attribute(.unique) var internalDomain: String {
 		"https://www.\(name.lowercased()).webflow.io"
@@ -72,6 +73,13 @@ import UniformTypeIdentifiers
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(name, forKey: .name)
 		try container.encode(pages, forKey: .pages)
+	}
+	
+	var metadata: GroupActivityMetadata {
+		var metadata = GroupActivityMetadata()
+		metadata.title = NSLocalizedString("Edit Website", comment: self.name)
+		metadata.type = .generic
+		return metadata
 	}
 }
 

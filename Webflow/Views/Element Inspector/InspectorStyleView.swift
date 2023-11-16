@@ -6,7 +6,18 @@ struct InspectorStyleView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
 	@Query var classes: [ClassModel]
 	@State private var isExpanded: Bool = true
-	@State private var currentClasses: [ClassModel] = []
+	@State private var currentClasses: [ClassModel] = [] {
+		didSet {
+			guard let selectedElement = websiteManager.selectedElement else { return }
+			selectedElement.classes = currentClasses
+			
+			do {
+				try modelContext.save()
+			} catch {
+				print(error)
+			}
+		}
+	}
 	@State private var searchText: String = ""
 	@State private var displayMode: ElementStyleModel.Display = .Block
 	@State private var margin: (CGFloat?, CGFloat?, CGFloat?, CGFloat?)?
@@ -23,6 +34,8 @@ struct InspectorStyleView: View {
 	}
 	
 	var body: some View {
+		@Bindable var websiteManager = websiteManager
+		var availableClasses: [ClassModel] = classes.filter { !currentClasses.contains($0) }
 		List {
 			if let selectedElement = websiteManager.selectedElement {
 				@Bindable var selectedElement = selectedElement
@@ -31,7 +44,11 @@ struct InspectorStyleView: View {
 					HStack {
 						Image(systemName: "square")
 						
-						Text(websiteManager.selectedElement == nil ? "None selected" : "\(websiteManager.selectedElement?.name ?? "") Styles")
+						if selectedElement.classes.isEmpty {
+							Text(websiteManager.selectedElement == nil ? "None selected" : "\(websiteManager.selectedElement?.name ?? "") Styles")
+						} else {
+							Text(selectedElement.classes[0].name)
+						}
 					}
 					
 					Button {
@@ -49,7 +66,7 @@ struct InspectorStyleView: View {
 				.listRowSeparator(.hidden)
 				
 				Section {
-					CustomSearchBar()
+					CustomSearchBar(currentClasses: currentClasses, allClasses: availableClasses)
 						.padding(.horizontal, -8.0)
 						
 				} header: {
@@ -100,15 +117,16 @@ struct InspectorStyleView: View {
 						}
 						.pickerStyle(.segmented)
 					}
+					.listRowSeparator(.hidden)
 				}
-				.listRowSeparator(.hidden)
 				
 				DisclosureGroup("Spacing", isExpanded: $isExpanded) {
 
 				}
+				.tint(.primary)
 								
 				InspectorSizeSection(element: selectedElement)
-				
+					.tint(.primary)
 				
 				InspectorStylePositionSection()
 					.tint(.primary)
@@ -149,6 +167,40 @@ struct InspectorStyleView: View {
 		.listStyle(.plain)
 		.scrollContentBackground(.hidden)
 		.background(Color("Background"))
+		.searchable(
+			text: $searchText,
+			tokens: $currentClasses,
+			suggestedTokens: .constant(classes),
+			token: {
+			Text($0.name)
+		})
+		.onSubmit(of: .search) {
+			guard let selectedElement = websiteManager.selectedElement else { return }
+			if searchText.isEmpty { return }
+			
+			let filteredClass = classes.first { $0.name.localizedCaseInsensitiveContains(searchText) }
+			
+			if let filteredClass {
+				currentClasses.append(filteredClass)
+			} else {
+				let newClass = ClassModel(name: searchText)
+				modelContext.insert(newClass)
+				
+				currentClasses.append(newClass)
+				
+				@Bindable var element = selectedElement
+				
+				element.classes.append(newClass)
+			}
+			
+			do {
+				try modelContext.save()
+			} catch {
+				print(error)
+			}
+			
+			searchText = ""
+		}
 		.onAppear {
 			if let selectedElement = websiteManager.selectedElement, let style = selectedElement.style, let elementClasses = style.classes {
 				currentClasses = elementClasses
@@ -163,6 +215,9 @@ struct InspectorStyleView: View {
 		}
 		.toolbar {
 			InspectorToolbarView(selectedTab: $selectedTab)
+		}
+		.onChange(of: websiteManager.selectedElement) { oldValue, newValue in
+			currentClasses = newValue?.classes ?? []
 		}
 	}
 }
@@ -227,18 +282,3 @@ struct InspectorStyleView: View {
 	.environment(previewWebsiteManager)
 	.modelContainer(for: ElementModel.self, inMemory: true)
 })
-
-//		.searchable(
-//			text: $searchText,
-//			tokens: $currentClasses,
-//			placement: .toolbar,
-//			prompt: Text("Select a class or tag")
-//		) {
-//			Text($0.name)
-//		}
-//		.onSubmit(of: .search) {
-//			if searchText.isEmpty { return }
-//			let newClass = ClassModel(name: searchText)
-//
-//			modelContext.insert(newClass)
-//		}

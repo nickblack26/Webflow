@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 @Model
 final class ElementStyleModel: Codable {
@@ -22,7 +23,15 @@ final class ElementStyleModel: Codable {
 	@Relationship(deleteRule: .cascade, inverse: \SizeModel.element)
 	var size: SizeModel?
 	
-	init(display: Display? = nil, overflow: Overflow? = nil, aspectRatio: AspectRatio? = nil, classes: [ClassModel]? = nil, element: ElementModel? = nil, spacing: SpacingModel? = nil, size: SizeModel? = nil) {
+	init(
+		display: Display? = nil,
+		overflow: Overflow? = nil,
+		aspectRatio: AspectRatio? = nil,
+		classes: [ClassModel]? = [],
+		element: ElementModel? = nil,
+		spacing: SpacingModel? = nil,
+		size: SizeModel? = nil
+	) {
 		self.display = display
 		self.overflow = overflow
 		self.aspectRatio = aspectRatio
@@ -110,6 +119,22 @@ extension ElementStyleModel {
 		}
 		
 		var id: Self { self }
+		
+		var alignment: Alignment {
+			switch self {
+				case .Block: return Alignment.leading
+				case .Flex:
+					return Alignment.leading
+				case .Grid:
+					return Alignment.leading
+				case .InlineBlock:
+					return Alignment.leading
+				case .Inline:
+					return Alignment.leading
+				case .Hidden:
+					return Alignment.leading
+			}
+		}
 	}
 	
 	enum Overflow: String, CaseIterable, Codable {

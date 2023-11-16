@@ -29,8 +29,6 @@ struct InspectorStylePositionSection: View {
 					}
 				}
 			}
-//			.frame(maxWidth: .infinity, alignment: .leading)
-			.listRowSeparator(.hidden)
 			
 			DisclosureGroup(
 				isExpanded: .constant(true),
@@ -75,9 +73,7 @@ struct InspectorStylePositionSection: View {
 					}
 				}
 			)
-			.listRowSeparator(.hidden)
 		}
-		
     }
 }
 

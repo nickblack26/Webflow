@@ -10,13 +10,15 @@ import SwiftData
 
 struct PageListView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(NavigationManager.self) private var navigation
 	@State var isEditMode: EditMode = .active
 	@State private var searchText: String = ""
 	@State private var createNewPage: Bool = false
 	@Binding var selectedPage: PageModel?
 	
 	var body: some View {
-		List(selection: $selectedPage) {
+		@Bindable var navigation = navigation
+		List(selection: $navigation.selectedPage) {
 			ForEach(PageModel.Category.allCases, id: \.self) { type in
 				PageGroupedList(pageType: type, searchText: $searchText)
 			}

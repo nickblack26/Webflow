@@ -128,26 +128,21 @@ extension ElementModel {
 	enum Tag: String, CaseIterable, Codable {
 		case A
 		case Abbr
-		case Acronym
 		case Address
-		case Applet
 		case Area
 		case Article
 		case Aside
 		case Audio
 		case B
 		case Base
-		case Basefont
 		case Bdi
 		case Bdo
-		case Big
 		case Blockquote
 		case Body
 		case Br
 		case Button
 		case Canvas
 		case Caption
-		case Center
 		case Cite
 		case Code
 		case Col
@@ -159,7 +154,6 @@ extension ElementModel {
 		case Details
 		case Dfn
 		case Dialog
-		case Dir
 		case Div
 		case Dl
 		case Dt
@@ -168,11 +162,8 @@ extension ElementModel {
 		case Fieldset
 		case Figcaption
 		case Figure
-		case Font
 		case Footer
 		case Form
-		case Frame
-		case Frameset
 		case H1
 		case H2
 		case H3
@@ -201,7 +192,6 @@ extension ElementModel {
 		case Meta
 		case Meter
 		case Nav
-		case Noframes
 		case Noscript
 		case Object
 		case Ol
@@ -226,7 +216,6 @@ extension ElementModel {
 		case Small
 		case Source
 		case Span
-		case Strike
 		case Strong
 		case Style
 		case Sub
@@ -245,7 +234,6 @@ extension ElementModel {
 		case Title
 		case Tr
 		case Track
-		case Tt
 		case U
 		case Ul
 		case Var
@@ -254,6 +242,8 @@ extension ElementModel {
 		
 		var icon: String {
 			switch self {
+				case .Body:
+					"ElementBodyIcon"
 				case .Div:
 					"ElementDivIcon"
 				case .Header:
@@ -294,6 +284,234 @@ extension ElementModel {
 				default: .init()
 			}
 		}
+		
+		var generatedTag: String {
+			switch self {
+				case .A: return "<a>"
+				case .Abbr: return "<abbr>"
+				case .Address: return ""
+				case .Area:
+					return ""
+				case .Article:
+					return ""
+				case .Aside:
+					return ""
+				case .Audio:
+					return ""
+				case .B:
+					return ""
+				case .Base:
+					return ""
+				case .Bdi:
+					return ""
+				case .Bdo:
+					return ""
+				case .Blockquote:
+					return ""
+				case .Body:
+					return ""
+				case .Br:
+					return ""
+				case .Button:
+					return ""
+				case .Canvas:
+					return ""
+				case .Caption:
+					return ""
+				case .Cite:
+					return ""
+				case .Code:
+					return ""
+				case .Col:
+					return ""
+				case .Colgroup:
+					return ""
+				case .Data:
+					return ""
+				case .Datalist:
+					return ""
+				case .Dd:
+					return ""
+				case .Del:
+					return ""
+				case .Details:
+					return ""
+				case .Dfn:
+					return ""
+				case .Dialog:
+					return ""
+				case .Div:
+					return ""
+				case .Dl:
+					return ""
+				case .Dt:
+					return ""
+				case .Em:
+					return ""
+				case .Embed:
+					return ""
+				case .Fieldset:
+					return ""
+				case .Figcaption:
+					return ""
+				case .Figure:
+					return ""
+				case .Footer:
+					return ""
+				case .Form:
+					return ""
+				case .H1:
+					return ""
+				case .H2:
+					return ""
+				case .H3:
+					return ""
+				case .H4:
+					return ""
+				case .H5:
+					return ""
+				case .H6:
+					return ""
+				case .Head:
+					return ""
+				case .Header:
+					return ""
+				case .Hgroup:
+					return ""
+				case .Hr:
+					return ""
+				case .Html:
+					return ""
+				case .I:
+					return ""
+				case .Iframe:
+					return ""
+				case .Img:
+					return ""
+				case .Input:
+					return ""
+				case .Ins:
+					return ""
+				case .Kbd:
+					return ""
+				case .Label:
+					return ""
+				case .Legend:
+					return ""
+				case .Li:
+					return ""
+				case .Link:
+					return ""
+				case .Main:
+					return ""
+				case .Map:
+					return ""
+				case .Mark:
+					return ""
+				case .Menu:
+					return ""
+				case .Meta:
+					return ""
+				case .Meter:
+					return ""
+				case .Nav:
+					return ""
+				case .Noscript:
+					return ""
+				case .Object:
+					return ""
+				case .Ol:
+					return ""
+				case .Optgroup:
+					return ""
+				case .Option:
+					return ""
+				case .Output:
+					return ""
+				case .P:
+					return ""
+				case .Param:
+					return ""
+				case .Picture:
+					return ""
+				case .Pre:
+					return ""
+				case .Progress:
+					return ""
+				case .Q:
+					return ""
+				case .Rp:
+					return ""
+				case .Rt:
+					return ""
+				case .Ruby:
+					return ""
+				case .S:
+					return ""
+				case .Samp:
+					return ""
+				case .Script:
+					return ""
+				case .Search:
+					return ""
+				case .Section:
+					return ""
+				case .Select:
+					return ""
+				case .Small:
+					return ""
+				case .Source:
+					return ""
+				case .Span:
+					return ""
+				case .Strong:
+					return ""
+				case .Style:
+					return ""
+				case .Sub:
+					return ""
+				case .Summary:
+					return ""
+				case .Sup:
+					return ""
+				case .Svg:
+					return ""
+				case .Table:
+					return ""
+				case .Tbody:
+					return ""
+				case .Td:
+					return ""
+				case .Template:
+					return ""
+				case .Textarea:
+					return ""
+				case .Tfoot:
+					return ""
+				case .Th:
+					return ""
+				case .Thead:
+					return ""
+				case .Time:
+					return ""
+				case .Title:
+					return ""
+				case .Tr:
+					return ""
+				case .Track:
+					return ""
+				case .U:
+					return ""
+				case .Ul:
+					return ""
+				case .Var:
+					return ""
+				case .Video:
+					return ""
+				case .Wbr:
+					return ""
+			}
+		}
 	}
 }
 
@@ -302,6 +520,50 @@ extension ElementModel: Transferable {
 		CodableRepresentation(contentType: .elementModel)
 	}
 }
+
 extension UTType {
 	static let elementModel = UTType(exportedAs: "com.nicholasblack.Webflow")
+}
+
+extension ElementModel {
+	/// Move children elements to parent
+	func wrapElement(_ element: ElementModel) {
+		if let children {
+			element.children?.append(contentsOf: children)
+			self.children?.append(element)
+		}
+	}
+	
+	/// Move children elements to parent
+	func unWrapElement() {
+		if let parent = self.parent, let children = self.children {
+			parent.children?.append(contentsOf: children)
+		}
+	}
+	
+	/// Move child element to parent
+	func moveToParent() {
+		if let parent = self.parent, let grandparent = parent.parent {
+			grandparent.children?.append(self)
+		}
+	}
+	
+	/// Get all parents elements until nil is reached
+	func getAllParents() -> [ElementModel] {
+		var tempElement: ElementModel? = self
+		var parents: [ElementModel] = []
+		
+		while tempElement?.parent != nil {
+			if let parent = tempElement?.parent {
+				// add parent to beginning
+				// The reason for this is so when you iterate through a list, it will put the furthest parent from the element at the top
+				parents.insert(parent, at: 0)
+				tempElement = parent
+			}
+		}
+		
+		parents.insert(self, at: 0)
+		
+		return parents
+	}
 }

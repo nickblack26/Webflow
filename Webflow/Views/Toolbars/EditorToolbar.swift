@@ -6,6 +6,7 @@ struct EditorToolbar: View {
 	@State private var isDesigning: Bool = false
 	@State private var showPublisher: Bool = false
 	@State private var showUserStatus: Bool = false
+	@State private var showSharePopover: Bool = false
 	
 	var body: some View {
 		HStack {
@@ -51,7 +52,7 @@ struct EditorToolbar: View {
 				})
 				
 				Divider()
-					.frame(maxHeight: 48)
+					.frame(maxHeight: 45)
 				
 				Button {
 					
@@ -118,7 +119,7 @@ struct EditorToolbar: View {
 					.buttonHoverEffect()
 		
 				Button {
-					
+					showSharePopover.toggle()
 				} label: {
 					HStack {
 						Image("accountIcon")
@@ -127,6 +128,9 @@ struct EditorToolbar: View {
 				}
 				.buttonStyle(.borderedProminent)
 				.tint(Color.background2)
+				.popover(isPresented: $showSharePopover) {
+					SharePopover(isPresented: $showSharePopover)
+				}
 				
 				Button {
 					showPublisher.toggle()
@@ -145,6 +149,6 @@ struct EditorToolbar: View {
 			}
 		}
 		.padding(.horizontal)
-		.frame(height: 48)
+		.frame(height: 45)
 	}
 }

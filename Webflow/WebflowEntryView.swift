@@ -24,10 +24,12 @@ struct WebflowEntryView: View {
 	@Query private var websites: [WebsiteModel]
 	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(NavigationManager.self) private var navigation
 	@State private var newWebsite: Bool = false
 	
 	var body: some View {
 		@Bindable var websiteManager = websiteManager
+		@Bindable var navigation = navigation
 		NavigationStack {
 			if websites.isEmpty {
 				ContentUnavailableView(label: {
@@ -40,10 +42,12 @@ struct WebflowEntryView: View {
 					}
 				})
 			} else {
-				List(websites, selection: $websiteManager.selectedWebsite) { website in
-					Button(website.name) {
-						websiteManager.selectedWebsite = website
-					}
+				List(
+					websites,
+					selection: $navigation.selectedWebsite
+				) { website in
+					Text(website.name)
+						.tag(website)
 				}
 			}
 		}
@@ -53,7 +57,7 @@ struct WebflowEntryView: View {
 	}
 	
 	private func delete(_ website: WebsiteModel) {
-		websiteManager.selectedWebsite = nil
+		navigation.selectedWebsite = nil
 		modelContext.delete(website)
 	}
 	

@@ -14,11 +14,13 @@ struct PageDetailView: View {
 		let children = page.body.children
 		
 		if let children, !children.isEmpty {
-			List(children, selection: $websiteManager.selectedElement) { element in
-				ElementView(element: element)
+			List(selection: $websiteManager.selectedElement) {
+				ForEach(children) { element in
+					ElementView(element: element)
+				}
 			}
-			.listRowSeparator(.hidden)
 			.listStyle(.plain)
+			.listRowSeparator(.hidden)
 		} else {
 			EmptyPageDetailView()
 		}
@@ -31,5 +33,6 @@ struct PageDetailView: View {
 	} detail: {
 		PageDetailView(selectedTab: .constant(.Add), page: .init(name: "Test", index: 0))
 			.environment(previewWebsiteManager)
+			.modelContainer(for: WebsiteModel.self, inMemory: true)
 	}
 }

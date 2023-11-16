@@ -9,14 +9,29 @@ import SwiftUI
 import UIKit
 
 struct CustomSearchBar: UIViewRepresentable {
-	func makeUIView(context: Context) -> UISearchBar {
-		let searchBar = UISearchBar()
-		searchBar.text = ""
-		searchBar.placeholder = "Select a class or tag"
-		searchBar.searchBarStyle = .minimal
+	var currentClasses: [ClassModel]
+	var allClasses: [ClassModel]
+	
+	func makeUIView(context: Context) -> UISearchTextField {
+		let textField = UISearchTextField()
+		textField.allowsDeletingTokens = true
+		textField.allowsCopyingTokens = true
+		textField.placeholder = "Select a class or tag"
+		textField.text = ""
+		textField.tokenBackgroundColor = UIColor(named: "accentColor", in: .main, compatibleWith: .current)
 		
-		searchBar.setTf(color: .clear)
-		return searchBar
+		let tokens: [UISearchToken] = currentClasses.map { token in
+			return UISearchToken(icon: nil, text: token.name)
+		}
+		
+		let suggestions: [UISearchSuggestionItem] = allClasses.map { suggest in
+			return UISearchSuggestionItem(localizedSuggestion: suggest.name)
+		}
+		
+		textField.searchSuggestions = suggestions
+		textField.tokens = tokens
+		
+		return textField
 	}
 	
 	func updateUIView(_ uiView: UIViewType, context: Context) {
@@ -25,7 +40,7 @@ struct CustomSearchBar: UIViewRepresentable {
 }
 
 #Preview {
-    CustomSearchBar()
+	CustomSearchBar(currentClasses: [], allClasses: [])
 }
 
 extension UISearchBar {

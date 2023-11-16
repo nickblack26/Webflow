@@ -29,7 +29,13 @@ struct NavigatorListItemView: View {
 							.resizable()
 							.frame(width: 16, height: 16)
 						
-						Text(element.name)
+						if element.classes.isEmpty {
+							Text(element.name)
+								.lineLimit(1)
+						} else {
+							Text(element.classes[0].name)
+								.lineLimit(1)
+						}
 					}
 					.contextMenu(menuItems: {
 						ElementContextMenu(element: element)
@@ -57,7 +63,14 @@ struct NavigatorListItemView: View {
 				Image(element.settings?.tag.icon ?? "ElementDivIcon")
 					.resizable()
 					.frame(width: 16, height: 16)
-				Text(element.name)
+				
+				if element.classes.isEmpty {
+					Text(element.name)
+						.lineLimit(1)
+				} else {
+					Text(element.classes[0].name)
+						.lineLimit(1)
+				}
 			}
 			.contextMenu(menuItems: {
 				ElementContextMenu(element: element)

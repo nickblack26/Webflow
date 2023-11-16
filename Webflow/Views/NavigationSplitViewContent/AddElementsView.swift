@@ -9,11 +9,14 @@ import SwiftUI
 
 struct AddElementsView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(NavigationManager.self) private var navigation
 	@State private var searchText: String = ""
 	@State private var selection: String = "elements"
 	@Binding var selectedPage: PageModel?
 	
     var body: some View {
+		@Bindable var navigation = navigation
+		
 		List {
 			Picker("Type", selection: $selection) {
 				Text("Elements")
@@ -141,7 +144,7 @@ struct AddElementsView: View {
 		if let selectedElement = websiteManager.selectedElement {
 			selectedElement.children?.append(element)
 		} else {
-			if let selectedPage {
+			if let selectedPage = navigation.selectedPage {
 				selectedPage.body.children?.append(element)
 			}
 		}

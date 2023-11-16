@@ -4,11 +4,13 @@ import SwiftData
 struct NavigatorListView: View {
 	@Query private var elements: [ElementModel]
 	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(NavigationManager.self) private var navigation
 	var selectedPage: PageModel?
 	
 	var body: some View {
 		@Bindable var websiteManager = websiteManager
-		if let selectedPage {
+		@Bindable var navigation = navigation
+		if let selectedPage = navigation.selectedPage {
 			List(selection: $websiteManager.selectedElement) {
 				NavigatorListItemView(element: selectedPage.body)
 			}

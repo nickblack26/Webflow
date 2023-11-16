@@ -21,21 +21,35 @@ struct ElementView: View {
 			}
 		} else {
 			ZStack {
-				Text("")
+				Text("Hello")
 			}
-			.listRowSeparator(.hidden)
-			.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
 			.tag(element)
-//			.padding(.leading, element.style?.spacing?.paddingLeft ?? 0)
-//			.padding(.top, element.style?.spacing?.paddingTop ?? 0)
-//			.padding(.trailing, element.style?.spacing?.paddingRight ?? 0)
-//			.padding(.bottom, element.style?.spacing?.paddingBottom ?? 0)
-//			.frame(
-//				minWidth: element.style?.size?.minWidth  ?? nil,
-//				maxWidth: element.style?.size?.maxWidth ?? .infinity,
-//				minHeight: element.style?.size?.minHeight  ?? 75,
-//				maxHeight: element.style?.size?.maxHeight  ?? nil
-//			)
+			.listRowSeparator(.hidden)
+			.listRowInsets(
+				EdgeInsets(
+					top: element.style?.spacing?.marginTop ?? 0,
+					leading: element.style?.spacing?.marginLeft ?? 0,
+					bottom: element.style?.spacing?.marginBottom ?? 0,
+					trailing: element.style?.spacing?.marginRight ?? 0
+				)
+			)
+			.padding(
+				EdgeInsets(
+					top: element.style?.spacing?.paddingTop ?? 0,
+					leading: element.style?.spacing?.paddingLeft ?? 0,
+					bottom: element.style?.spacing?.paddingBottom ?? 0,
+					trailing: element.style?.spacing?.paddingRight ?? 0
+				)
+			)
+			.frame(
+				minWidth: element.style?.size?.minWidth,
+				idealWidth: element.style?.size?.width,
+				maxWidth: element.style?.size?.maxWidth ?? .infinity,
+				minHeight: element.style?.size?.minHeight  ?? 75,
+				idealHeight: element.style?.size?.height,
+				maxHeight: element.style?.size?.maxHeight,
+				alignment: element.style?.display?.alignment ?? .leading
+			)
 			.background {
 				Rectangle()
 					.fill(.clear)
@@ -61,8 +75,15 @@ struct ElementView: View {
 							
 						} label: {
 							Image(systemName: "square")
-							Text(element.name)
-								.font(.caption)
+							if let selectedElement = websiteManager.selectedElement {
+								if selectedElement.classes.isEmpty {
+									Text(element.name)
+										.font(.caption)
+								} else {
+									Text(selectedElement.classes[0].name)
+										.font(.caption)
+								}
+							}
 						}
 						.buttonStyle(.borderedProminent)
 						.tint(.accent)
@@ -91,13 +112,15 @@ struct ElementView: View {
 								
 								Image("chevronDown")
 							}
-							.buttonStyle(.bordered)
+							.buttonStyle(.borderedProminent)
 							.tint(.orange)
+							.offset(y: -12)
 						}
 					}
-					.offset(y: -26.0)
+					.offset(y: -36)
 					.contentShape(Rectangle())
 				}
+				
 			})
 			.dropDestination(for: ElementModel.self) { items, location in
 				let elements: [ElementModel] = items.compactMap { element in
@@ -116,7 +139,6 @@ struct ElementView: View {
 			})
 			.contentShape(Rectangle())
 		}
-		
 	}
 	
 	private func delete() {

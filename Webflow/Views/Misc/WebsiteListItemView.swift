@@ -10,6 +10,7 @@ import SwiftUI
 struct WebsiteListItemView: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(NavigationManager.self) private var navigation
 	@Environment(\.openWindow) private var openWindow
 	
 	@State private var hovering: Bool = false
@@ -18,7 +19,7 @@ struct WebsiteListItemView: View {
 	
 	var body: some View {
 		Button {
-			websiteManager.selectedWebsite = website
+			navigation.selectedWebsite = website
 		} label: {
 			VStack(alignment: .leading) {
 				VStack {

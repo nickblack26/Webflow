@@ -60,10 +60,22 @@
 		01D493F72AF9658800F10AEB /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D493F62AF9658800F10AEB /* CustomSearchBar.swift */; };
 		01D493F92AF9837800F10AEB /* InspectorStylePositionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D493F82AF9837800F10AEB /* InspectorStylePositionSection.swift */; };
 		01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */; };
+		1D0B156C2AFE7A860040499C /* SharePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0B156B2AFE7A860040499C /* SharePopover.swift */; };
+		1D0B156E2AFE7D7C0040499C /* PageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0B156D2AFE7D7C0040499C /* PageRow.swift */; };
 		1DAAEFD22AFAF23D00A8DD33 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFD12AFAF23D00A8DD33 /* Binding+Extension.swift */; };
 		1DAAEFD42AFBFFC200A8DD33 /* PropertyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFD32AFBFFC200A8DD33 /* PropertyModel.swift */; };
-		1DAAEFD62AFC1B0600A8DD33 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFD52AFC1B0600A8DD33 /* CustomView.swift */; };
 		1DAAEFD82AFC34AD00A8DD33 /* InspectorToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFD72AFC34AD00A8DD33 /* InspectorToolbarView.swift */; };
+		1DAAEFDB2AFD23E000A8DD33 /* FileCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFDA2AFD23E000A8DD33 /* FileCommands.swift */; };
+		1DAAEFDD2AFD257700A8DD33 /* ViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFDC2AFD257700A8DD33 /* ViewCommands.swift */; };
+		1DAAEFDF2AFD2CED00A8DD33 /* ReplacementCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFDE2AFD2CED00A8DD33 /* ReplacementCommands.swift */; };
+		1DAAEFE52AFD483300A8DD33 /* SplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFE42AFD483300A8DD33 /* SplitView.swift */; };
+		1DAAEFE72AFD52D400A8DD33 /* ToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFE62AFD52D400A8DD33 /* ToolbarDelegate.swift */; };
+		1DAAEFE92AFD536F00A8DD33 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFE82AFD536F00A8DD33 /* SceneDelegate.swift */; };
+		1DAAEFEB2AFD559A00A8DD33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFEA2AFD559A00A8DD33 /* AppDelegate.swift */; };
+		1DAAEFED2AFD560400A8DD33 /* CustomSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFEC2AFD560400A8DD33 /* CustomSidebar.swift */; };
+		1DAAEFEF2AFD6E0F00A8DD33 /* Trapezoid+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFEE2AFD6E0F00A8DD33 /* Trapezoid+Extension.swift */; };
+		1DAAEFF12AFD6EF000A8DD33 /* InspectorSpacingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFF02AFD6EF000A8DD33 /* InspectorSpacingSection.swift */; };
+		1DAAEFF32AFDA47300A8DD33 /* PageModel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEFF22AFDA47300A8DD33 /* PageModel+Extension.swift */; };
 		1DECED852AF2F36D008DEDFC /* ElementContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */; };
 /* End PBXBuildFile section */
 
@@ -123,10 +135,22 @@
 		01D493F62AF9658800F10AEB /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		01D493F82AF9837800F10AEB /* InspectorStylePositionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorStylePositionSection.swift; sourceTree = "<group>"; };
 		01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAddButtonLabelView.swift; sourceTree = "<group>"; };
+		1D0B156B2AFE7A860040499C /* SharePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopover.swift; sourceTree = "<group>"; };
+		1D0B156D2AFE7D7C0040499C /* PageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageRow.swift; sourceTree = "<group>"; };
 		1DAAEFD12AFAF23D00A8DD33 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		1DAAEFD32AFBFFC200A8DD33 /* PropertyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyModel.swift; sourceTree = "<group>"; };
-		1DAAEFD52AFC1B0600A8DD33 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		1DAAEFD72AFC34AD00A8DD33 /* InspectorToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorToolbarView.swift; sourceTree = "<group>"; };
+		1DAAEFDA2AFD23E000A8DD33 /* FileCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCommands.swift; sourceTree = "<group>"; };
+		1DAAEFDC2AFD257700A8DD33 /* ViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCommands.swift; sourceTree = "<group>"; };
+		1DAAEFDE2AFD2CED00A8DD33 /* ReplacementCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplacementCommands.swift; sourceTree = "<group>"; };
+		1DAAEFE42AFD483300A8DD33 /* SplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitView.swift; sourceTree = "<group>"; };
+		1DAAEFE62AFD52D400A8DD33 /* ToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarDelegate.swift; sourceTree = "<group>"; };
+		1DAAEFE82AFD536F00A8DD33 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		1DAAEFEA2AFD559A00A8DD33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1DAAEFEC2AFD560400A8DD33 /* CustomSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSidebar.swift; sourceTree = "<group>"; };
+		1DAAEFEE2AFD6E0F00A8DD33 /* Trapezoid+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Trapezoid+Extension.swift"; sourceTree = "<group>"; };
+		1DAAEFF02AFD6EF000A8DD33 /* InspectorSpacingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorSpacingSection.swift; sourceTree = "<group>"; };
+		1DAAEFF22AFDA47300A8DD33 /* PageModel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageModel+Extension.swift"; sourceTree = "<group>"; };
 		1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementContextMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +197,11 @@
 				010AF88B2AD0C2CB00A8785A /* WebflowApp.swift */,
 				010AF8C42AD4817400A8785A /* WebflowEntryView.swift */,
 				010AF88D2AD0C2CB00A8785A /* WebsiteEntryView.swift */,
-				1DAAEFD52AFC1B0600A8DD33 /* CustomView.swift */,
+				1DAAEFE42AFD483300A8DD33 /* SplitView.swift */,
+				1DAAEFE62AFD52D400A8DD33 /* ToolbarDelegate.swift */,
+				1DAAEFE82AFD536F00A8DD33 /* SceneDelegate.swift */,
+				1DAAEFEA2AFD559A00A8DD33 /* AppDelegate.swift */,
+				1DAAEFEC2AFD560400A8DD33 /* CustomSidebar.swift */,
 			);
 			path = Webflow;
 			sourceTree = "<group>";
@@ -207,6 +235,7 @@
 		010AF8B02AD0CBA300A8785A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1DAAEFD92AFD235800A8DD33 /* Commands */,
 				01D493F42AF94B2400F10AEB /* ContextMenus */,
 				01A4B6582AD4EAF2009B3F9E /* Element */,
 				010AF8B52AD1B06D00A8785A /* Element Inspector */,
@@ -228,6 +257,7 @@
 				01A4B65E2AD4F35C009B3F9E /* InspectorSizeSection.swift */,
 				01D493F82AF9837800F10AEB /* InspectorStylePositionSection.swift */,
 				014C95992AF9EA6700B75724 /* ElementInteractionsView.swift */,
+				1DAAEFF02AFD6EF000A8DD33 /* InspectorSpacingSection.swift */,
 			);
 			path = "Element Inspector";
 			sourceTree = "<group>";
@@ -238,6 +268,8 @@
 				010AF8CF2AD4DB4300A8785A /* Modifier+Extension.swift */,
 				01BE7EB02AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift */,
 				1DAAEFD12AFAF23D00A8DD33 /* Binding+Extension.swift */,
+				1DAAEFEE2AFD6E0F00A8DD33 /* Trapezoid+Extension.swift */,
+				1DAAEFF22AFDA47300A8DD33 /* PageModel+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -297,12 +329,14 @@
 		01D493F32AF94AFC00F10AEB /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				01BE7EA92AF06B17005ACDB7 /* ImageGridItemView.swift */,
 				01D493F62AF9658800F10AEB /* CustomSearchBar.swift */,
 				01BE77212ADDC7FE004D383C /* WebsiteListItemView.swift */,
 				01E7AC9D2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift */,
 				01B58EC62AEB666900164CBB /* EmptyPageDetailView.swift */,
 				01A5F3C82AEAB67A000FD778 /* EmptyListView.swift */,
 				01B58EBF2AEAF9E300164CBB /* BreakpointPicker.swift */,
+				1D0B156D2AFE7D7C0040499C /* PageRow.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -310,7 +344,6 @@
 		01D493F42AF94B2400F10AEB /* ContextMenus */ = {
 			isa = PBXGroup;
 			children = (
-				01BE7EA92AF06B17005ACDB7 /* ImageGridItemView.swift */,
 				1DECED842AF2F36D008DEDFC /* ElementContextMenu.swift */,
 			);
 			path = ContextMenus;
@@ -330,6 +363,7 @@
 			children = (
 				01D493EE2AF92F0B00F10AEB /* AssetPopoverView.swift */,
 				014C95972AF9C85600B75724 /* PublishingPopoverView.swift */,
+				1D0B156B2AFE7A860040499C /* SharePopover.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -341,6 +375,16 @@
 				010AF8AE2AD0CB7800A8785A /* WebsiteManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		1DAAEFD92AFD235800A8DD33 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				1DAAEFDA2AFD23E000A8DD33 /* FileCommands.swift */,
+				1DAAEFDC2AFD257700A8DD33 /* ViewCommands.swift */,
+				1DAAEFDE2AFD2CED00A8DD33 /* ReplacementCommands.swift */,
+			);
+			path = Commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,34 +466,45 @@
 				010AF89F2AD0C37900A8785A /* ElementModel.swift in Sources */,
 				010AF8D02AD4DB4300A8785A /* Modifier+Extension.swift in Sources */,
 				010AF8B92AD45B4400A8785A /* AddElementsView.swift in Sources */,
+				1DAAEFE72AFD52D400A8DD33 /* ToolbarDelegate.swift in Sources */,
 				010AF8B72AD1B07E00A8785A /* InspectorStyleView.swift in Sources */,
+				1DAAEFE52AFD483300A8DD33 /* SplitView.swift in Sources */,
 				010AF8C72AD48E3B00A8785A /* NewWebsiteView.swift in Sources */,
 				01B58EC22AEB021500164CBB /* EditorToolbar.swift in Sources */,
+				1DAAEFF12AFD6EF000A8DD33 /* InspectorSpacingSection.swift in Sources */,
 				010AF8C52AD4817400A8785A /* WebflowEntryView.swift in Sources */,
+				1DAAEFDF2AFD2CED00A8DD33 /* ReplacementCommands.swift in Sources */,
 				010AF8C92AD4AD4500A8785A /* NewPageView.swift in Sources */,
 				010AF8B22AD0CBB300A8785A /* ElementView.swift in Sources */,
 				1DAAEFD22AFAF23D00A8DD33 /* Binding+Extension.swift in Sources */,
 				01BE7EA62AF06381005ACDB7 /* ComponentsListView.swift in Sources */,
 				010AF8A32AD0C51700A8785A /* WebsiteModel.swift in Sources */,
 				01B58EC72AEB666900164CBB /* EmptyPageDetailView.swift in Sources */,
+				1DAAEFDD2AFD257700A8DD33 /* ViewCommands.swift in Sources */,
 				010AF8BF2AD4694C00A8785A /* PageListView.swift in Sources */,
+				1DAAEFDB2AFD23E000A8DD33 /* FileCommands.swift in Sources */,
 				014C95982AF9C85600B75724 /* PublishingPopoverView.swift in Sources */,
 				01D493F72AF9658800F10AEB /* CustomSearchBar.swift in Sources */,
 				01BE7EB12AF1EDE2005ACDB7 /* CGFloat+PixelConversion.swift in Sources */,
 				01BE7EA82AF063C2005ACDB7 /* AssetsListView.swift in Sources */,
 				014C95962AF9948200B75724 /* NavigationManager.swift in Sources */,
 				01D493F92AF9837800F10AEB /* InspectorStylePositionSection.swift in Sources */,
-				1DAAEFD62AFC1B0600A8DD33 /* CustomView.swift in Sources */,
 				010AF8A12AD0C49E00A8785A /* PageModel.swift in Sources */,
 				01B58EBC2AEAF25F00164CBB /* ButtonLabel.swift in Sources */,
 				010AF8CB2AD4BFFA00A8785A /* ElementItemView.swift in Sources */,
 				01A5F3C92AEAB67A000FD778 /* EmptyListView.swift in Sources */,
 				010AF8A52AD0C5C800A8785A /* ElementSettingsModel.swift in Sources */,
+				1DAAEFE92AFD536F00A8DD33 /* SceneDelegate.swift in Sources */,
+				1DAAEFF32AFDA47300A8DD33 /* PageModel+Extension.swift in Sources */,
 				010AF8BB2AD45DFC00A8785A /* NavigatorListView.swift in Sources */,
+				1DAAEFED2AFD560400A8DD33 /* CustomSidebar.swift in Sources */,
 				01B58EB82AEAD46300164CBB /* SidebarTab.swift in Sources */,
 				01D493F22AF945C000F10AEB /* AssetsToolbar.swift in Sources */,
 				01D493EF2AF92F0B00F10AEB /* AssetPopoverView.swift in Sources */,
+				1D0B156C2AFE7A860040499C /* SharePopover.swift in Sources */,
+				1D0B156E2AFE7D7C0040499C /* PageRow.swift in Sources */,
 				014C959A2AF9EA6700B75724 /* ElementInteractionsView.swift in Sources */,
+				1DAAEFEB2AFD559A00A8DD33 /* AppDelegate.swift in Sources */,
 				01A4B65B2AD4EE24009B3F9E /* InspectorSettingsView.swift in Sources */,
 				010AF8AD2AD0C80800A8785A /* ClassModel.swift in Sources */,
 				01A5F3C52AEAAA19000FD778 /* GroupedList.swift in Sources */,
@@ -459,6 +514,7 @@
 				01E7AC9E2AEF4DDB004D98B8 /* PanelAddButtonLabelView.swift in Sources */,
 				1DECED852AF2F36D008DEDFC /* ElementContextMenu.swift in Sources */,
 				01B58EC52AEB13EF00164CBB /* ModelDefaults.swift in Sources */,
+				1DAAEFEF2AFD6E0F00A8DD33 /* Trapezoid+Extension.swift in Sources */,
 				01BE7EB62AF1F349005ACDB7 /* ButtonHoverEffect.swift in Sources */,
 				01B58EC02AEAF9E300164CBB /* BreakpointPicker.swift in Sources */,
 				010AF88E2AD0C2CB00A8785A /* WebsiteEntryView.swift in Sources */,

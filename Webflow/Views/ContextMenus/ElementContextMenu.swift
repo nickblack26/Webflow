@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 enum InteractionTrigger: String, CaseIterable {
 	case MouseClick
@@ -51,12 +52,17 @@ struct ElementContextMenu: View {
 	var body: some View {
 		@Bindable var websiteManager = websiteManager
 		let hasClass = !element.classes.isEmpty
-		let hasParent = element.parent != nil
+		let hasGrandparent = element.parent != nil && element.parent?.parent != nil
 		
 		Section {
 			Menu("Select Parent Element") {
-				List(parents, selection: $websiteManager.selectedElement) { element in
-					Text(element.name)
+				ForEach(element.getAllParents()) { element in
+					Button {
+						websiteManager.selectedElement = element
+					} label: {
+						Text(element.name)
+							.badge(Text("\(Image(element.settings?.tag.icon ?? "ElementDivIcon"))"))
+					}
 				}
 			}
 		}
@@ -64,32 +70,53 @@ struct ElementContextMenu: View {
 		Section {
 			Menu("Wrap in") {
 				Button {
+					if let parent = element.parent {
+						let newElement = ElementModel(name: "Div Block", tag: .Div, children: [element])
+						modelContext.insert(newElement)
+						parent.children?.append(newElement)
+					}
 					
 				} label: {
 					Text("Div Block")
 				}
 				
 				Button {
+					if let parent = element.parent {
+						let newElement = ElementModel(name: "Link Block", tag: .A, children: [element])
+						modelContext.insert(newElement)
+						parent.children?.append(newElement)
+					}
 					
 				} label: {
 					Text("Link Block")
 				}
 				
 				Button {
-					
+					if let parent = element.parent {
+						let newElement = ElementModel(name: "V Flex", tag: .Div, style: .init(display: .Flex), children: [element])
+						
+						modelContext.insert(newElement)
+						parent.children?.append(newElement)
+					}
 				} label: {
 					Text("V Flex")
 				}
 				
 				Button {
-					
+					if let parent = element.parent {
+						let newElement = ElementModel(name: "H Flex", tag: .Div, style: .init(display: .Flex), children: [element])
+						
+						modelContext.insert(newElement)
+						parent.children?.append(newElement)
+					}
 				} label: {
 					Text("H Flex")
 				}
 			}
 			
 			Button {
-				
+				element.unWrapElement()
+				modelContext.delete(element)
 			} label: {
 				Text("Unwrap")
 			}
@@ -97,7 +124,7 @@ struct ElementContextMenu: View {
 		
 		Section {
 			Button {
-				
+				element.tag = .A
 			} label: {
 				Text("Convert to Link Block")
 			}
@@ -105,20 +132,20 @@ struct ElementContextMenu: View {
 		
 		Section {
 			Button {
-				
+				UIPasteboard.general.setValue(element, forPasteboardType: UTType.data.identifier)
 			} label: {
 				Text("Cut")
 			}
-	
 			
 			Button {
-				
+				UIPasteboard.general.setValue(element, forPasteboardType: UTType.data.identifier)
 			} label: {
 				Text("Copy")
 			}
 			
 			Button {
-				
+				let duplicateElement = ElementModel(backingData: element.persistentBackingData)
+				modelContext.insert(duplicateElement)
 			} label: {
 				Text("Duplicate")
 			}
@@ -145,7 +172,7 @@ struct ElementContextMenu: View {
 			.disabled(!hasClass)
 			
 			Button {
-				
+				element.classes.remove(at: 0)
 			} label: {
 				Text("Remove Class")
 			}
@@ -161,21 +188,22 @@ struct ElementContextMenu: View {
 		
 		Section {
 			Menu("Add Interaction Trigger") {
-				Button {
-					
-				} label: {
-					Text("Add Class...")
+				ForEach(InteractionTrigger.allCases, id: \.self) { trigger in
+					Button(trigger.rawValue) {
+						
+					}
 				}
 			}
 		}
 		
 		Section {
 			Button {
-				
+				element.moveToParent()
+				try? modelContext.save()
 			} label: {
 				Text("Move to parent")
 			}
-			.disabled(hasParent)
+			.disabled(!hasGrandparent)
 		}
 		
 		Section {
@@ -184,18 +212,6 @@ struct ElementContextMenu: View {
 			} label: {
 				Text("Create component")
 			}
-		}
-		.onAppear {
-			getParents(element: element)
-		}
-	}
-	
-	func getParents(element: ElementModel) {
-		print(element.parent.debugDescription)
-		if let parent = element.parent {
-			print(parent)
-			self.parents.append(parent)
-			getParents(element: parent)
 		}
 	}
 }

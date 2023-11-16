@@ -1,12 +1,9 @@
 import SwiftUI
 import SwiftData
-import UIKit
-import UniformTypeIdentifiers
-
 
 @main
 struct WebflowApp: App {
-	@UIApplicationDelegateAdaptor private var appDelegate: MyAppDelegate
+	@UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
 	
 	@State private var websiteManager = WebsiteManager()
 	@State private var navigationManager = NavigationManager()
@@ -30,7 +27,7 @@ struct WebflowApp: App {
 		WindowGroup {
 			WebflowEntryView()
 				.frame(minWidth: 900, minHeight: 500)
-				.fullScreenCover(item: $websiteManager.selectedWebsite) { website in
+				.fullScreenCover(item: $navigationManager.selectedWebsite) { website in
 					VStack(spacing: 0) {
 						EditorToolbar()
 						
@@ -46,54 +43,12 @@ struct WebflowApp: App {
 					.environment(navigationManager)
 				}
 		}
-		
+		.commands {
+			ReplacementCommands()
+			ViewCommands()
+		}
 		.modelContainer(sharedModelContainer)
 		.environment(websiteManager)
-	}
-}
-
-class MyAppDelegate: NSObject, UIApplicationDelegate {
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-		
-		return true
-	}
-	
-	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-		let configuration = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-		configuration.delegateClass = MySceneDelegate.self
-		return configuration
-	}
-}
-
-class MySceneDelegate: NSObject, UIWindowSceneDelegate, ObservableObject {
-	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-		
-		guard let windowScene = (scene as? UIWindowScene) else { return }
-		
-#if targetEnvironment(macCatalyst)
-		if let titlebar = windowScene.titlebar {
-			titlebar.titleVisibility = .hidden
-			titlebar.toolbar = nil
-		}
-#endif
-		
-	}
-}
-
-struct CustomHTMLDocument: FileDocument {
-	var data: Data
-	
-	static var readableContentTypes: [UTType] { [UTType.websiteModel] }
-	
-	init(configuration: ReadConfiguration) throws {
-		guard let data = configuration.file.regularFileContents
-		else {
-			throw CocoaError(.fileReadCorruptFile)
-		}
-		self.data = data
-	}
-	
-	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-		FileWrapper(regularFileWithContents: data)
+		.environment(navigationManager)
 	}
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EmptyPageDetailView: View {
 	@Environment(WebsiteManager.self) private var websiteManager
+	@Environment(NavigationManager.self) private var navigation
 	
 	var body: some View {
 		VStack {
@@ -47,7 +48,7 @@ struct EmptyPageDetailView: View {
 			let elements = items.compactMap { element in
 				ElementModel(name: element.name)
 			}
-			if let page = websiteManager.selectedPage {
+			if let page = navigation.selectedPage {
 				page.body.children?.append(contentsOf: elements)
 			}
 			websiteManager.draggingElement = nil

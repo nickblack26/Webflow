@@ -271,13 +271,13 @@ struct InspectorSizeSection: View {
 				
 				Picker("Overflow", selection: $overflow) {
 					ForEach(ElementStyleModel.Overflow.allCases, id: \.self) { overflow in
-						if(overflow.icon.isEmpty) {
-							Text("Auto")
-								.tag(overflow)
-						} else {
-							Image(overflow.icon)
-								.tag(overflow)
-						}
+						Image(overflow.icon)
+							.tag(overflow)
+//						if(overflow.icon.isEmpty) {
+//							Text("Auto")
+//								.tag(overflow)
+//						} else {
+//						}
 					}
 				}
 				.pickerStyle(.segmented)
